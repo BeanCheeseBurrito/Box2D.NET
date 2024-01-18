@@ -1,0 +1,3 @@
+[submodule "native/box2c"]
+	path = native/box2c
+	url = https://github.com/erincatto/box2c

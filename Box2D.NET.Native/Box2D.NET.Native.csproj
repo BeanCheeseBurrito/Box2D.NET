@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard1.0</TargetFramework>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NativeIsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</NativeIsLinux>
+        <NativeIsOsx Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</NativeIsOsx>
+        <NativeIsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</NativeIsWindows>
+
+        <NativeProcessorArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</NativeProcessorArch>
+        <NativeLibName>box2c</NativeLibName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Vezel.Zig.Toolsets.linux-x64" Version="0.11.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsLinux)' == 'true'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+
+        <PackageReference Include="Vezel.Zig.Toolsets.osx-x64" Version="0.11.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsOsx)' == 'true'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+
+        <PackageReference Include="Vezel.Zig.Toolsets.win-x64" Version="0.11.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsWindows)' == 'true'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+
+        <PackageReference Include="Vezel.Zig.Toolsets.linux-arm64" Version="0.11.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsLinux)' == 'true'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+
+        <PackageReference Include="Vezel.Zig.Toolsets.osx-arm64" Version="0.11.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsOsx)' == 'true'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+
+        <PackageReference Include="Vezel.Zig.Toolsets.win-arm64" Version="0.11.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsWindows)' == 'true'">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <Target Name="Compile Native Library" AfterTargets="build">
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-x64   -Dtarget=x86_64-linux-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-x64     -Dtarget=x86_64-windows-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-x64     -Dtarget=x86_64-macos"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-arm64 -Dtarget=aarch64-linux-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-arm64   -Dtarget=aarch64-windows-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-arm64   -Dtarget=aarch64-macos"/>
+
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-x64   -Dtarget=x86_64-linux-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-x64     -Dtarget=x86_64-windows-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-x64     -Dtarget=x86_64-macos"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-arm64 -Dtarget=aarch64-linux-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-arm64   -Dtarget=aarch64-windows-gnu"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-arm64   -Dtarget=aarch64-macos"/>
+    </Target>
+
+</Project>
