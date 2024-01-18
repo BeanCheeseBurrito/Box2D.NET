@@ -4,6 +4,11 @@ const LazyPath = Build.LazyPath;
 
 pub fn compileLibrary(b: *Build, lib: *Build.Step.Compile) void {
     lib.linkLibC();
+    lib.strip = lib.optimize != .Debug;
+
+    if (lib.optimize != .Debug) {
+        lib.defineCMacro("NDEBUG", null);
+    }
 
     lib.addIncludePath(LazyPath.relative("../native/box2c/src"));
     lib.addIncludePath(LazyPath.relative("../native/box2c/include"));
