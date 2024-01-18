@@ -69,10 +69,8 @@ jobs:
     - name: Build Projects
       shell: bash
       run: |
-        if [ '${{ matrix.os }}' == 'ubuntu-latest' ]; then
-          dotnet build --property:Deterministic=true -c Debug
-          dotnet build --property:Deterministic=true -c Release
-        fi
+        dotnet build --property:Deterministic=true -c Debug
+        dotnet build --property:Deterministic=true -c Release
 
     - name: Run Tests
       shell: bash
