@@ -13,13 +13,13 @@ namespace Box2D.NET.Tests
 			B2.Vec2 gravity = new B2.Vec2 { x = 0.0f, y = -10.0f };
 
 			// Construct a world object, which will hold and simulate the rigid bodies.
-			B2.WorldDef worldDef = B2.defaultWorldDef;
+			B2.WorldDef worldDef = B2.DefaultWorldDef;
 			worldDef.gravity = gravity;
 
 			B2.WorldId worldId = B2.CreateWorld(&worldDef);
 
 			// Define the ground body.
-			B2.BodyDef groundBodyDef = B2.defaultBodyDef;
+			B2.BodyDef groundBodyDef = B2.DefaultBodyDef;
 			groundBodyDef.position = new B2.Vec2 { x = 0.0f, y = -10.0f };
 
 			// Call the body factory which allocates memory for the ground body
@@ -31,11 +31,11 @@ namespace Box2D.NET.Tests
 			B2.Polygon groundBox = B2.MakeBox(50.0f, 10.0f);
 
 			// Add the box shape to the ground body.
-			B2.ShapeDef groundShapeDef = B2.defaultShapeDef;
+			B2.ShapeDef groundShapeDef = B2.DefaultShapeDef;
 			B2.CreatePolygonShape(groundBodyId, &groundShapeDef, &groundBox);
 
 			// Define the dynamic body. We set its position and call the body factory.
-			B2.BodyDef bodyDef = B2.defaultBodyDef;
+			B2.BodyDef bodyDef = B2.DefaultBodyDef;
 			bodyDef.type = B2.dynamicBody;
 			bodyDef.position = new B2.Vec2 { x = 0.0f, y = 4.0f };
 			B2.BodyId bodyId = B2.CreateBody(worldId, &bodyDef);
@@ -44,7 +44,7 @@ namespace Box2D.NET.Tests
 			B2.Polygon dynamicBox = B2.MakeBox(1.0f, 1.0f);
 
 			// Define the dynamic body shape
-			B2.ShapeDef shapeDef = B2.defaultShapeDef;
+			B2.ShapeDef shapeDef = B2.DefaultShapeDef;
 
 			// Set the box density to be non-zero, so it will be dynamic.
 			shapeDef.density = 1.0f;
