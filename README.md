@@ -70,6 +70,13 @@ For more up-to-date packages, development builds are available on the [GitLab pa
 > [!WARNING] 
 > Development feed packages may be deleted without warning to free up space.
 
+## Running examples
+To run any of the example programs, use ``dotnet run``and set the `Example` property's value to the example's full class name.
+**Example**:
+```console
+dotnet run --project Box2D.NET.Examples --property:Example=HelloWorld
+```
+
 ## Building from source
 ### Clone the repo
 Clone the repo and it's submodules.
