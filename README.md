@@ -7,6 +7,8 @@
 [![MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://github.com/BeanCheeseBurrito/Box2D.NET/blob/main/LICENSE)
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Box2D.NET.Release?style=for-the-badge&color=blue)](https://www.nuget.org/packages/Box2D.NET.Release)
 
+[Examples](https://github.com/BeanCheeseBurrito/Box2D.NET/tree/main/Box2D.NET.Examples/CSharp)
+
 </div>
 
 **Box2D.NET** is a C# binding for [Box2C](https://github.com/erincatto/box2c). Low-level bindings to the C api are included and generated with [Bindgen.NET](https://github.com/BeanCheeseBurrito/Bindgen.NET). Native libraries are cross-compiled with [Vezel-Dev's Zig Toolsets](https://github.com/vezel-dev/zig-toolsets).
@@ -71,7 +73,7 @@ For more up-to-date packages, development builds are available on the [GitLab pa
 > Development feed packages may be deleted without warning to free up space.
 
 ## Running examples
-To run any of the example programs, use ``dotnet run``and set the `Example` property's value to the example's full class name.
+To run any of the example programs, use ``dotnet run`` and set the `Example` property's value to the example's full class name.
 **Example**:
 ```console
 dotnet run --project Box2D.NET.Examples --property:Example=HelloWorld
