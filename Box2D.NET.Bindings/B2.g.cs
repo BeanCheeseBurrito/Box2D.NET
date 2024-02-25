@@ -1,8 +1,30 @@
 #nullable enable
+#pragma warning disable CS9084
 namespace Box2D.NET.Bindings
 {
     public static unsafe partial class B2
     {
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_Center", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 AABBCenter(AABB a);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_Contains", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte AABBContains(AABB a, AABB b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_Extents", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 AABBExtents(AABB a);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte AABBIsValid(AABB aabb);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_Union", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern AABB AABBUnion(AABB a, AABB b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Abs", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Abs(Vec2 a);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Add", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Add(Vec2 a, Vec2 b);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_ApplyAngularImpulse", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodyApplyAngularImpulse(BodyId bodyId, float impulse, byte wake);
 
@@ -29,6 +51,9 @@ namespace Box2D.NET.Bindings
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_Enable", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodyEnable(BodyId bodyId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_EnableSleep", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void BodyEnableSleep(BodyId bodyId, byte enableSleep);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetAngle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float BodyGetAngle(BodyId bodyId);
@@ -81,6 +106,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetPosition", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Vec2 BodyGetPosition(BodyId bodyId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetRotation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot BodyGetRotation(BodyId bodyId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetTransform", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Transform BodyGetTransform(BodyId bodyId);
 
@@ -105,8 +133,14 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte BodyIsEnabled(BodyId bodyId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsSleepEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte BodyIsSleepEnabled(BodyId bodyId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte BodyIsValid(BodyId id);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_ResetMassData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void BodyResetMassData(BodyId bodyId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetAngularDamping", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodySetAngularDamping(BodyId bodyId, float angularDamping);
@@ -132,6 +166,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodySetType(BodyId bodyId, BodyType type);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void BodySetUserData(BodyId bodyId, void* userData);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_Wake", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodyWake(BodyId bodyId);
 
@@ -143,6 +180,9 @@ namespace Box2D.NET.Bindings
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_SetRestitution", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ChainSetRestitution(ChainId chainId, float restitution);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Clamp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Clamp(Vec2 v, Vec2 a, Vec2 b);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideCapsuleAndCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Manifold CollideCapsuleAndCircle(Capsule* capsuleA, Transform xfA, Circle* circleB, Transform xfB);
@@ -172,13 +212,16 @@ namespace Box2D.NET.Bindings
         public static extern Manifold CollideSegmentAndPolygon(Segment* segmentA, Transform xfA, Polygon* polygonB, Transform xfB, DistanceCache* cache);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollideSmoothSegmentAndCapsule(SmoothSegment* segmentA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollideSmoothSegmentAndCapsule(SmoothSegment* smoothSegmentA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Manifold CollideSmoothSegmentAndCircle(SmoothSegment* smoothSegmentA, Transform xfA, Circle* circleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollideSmoothSegmentAndPolygon(SmoothSegment* segmentA, Transform xfA, Polygon* polygonB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollideSmoothSegmentAndPolygon(SmoothSegment* smoothSegmentA, Transform xfA, Polygon* polygonB, Transform xfB, DistanceCache* cache);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeAngularVelocity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float ComputeAngularVelocity(Rot q1, Rot q2, float inv_h);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeCapsuleAABB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AABB ComputeCapsuleAABB(Capsule* shape, Transform transform);
@@ -191,6 +234,9 @@ namespace Box2D.NET.Bindings
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeCircleMass", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern MassData ComputeCircleMass(Circle* shape, float density);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeHull", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Hull ComputeHull(Vec2* points, int count);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputePolygonAABB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AABB ComputePolygonAABB(Polygon* shape, Transform transform);
@@ -234,6 +280,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateSegmentShape", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ShapeId CreateSegmentShape(BodyId bodyId, ShapeDef* def, Segment* segment);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateTimer", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Timer CreateTimer();
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateWeldJoint", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern JointId CreateWeldJoint(WorldId worldId, WeldJointDef* def);
 
@@ -243,8 +292,59 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateWorld", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern WorldId CreateWorld(WorldDef* def);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Cross", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float Cross(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CrossSV", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 CrossSV(float s, Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CrossVS", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 CrossVS(Vec2 v, float s);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultBodyDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern BodyDef DefaultBodyDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultChainDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern ChainDef DefaultChainDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultDistanceJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern DistanceJointDef DefaultDistanceJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultFilter", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Filter DefaultFilter();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultMotorJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern MotorJointDef DefaultMotorJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultMouseJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern MouseJointDef DefaultMouseJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultPrismaticJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern PrismaticJointDef DefaultPrismaticJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultQueryFilter", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern QueryFilter DefaultQueryFilter();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultRevoluteJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern RevoluteJointDef DefaultRevoluteJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultShapeDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern ShapeDef DefaultShapeDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultWeldJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern WeldJointDef DefaultWeldJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultWheelJointDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern WheelJointDef DefaultWheelJointDef();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultWorldDef", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern WorldDef DefaultWorldDef();
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DestroyBody", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void DestroyBody(BodyId bodyId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DestroyBodyAndJoints", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DestroyBodyAndJoints(BodyId bodyId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DestroyChain", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void DestroyChain(ChainId chainId);
@@ -258,20 +358,149 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DestroyWorld", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void DestroyWorld(WorldId worldId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Distance", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float Distance(Vec2 a, Vec2 b);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetConstraintForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float DistanceJointGetConstraintForce(JointId jointId, float timeStep);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetCurrentLength", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float DistanceJointGetCurrentLength(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DistanceJointGetDampingRatio(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DistanceJointGetHertz(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetLength", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DistanceJointGetLength(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetMaxLength", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DistanceJointGetMaxLength(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetMinLength", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DistanceJointGetMinLength(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_SetLength", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void DistanceJointSetLength(JointId jointId, float length, float minLength, float maxLength);
+        public static extern void DistanceJointSetLength(JointId jointId, float length);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_SetLengthRange", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DistanceJointSetLengthRange(JointId jointId, float minLength, float maxLength);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_SetTuning", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void DistanceJointSetTuning(JointId jointId, float hertz, float dampingRatio);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceSquared", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DistanceSquared(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Dot", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float Dot(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Clone", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeClone(DynamicTree* outTree, DynamicTree* inTree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Create", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern DynamicTree DynamicTreeCreate();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_CreateProxy", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int DynamicTreeCreateProxy(DynamicTree* tree, AABB aabb, uint categoryBits, int userData);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Destroy", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeDestroy(DynamicTree* tree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_DestroyProxy", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeDestroyProxy(DynamicTree* tree, int proxyId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_EnlargeProxy", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeEnlargeProxy(DynamicTree* tree, int proxyId, AABB aabb);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetAABB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern AABB DynamicTreeGetAABB(DynamicTree* tree, int proxyId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetAreaRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float DynamicTreeGetAreaRatio(DynamicTree* tree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetHeight", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int DynamicTreeGetHeight(DynamicTree* tree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetMaxBalance", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int DynamicTreeGetMaxBalance(DynamicTree* tree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetProxyCount", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int DynamicTreeGetProxyCount(DynamicTree* tree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int DynamicTreeGetUserData(DynamicTree* tree, int proxyId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_MoveProxy", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeMoveProxy(DynamicTree* tree, int proxyId, AABB aabb);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Query", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeQuery(DynamicTree* tree, AABB aabb, System.IntPtr* callback, void* context);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_QueryFiltered", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeQueryFiltered(DynamicTree* tree, AABB aabb, uint maskBits, System.IntPtr* callback, void* context);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_RayCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeRayCast(DynamicTree* tree, RayCastInput* input, uint maskBits, System.IntPtr* callback, void* context);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Rebuild", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern int DynamicTreeRebuild(DynamicTree* tree, byte fullBuild);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_RebuildBottomUp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeRebuildBottomUp(DynamicTree* tree);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_ShapeCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeShapeCast(DynamicTree* tree, ShapeCastInput* input, uint maskBits, System.IntPtr* callback, void* context);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_ShiftOrigin", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeShiftOrigin(DynamicTree* tree, Vec2 newOrigin);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Validate", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void DynamicTreeValidate(DynamicTree* tree);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetByteCount", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern uint GetByteCount();
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetInverse22", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Mat22 GetInverse22(Mat22 A);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetLengthAndNormalize", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 GetLengthAndNormalize(float* length, Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetMilliseconds", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float GetMilliseconds(Timer* timer);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetMillisecondsAndReset", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float GetMillisecondsAndReset(Timer* timer);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetSweepTransform", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Transform GetSweepTransform(Sweep* sweep, float time);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetTicks", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern long GetTicks(Timer* timer);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IntegrateRotation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot IntegrateRotation(Rot q1, float deltaAngle);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2InvMulRot", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot InvMulRot(Rot q, Rot r);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2InvMulTransforms", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Transform InvMulTransforms(Transform A, Transform B);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2InvRotateVector", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 InvRotateVector(Rot q, Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2InvTransformPoint", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 InvTransformPoint(Transform xf, Vec2 p);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsNormalized", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte IsNormalized(Rot q);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte IsValid(float a);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidRay", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte IsValidRay(RayCastInput* input);
@@ -282,17 +511,50 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetBodyB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern BodyId JointGetBodyB(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetCollideConnected", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte JointGetCollideConnected(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetLocalAnchorA", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 JointGetLocalAnchorA(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetLocalAnchorB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 JointGetLocalAnchorB(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern JointType JointGetType(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void* JointGetUserData(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte JointIsValid(JointId id);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_SetCollideConnected", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void JointSetCollideConnected(JointId jointId, byte shouldCollide);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_SetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void JointSetUserData(JointId jointId, void* userData);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LeftPerp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 LeftPerp(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Length", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float Length(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LengthSquared", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float LengthSquared(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Lerp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Lerp(Vec2 a, Vec2 b, float t);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeBox", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Polygon MakeBox(float hx, float hy);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeColor", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Color MakeColor(HexColor hexCode, float alpha);
+        public static extern Color MakeColor(HexColor hexCode);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeColorAlpha", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Color MakeColorAlpha(HexColor hexCode, float alpha);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeOffsetBox", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Polygon MakeOffsetBox(float hx, float hy, Vec2 center, float angle);
@@ -303,17 +565,44 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakePolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Polygon MakePolygon(Hull* hull, float radius);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeProxy", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern DistanceProxy MakeProxy(Vec2* vertices, int count, float radius);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeRot", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot MakeRot(float angle);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeRoundedBox", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Polygon MakeRoundedBox(float hx, float hy, float radius);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeSquare", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Polygon MakeSquare(float h);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Max", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Max(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Min", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Min(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetAngularOffset", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float MotorJointGetAngularOffset(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetConstraintForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Vec2 MotorJointGetConstraintForce(JointId jointId, float inverseTimeStep);
+        public static extern Vec2 MotorJointGetConstraintForce(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float MotorJointGetConstraintTorque(JointId jointId, float inverseTimeStep);
+        public static extern float MotorJointGetConstraintTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetCorrectionFactor", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float MotorJointGetCorrectionFactor(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetLinearOffset", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 MotorJointGetLinearOffset(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetMaxForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float MotorJointGetMaxForce(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_GetMaxTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float MotorJointGetMaxTorque(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_SetAngularOffset", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void MotorJointSetAngularOffset(JointId jointId, float angularOffset);
@@ -330,8 +619,56 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MotorJoint_SetMaxTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void MotorJointSetMaxTorque(JointId jointId, float maxTorque);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MouseJoint_GetDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float MouseJointGetDampingRatio(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MouseJoint_GetHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float MouseJointGetHertz(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MouseJoint_GetTarget", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 MouseJointGetTarget(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MouseJoint_SetTarget", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void MouseJointSetTarget(JointId jointId, Vec2 target);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MouseJoint_SetTuning", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void MouseJointSetTuning(JointId jointId, float hertz, float dampingRatio);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Mul", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Mul(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MulAdd", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 MulAdd(Vec2 a, float s, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MulMV", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 MulMV(Mat22 A, Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MulRot", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot MulRot(Rot q, Rot r);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MulSub", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 MulSub(Vec2 a, float s, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MulSV", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 MulSV(float s, Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MulTransforms", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Transform MulTransforms(Transform A, Transform B);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Neg", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Neg(Vec2 a);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2NLerp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot NLerp(Rot q1, Rot q2, float t);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Normalize", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Normalize(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2NormalizeChecked", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 NormalizeChecked(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2NormalizeRot", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Rot NormalizeRot(Rot q);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PointInCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte PointInCapsule(Vec2 point, Capsule* shape);
@@ -349,13 +686,25 @@ namespace Box2D.NET.Bindings
         public static extern void PrismaticJointEnableMotor(JointId jointId, byte enableMotor);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetConstraintForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Vec2 PrismaticJointGetConstraintForce(JointId jointId, float inverseTimeStep);
+        public static extern Vec2 PrismaticJointGetConstraintForce(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float PrismaticJointGetConstraintTorque(JointId jointId, float inverseTimeStep);
+        public static extern float PrismaticJointGetConstraintTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetMaxMotorForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float PrismaticJointGetMaxMotorForce(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetMotorForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float PrismaticJointGetMotorForce(JointId jointId, float inverseTimeStep);
+        public static extern float PrismaticJointGetMotorForce(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetMotorSpeed", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float PrismaticJointGetMotorSpeed(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_IsLimitEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte PrismaticJointIsLimitEnabled(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_IsMotorEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte PrismaticJointIsMotorEnabled(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_SetMaxMotorForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void PrismaticJointSetMaxMotorForce(JointId jointId, float force);
@@ -375,6 +724,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RayCastSegment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern CastOutput RayCastSegment(RayCastInput* input, Segment* shape, byte oneSided);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RelativeAngle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float RelativeAngle(Rot b, Rot a);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_EnableLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void RevoluteJointEnableLimit(JointId jointId, byte enableLimit);
 
@@ -382,19 +734,52 @@ namespace Box2D.NET.Bindings
         public static extern void RevoluteJointEnableMotor(JointId jointId, byte enableMotor);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetConstraintForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Vec2 RevoluteJointGetConstraintForce(JointId jointId, float inverseTimeStep);
+        public static extern Vec2 RevoluteJointGetConstraintForce(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float RevoluteJointGetConstraintTorque(JointId jointId, float inverseTimeStep);
+        public static extern float RevoluteJointGetConstraintTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float RevoluteJointGetMaxMotorTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetMotorSpeed", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float RevoluteJointGetMotorSpeed(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float RevoluteJointGetMotorTorque(JointId jointId, float inverseTimeStep);
+        public static extern float RevoluteJointGetMotorTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_IsLimitEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte RevoluteJointIsLimitEnabled(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_IsMotorEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte RevoluteJointIsMotorEnabled(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_SetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void RevoluteJointSetMaxMotorTorque(JointId jointId, float torque);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_SetMotorSpeed", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void RevoluteJointSetMotorSpeed(JointId jointId, float motorSpeed);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RightPerp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 RightPerp(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Rot_GetAngle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float RotGetAngle(Rot q);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Rot_GetXAxis", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 RotGetXAxis(Rot q);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Rot_GetYAxis", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 RotGetYAxis(Rot q);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Rot_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte RotIsValid(Rot q);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RotateVector", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 RotateVector(Rot q, Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SegmentDistance", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern SegmentDistanceResult SegmentDistance(Vec2 p1, Vec2 q1, Vec2 p2, Vec2 q2);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SetAllocator", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void SetAllocator(System.IntPtr* allocFcn, System.IntPtr* freeFcn);
@@ -409,10 +794,10 @@ namespace Box2D.NET.Bindings
         public static extern BodyId ShapeGetBody(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Capsule* ShapeGetCapsule(ShapeId shapeId);
+        public static extern Capsule ShapeGetCapsule(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Circle* ShapeGetCircle(ShapeId shapeId);
+        public static extern Circle ShapeGetCircle(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetContactCapacity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern int ShapeGetContactCapacity(ShapeId shapeId);
@@ -433,16 +818,16 @@ namespace Box2D.NET.Bindings
         public static extern ChainId ShapeGetParentChain(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Polygon* ShapeGetPolygon(ShapeId shapeId);
+        public static extern Polygon ShapeGetPolygon(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetRestitution", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float ShapeGetRestitution(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetSegment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Segment* ShapeGetSegment(ShapeId shapeId);
+        public static extern Segment ShapeGetSegment(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetSmoothSegment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern SmoothSegment* ShapeGetSmoothSegment(ShapeId shapeId);
+        public static extern SmoothSegment ShapeGetSmoothSegment(ShapeId shapeId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ShapeType ShapeGetType(ShapeId shapeId);
@@ -456,6 +841,15 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte ShapeIsValid(ShapeId id);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_RayCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern CastOutput ShapeRayCast(ShapeId shapeId, Vec2 origin, Vec2 translation);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeSetCapsule(ShapeId shapeId, Capsule capsule);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeSetCircle(ShapeId shapeId, Circle circle);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetDensity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ShapeSetDensity(ShapeId shapeId, float density);
 
@@ -465,11 +859,23 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetFriction", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ShapeSetFriction(ShapeId shapeId, float friction);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeSetPolygon(ShapeId shapeId, Polygon polygon);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetRestitution", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ShapeSetRestitution(ShapeId shapeId, float restitution);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetSegment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeSetSegment(ShapeId shapeId, Segment segment);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeSetUserData(ShapeId shapeId, void* userData);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_TestPoint", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte ShapeTestPoint(ShapeId shapeId, Vec2 point);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ShapeCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern CastOutput ShapeCast(ShapeCastPairInput* input);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ShapeCastCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern CastOutput ShapeCastCapsule(ShapeCastInput* input, Capsule* shape);
@@ -483,8 +889,56 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ShapeCastSegment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern CastOutput ShapeCastSegment(ShapeCastInput* input, Segment* shape);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ShapeDistance", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern DistanceOutput ShapeDistance(DistanceCache* cache, DistanceInput* input);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SleepMilliseconds", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void SleepMilliseconds(float milliseconds);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Solve22", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Solve22(Mat22 A, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Sub", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 Sub(Vec2 a, Vec2 b);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2TimeOfImpact", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern TOIOutput TimeOfImpact(TOIInput* input);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2TransformPoint", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern Vec2 TransformPoint(Transform xf, Vec2 p);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2TransformPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Polygon TransformPolygon(Transform transform, Polygon* polygon);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ValidateHull", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte ValidateHull(Hull* hull);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Vec2_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte Vec2IsValid(Vec2 v);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetAngularDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WeldJointGetAngularDampingRatio(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetAngularHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WeldJointGetAngularHertz(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetLinearDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WeldJointGetLinearDampingRatio(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetLinearHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WeldJointGetLinearHertz(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetAngularDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WeldJointSetAngularDampingRatio(JointId jointId, float dampingRatio);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetAngularHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WeldJointSetAngularHertz(JointId jointId, float hertz);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetLinearDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WeldJointSetLinearDampingRatio(JointId jointId, float dampingRatio);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetLinearHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WeldJointSetLinearHertz(JointId jointId, float hertz);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_EnableLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WheelJointEnableLimit(JointId jointId, byte enableLimit);
@@ -493,16 +947,31 @@ namespace Box2D.NET.Bindings
         public static extern void WheelJointEnableMotor(JointId jointId, byte enableMotor);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetConstraintForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Vec2 WheelJointGetConstraintForce(JointId jointId, float inverseTimeStep);
+        public static extern Vec2 WheelJointGetConstraintForce(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float WheelJointGetConstraintTorque(JointId jointId, float inverseTimeStep);
+        public static extern float WheelJointGetConstraintTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WheelJointGetMaxMotorTorque(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetMotorSpeed", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WheelJointGetMotorSpeed(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float WheelJointGetMotorTorque(JointId jointId, float inverseTimeStep);
+        public static extern float WheelJointGetMotorTorque(JointId jointId);
 
-        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetDamping", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WheelJointSetDamping(JointId jointId, float damping);
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetSpringDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WheelJointGetSpringDampingRatio(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetSpringHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WheelJointGetSpringHertz(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_IsLimitEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte WheelJointIsLimitEnabled(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_IsMotorEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte WheelJointIsMotorEnabled(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WheelJointSetMaxMotorTorque(JointId jointId, float torque);
@@ -510,8 +979,11 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetMotorSpeed", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WheelJointSetMotorSpeed(JointId jointId, float motorSpeed);
 
-        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetStiffness", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WheelJointSetStiffness(JointId jointId, float stiffness);
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetSpringDampingRatio", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WheelJointSetSpringDampingRatio(JointId jointId, float dampingRatio);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetSpringHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WheelJointSetSpringHertz(JointId jointId, float hertz);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CapsuleCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WorldCapsuleCast(WorldId worldId, Capsule* capsule, Transform originTransform, Vec2 translation, QueryFilter filter, System.IntPtr* fcn, void* context);
@@ -577,7 +1049,7 @@ namespace Box2D.NET.Bindings
         public static extern void WorldSetRestitutionThreshold(WorldId worldId, float value);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_Step", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WorldStep(WorldId worldId, float timeStep, int velocityIterations, int relaxIterations);
+        public static extern void WorldStep(WorldId worldId, float timeStep, int subStepCount);
 
         public partial struct AABB
         {
@@ -619,7 +1091,7 @@ namespace Box2D.NET.Bindings
         {
             public int index;
 
-            public short world;
+            public ushort world;
 
             public ushort revision;
         }
@@ -652,7 +1124,7 @@ namespace Box2D.NET.Bindings
 
             public int count;
 
-            public byte loop;
+            public byte isLoop;
 
             public void* userData;
 
@@ -755,10 +1227,71 @@ namespace Box2D.NET.Bindings
 
         public partial struct DebugDraw
         {
+            public System.IntPtr DrawPolygon; // delegate* unmanaged<Vec2*, int, Color, void*, void>
+
+            public System.IntPtr DrawSolidPolygon; // delegate* unmanaged<Vec2*, int, Color, void*, void>
+
+            public System.IntPtr DrawRoundedPolygon; // delegate* unmanaged<Vec2*, int, float, Color, Color, void*, void>
+
+            public System.IntPtr DrawCircle; // delegate* unmanaged<Vec2, float, Color, void*, void>
+
+            public System.IntPtr DrawSolidCircle; // delegate* unmanaged<Vec2, float, Vec2, Color, void*, void>
+
+            public System.IntPtr DrawCapsule; // delegate* unmanaged<Vec2, Vec2, float, Color, void*, void>
+
+            public System.IntPtr DrawSolidCapsule; // delegate* unmanaged<Vec2, Vec2, float, Color, void*, void>
+
+            public System.IntPtr DrawSegment; // delegate* unmanaged<Vec2, Vec2, Color, void*, void>
+
+            public System.IntPtr DrawTransform; // delegate* unmanaged<Transform, void*, void>
+
+            public System.IntPtr DrawPoint; // delegate* unmanaged<Vec2, float, Color, void*, void>
+
+            public System.IntPtr DrawString; // delegate* unmanaged<Vec2, byte*, void*, void>
+
+            public byte drawShapes;
+
+            public byte drawJoints;
+
+            public byte drawAABBs;
+
+            public byte drawMass;
+
+            public byte drawContacts;
+
+            public byte drawGraphColors;
+
+            public byte drawContactNormals;
+
+            public byte drawContactImpulses;
+
+            public byte drawFrictionImpulses;
+
+            public void* context;
         }
 
         public partial struct DistanceCache
         {
+            public float metric;
+
+            public ushort count;
+
+            public fixed byte indexA[3];
+
+            public fixed byte indexB[3];
+        }
+
+        public partial struct DistanceInput
+        {
+            public DistanceProxy proxyA;
+
+            public DistanceProxy proxyB;
+
+            public Transform transformA;
+
+            public Transform transformB;
+
+            public byte useRadii;
         }
 
         public partial struct DistanceJointDef
@@ -782,6 +1315,77 @@ namespace Box2D.NET.Bindings
             public float dampingRatio;
 
             public byte collideConnected;
+
+            public void* userData;
+        }
+
+        public partial struct DistanceOutput
+        {
+            public Vec2 pointA;
+
+            public Vec2 pointB;
+
+            public float distance;
+
+            public int iterations;
+        }
+
+        public partial struct DistanceProxy
+        {
+            public vertices_FixedBuffer vertices;
+
+            public int count;
+
+            public float radius;
+
+            public partial struct vertices_FixedBuffer
+            {
+                public Vec2 Item0;
+
+                public Vec2 Item1;
+
+                public Vec2 Item2;
+
+                public Vec2 Item3;
+
+                public Vec2 Item4;
+
+                public Vec2 Item5;
+
+                public Vec2 Item6;
+
+                public Vec2 Item7;
+
+                public ref Vec2 this[int index] => ref AsSpan()[index];
+
+                [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                public System.Span<Vec2> AsSpan() => System.Runtime.InteropServices.MemoryMarshal.CreateSpan(ref Item0, 8);
+            }
+        }
+
+        public partial struct DynamicTree
+        {
+            public TreeNode* nodes;
+
+            public int root;
+
+            public int nodeCount;
+
+            public int nodeCapacity;
+
+            public int freeList;
+
+            public int proxyCount;
+
+            public int* leafIndices;
+
+            public AABB* leafBoxes;
+
+            public Vec2* leafCenters;
+
+            public int* binIndices;
+
+            public int rebuildCapacity;
         }
 
         public partial struct Filter
@@ -795,13 +1399,40 @@ namespace Box2D.NET.Bindings
 
         public partial struct Hull
         {
+            public points_FixedBuffer points;
+
+            public int count;
+
+            public partial struct points_FixedBuffer
+            {
+                public Vec2 Item0;
+
+                public Vec2 Item1;
+
+                public Vec2 Item2;
+
+                public Vec2 Item3;
+
+                public Vec2 Item4;
+
+                public Vec2 Item5;
+
+                public Vec2 Item6;
+
+                public Vec2 Item7;
+
+                public ref Vec2 this[int index] => ref AsSpan()[index];
+
+                [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
+                public System.Span<Vec2> AsSpan() => System.Runtime.InteropServices.MemoryMarshal.CreateSpan(ref Item0, 8);
+            }
         }
 
         public partial struct JointId
         {
             public int index;
 
-            public short world;
+            public ushort world;
 
             public ushort revision;
         }
@@ -841,6 +1472,8 @@ namespace Box2D.NET.Bindings
 
             public float tangentImpulse;
 
+            public float maxNormalImpulse;
+
             public ushort id;
 
             public byte persisted;
@@ -877,6 +1510,10 @@ namespace Box2D.NET.Bindings
             public float maxTorque;
 
             public float correctionFactor;
+
+            public byte collideConnected;
+
+            public void* userData;
         }
 
         public partial struct MouseJointDef
@@ -887,11 +1524,13 @@ namespace Box2D.NET.Bindings
 
             public Vec2 target;
 
-            public float maxForce;
+            public float hertz;
 
-            public float stiffness;
+            public float dampingRatio;
 
-            public float damping;
+            public byte collideConnected;
+
+            public void* userData;
         }
 
         public partial struct Polygon
@@ -982,6 +1621,8 @@ namespace Box2D.NET.Bindings
             public float motorSpeed;
 
             public byte collideConnected;
+
+            public void* userData;
         }
 
         public partial struct Profile
@@ -1059,6 +1700,8 @@ namespace Box2D.NET.Bindings
             public float drawSize;
 
             public byte collideConnected;
+
+            public void* userData;
         }
 
         public partial struct Rot
@@ -1073,6 +1716,19 @@ namespace Box2D.NET.Bindings
             public Vec2 point1;
 
             public Vec2 point2;
+        }
+
+        public partial struct SegmentDistanceResult
+        {
+            public Vec2 closest1;
+
+            public Vec2 closest2;
+
+            public float fraction1;
+
+            public float fraction2;
+
+            public float distanceSquared;
         }
 
         public partial struct SensorBeginTouchEvent
@@ -1137,6 +1793,21 @@ namespace Box2D.NET.Bindings
             }
         }
 
+        public partial struct ShapeCastPairInput
+        {
+            public DistanceProxy proxyA;
+
+            public DistanceProxy proxyB;
+
+            public Transform transformA;
+
+            public Transform transformB;
+
+            public Vec2 translationB;
+
+            public float maxFraction;
+        }
+
         public partial struct ShapeDef
         {
             public void* userData;
@@ -1162,7 +1833,7 @@ namespace Box2D.NET.Bindings
         {
             public int index;
 
-            public short world;
+            public ushort world;
 
             public ushort revision;
         }
@@ -1178,11 +1849,86 @@ namespace Box2D.NET.Bindings
             public int chainIndex;
         }
 
+        public partial struct Sweep
+        {
+            public Vec2 localCenter;
+
+            public Vec2 c1;
+
+            public Vec2 c2;
+
+            public Rot q1;
+
+            public Rot q2;
+        }
+
+        public partial struct Timer
+        {
+            public ulong start_sec;
+
+            public ulong start_usec;
+        }
+
+        public partial struct TOIInput
+        {
+            public DistanceProxy proxyA;
+
+            public DistanceProxy proxyB;
+
+            public Sweep sweepA;
+
+            public Sweep sweepB;
+
+            public float tMax;
+        }
+
+        public partial struct TOIOutput
+        {
+            public TOIState state;
+
+            public float t;
+        }
+
         public partial struct Transform
         {
             public Vec2 p;
 
             public Rot q;
+        }
+
+        public partial struct TreeNode
+        {
+            public AABB aabb;
+
+            public uint categoryBits;
+
+            public AnonymousRecord_dynamic_tree_L27_C2 AnonymousRecord_dynamic_tree_L27_C2_Field;
+
+            public int child1;
+
+            public int child2;
+
+            public int userData;
+
+            public short height;
+
+            public byte enlarged;
+
+            public fixed byte pad[9];
+
+            public ref int parent => ref AnonymousRecord_dynamic_tree_L27_C2_Field.parent;
+
+            public ref int next => ref AnonymousRecord_dynamic_tree_L27_C2_Field.next;
+
+            [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
+            public partial struct AnonymousRecord_dynamic_tree_L27_C2
+            {
+                [System.Runtime.InteropServices.FieldOffset(0)]
+                public int parent;
+
+                [System.Runtime.InteropServices.FieldOffset(0)]
+                public int next;
+            }
         }
 
         public partial struct Vec2
@@ -1222,6 +1968,8 @@ namespace Box2D.NET.Bindings
             public float angularDampingRatio;
 
             public byte collideConnected;
+
+            public void* userData;
         }
 
         public partial struct WheelJointDef
@@ -1248,11 +1996,13 @@ namespace Box2D.NET.Bindings
 
             public float motorSpeed;
 
-            public float stiffness;
+            public float hertz;
 
-            public float damping;
+            public float dampingRatio;
 
             public byte collideConnected;
+
+            public void* userData;
         }
 
         public partial struct WorldDef
@@ -1267,7 +2017,13 @@ namespace Box2D.NET.Bindings
 
             public float contactDampingRatio;
 
+            public float jointHertz;
+
+            public float jointDampingRatio;
+
             public byte enableSleep;
+
+            public byte enableContinous;
 
             public int bodyCapacity;
 
@@ -1277,7 +2033,7 @@ namespace Box2D.NET.Bindings
 
             public int jointCapacity;
 
-            public int arenaAllocatorCapacity;
+            public int stackAllocatorCapacity;
 
             public uint workerCount;
 
@@ -1290,7 +2046,7 @@ namespace Box2D.NET.Bindings
 
         public partial struct WorldId
         {
-            public short index;
+            public ushort index;
 
             public ushort revision;
         }
@@ -1886,12 +2642,21 @@ namespace Box2D.NET.Bindings
 
         public enum ShapeType : uint
         {
-            capsuleShape = 0,
-            circleShape = 1,
-            polygonShape = 2,
-            segmentShape = 3,
+            circleShape = 0,
+            capsuleShape = 1,
+            segmentShape = 2,
+            polygonShape = 3,
             smoothSegmentShape = 4,
             shapeTypeCount = 5
+        }
+
+        public enum TOIState : uint
+        {
+            toiStateUnknown = 0,
+            toiStateFailed = 1,
+            toiStateOverlapped = 2,
+            toiStateHit = 3,
+            toiStateSeparated = 4
         }
 
         public const BodyType staticBody = BodyType.staticBody;
@@ -3048,23 +3813,37 @@ namespace Box2D.NET.Bindings
 
         public const JointType wheelJoint = JointType.wheelJoint;
 
-        public const ShapeType capsuleShape = ShapeType.capsuleShape;
-
         public const ShapeType circleShape = ShapeType.circleShape;
 
-        public const ShapeType polygonShape = ShapeType.polygonShape;
+        public const ShapeType capsuleShape = ShapeType.capsuleShape;
 
         public const ShapeType segmentShape = ShapeType.segmentShape;
+
+        public const ShapeType polygonShape = ShapeType.polygonShape;
 
         public const ShapeType smoothSegmentShape = ShapeType.smoothSegmentShape;
 
         public const ShapeType shapeTypeCount = ShapeType.shapeTypeCount;
+
+        public const TOIState toiStateUnknown = TOIState.toiStateUnknown;
+
+        public const TOIState toiStateFailed = TOIState.toiStateFailed;
+
+        public const TOIState toiStateOverlapped = TOIState.toiStateOverlapped;
+
+        public const TOIState toiStateHit = TOIState.toiStateHit;
+
+        public const TOIState toiStateSeparated = TOIState.toiStateSeparated;
 
         public const float aabbMargin = 0.1f;
 
         public const float angularSleepTolerance = 0.03490659f;
 
         public const float angularSlop = 0.03490659f;
+
+        public const int defaultCategoryBits = 1;
+
+        public const uint defaultMaskBits = 4294967295;
 
         public const int graphColorCount = 12;
 
@@ -3078,7 +3857,7 @@ namespace Box2D.NET.Bindings
 
         public const int maxPolygonVertices = 8;
 
-        public const float maxRotation = 1.5707964f;
+        public const float maxRotation = 0.7853982f;
 
         public const float maxTranslation = 4f;
 
@@ -3269,4 +4048,5 @@ namespace Box2D.NET.Bindings
         }
     }
 }
+#pragma warning restore CS9084
 #nullable disable

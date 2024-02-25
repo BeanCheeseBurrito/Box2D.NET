@@ -25,29 +25,52 @@ BindingOptions options = new()
 
     TreatInputFileAsRawSourceCode = true,
     InputFile = """
+                #include <box2d/api.h>
                 #include <box2d/box2d.h>
+                #include <box2d/callbacks.h>
+                #include <box2d/color.h>
+                #include <box2d/constants.h>
+                #include <box2d/debug_draw.h>
+                #include <box2d/distance.h>
+                #include <box2d/dynamic_tree.h>
+                #include <box2d/event_types.h>
+                #include <box2d/geometry.h>
+                #include <box2d/hull.h>
+                #include <box2d/id.h>
+                #include <box2d/joint_types.h>
+                #include <box2d/manifold.h>
+                #include <box2d/math.h>
+                #include <box2d/math_types.h>
+                #include <box2d/timer.h>
+                #include <box2d/types.h>
                 """,
     OutputFile = GetOutputDirectory("B2.g.cs"),
 
     RemappedPrefixes =
     {
+        ("b2AABB_", "AABB"),
         ("b2Body_", "Body"),
         ("b2Chain_", "Chain"),
         ("b2DistanceJoint_", "DistanceJoint"),
+        ("b2DynamicTree_", "DynamicTree"),
         ("b2Joint_", "Joint"),
         ("b2MotorJoint_", "MotorJoint"),
         ("b2MouseJoint_", "MouseJoint"),
         ("b2PrismaticJoint_", "PrismaticJoint"),
         ("b2RevoluteJoint_", "RevoluteJoint"),
+        ("b2Rot_", "Rot"),
         ("b2Shape_", "Shape"),
+        ("b2Vec2_", "Vec2"),
         ("b2WheelJoint_", "WheelJoint"),
+        ("b2WeldJoint_", "WeldJoint"),
         ("b2World_", "World"),
         ("b2_", ""),
         ("b2", ""),
     },
 
     GenerateMacros = true,
-    GenerateExternVariables = true
+    GenerateExternVariables = true,
+    SuppressedWarnings = { "CS9084" }
 };
 
 BindingGenerator.Generate(options);
