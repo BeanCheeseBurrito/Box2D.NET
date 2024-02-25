@@ -4,12 +4,12 @@
         <TargetFrameworks>netstandard2.1;net6.0;net7.0</TargetFrameworks>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-    
+
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <IncludeContentInPack>true</IncludeContentInPack>
 
-        <Version>0.0.4</Version>
+        <Version>0.0.5</Version>
         <Title Condition="'$(Configuration)' == 'Debug'">Box2D.NET.Debug</Title>
         <Title Condition="'$(Configuration)' == 'Release'">Box2D.NET.Release</Title>
         <Authors>BeanCheeseBurrito</Authors>
