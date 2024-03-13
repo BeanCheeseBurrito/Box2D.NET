@@ -130,8 +130,14 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsAwake", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte BodyIsAwake(BodyId bodyId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsBullet", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte BodyIsBullet(BodyId bodyId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte BodyIsEnabled(BodyId bodyId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsFixedRotation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte BodyIsFixedRotation(BodyId bodyId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_IsSleepEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte BodyIsSleepEnabled(BodyId bodyId);
@@ -147,6 +153,12 @@ namespace Box2D.NET.Bindings
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetAngularVelocity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodySetAngularVelocity(BodyId bodyId, float angularVelocity);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetBullet", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void BodySetBullet(BodyId bodyId, byte flag);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetFixedRotation", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void BodySetFixedRotation(BodyId bodyId, byte flag);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetGravityScale", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodySetGravityScale(BodyId bodyId, float gravityScale);
@@ -535,6 +547,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_SetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void JointSetUserData(JointId jointId, void* userData);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_WakeBodies", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void JointWakeBodies(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LeftPerp", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Vec2 LeftPerp(Vec2 v);
 
@@ -691,6 +706,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float PrismaticJointGetConstraintTorque(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetLowerLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float PrismaticJointGetLowerLimit(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetMaxMotorForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float PrismaticJointGetMaxMotorForce(JointId jointId);
 
@@ -700,11 +718,17 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetMotorSpeed", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float PrismaticJointGetMotorSpeed(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetUpperLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float PrismaticJointGetUpperLimit(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_IsLimitEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte PrismaticJointIsLimitEnabled(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_IsMotorEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte PrismaticJointIsMotorEnabled(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_SetLimits", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void PrismaticJointSetLimits(JointId jointId, float lower, float upper);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_SetMaxMotorForce", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void PrismaticJointSetMaxMotorForce(JointId jointId, float force);
@@ -739,6 +763,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float RevoluteJointGetConstraintTorque(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetLowerLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float RevoluteJointGetLowerLimit(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float RevoluteJointGetMaxMotorTorque(JointId jointId);
 
@@ -748,11 +775,17 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float RevoluteJointGetMotorTorque(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_GetUpperLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float RevoluteJointGetUpperLimit(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_IsLimitEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte RevoluteJointIsLimitEnabled(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_IsMotorEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte RevoluteJointIsMotorEnabled(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_SetLimits", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void RevoluteJointSetLimits(JointId jointId, float lower, float upper);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_SetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void RevoluteJointSetMaxMotorTorque(JointId jointId, float torque);
@@ -786,6 +819,24 @@ namespace Box2D.NET.Bindings
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SetAssertFcn", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void SetAssertFcn(System.IntPtr* assertFcn);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_AreContactEventsEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte ShapeAreContactEventsEnabled(ShapeId shapeId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_ArePreSolveEventsEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte ShapeArePreSolveEventsEnabled(ShapeId shapeId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_AreSensorEventsEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern byte ShapeAreSensorEventsEnabled(ShapeId shapeId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_EnableContactEvents", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeEnableContactEvents(ShapeId shapeId, byte flag);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_EnablePreSolveEvents", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeEnablePreSolveEvents(ShapeId shapeId, byte flag);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_EnableSensorEvents", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void ShapeEnableSensorEvents(ShapeId shapeId, byte flag);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetAABB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern AABB ShapeGetAABB(ShapeId shapeId);
@@ -845,10 +896,10 @@ namespace Box2D.NET.Bindings
         public static extern CastOutput ShapeRayCast(ShapeId shapeId, Vec2 origin, Vec2 translation);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void ShapeSetCapsule(ShapeId shapeId, Capsule capsule);
+        public static extern void ShapeSetCapsule(ShapeId shapeId, Capsule* capsule);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void ShapeSetCircle(ShapeId shapeId, Circle circle);
+        public static extern void ShapeSetCircle(ShapeId shapeId, Circle* circle);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetDensity", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ShapeSetDensity(ShapeId shapeId, float density);
@@ -860,13 +911,13 @@ namespace Box2D.NET.Bindings
         public static extern void ShapeSetFriction(ShapeId shapeId, float friction);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void ShapeSetPolygon(ShapeId shapeId, Polygon polygon);
+        public static extern void ShapeSetPolygon(ShapeId shapeId, Polygon* polygon);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetRestitution", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ShapeSetRestitution(ShapeId shapeId, float restitution);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetSegment", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void ShapeSetSegment(ShapeId shapeId, Segment segment);
+        public static extern void ShapeSetSegment(ShapeId shapeId, Segment* segment);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetUserData", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void ShapeSetUserData(ShapeId shapeId, void* userData);
@@ -952,6 +1003,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetConstraintTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float WheelJointGetConstraintTorque(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetLowerLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WheelJointGetLowerLimit(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float WheelJointGetMaxMotorTorque(JointId jointId);
 
@@ -967,11 +1021,17 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetSpringHertz", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float WheelJointGetSpringHertz(JointId jointId);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_GetUpperLimit", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern float WheelJointGetUpperLimit(JointId jointId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_IsLimitEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte WheelJointIsLimitEnabled(JointId jointId);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_IsMotorEnabled", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte WheelJointIsMotorEnabled(JointId jointId);
+
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetLimits", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WheelJointSetLimits(JointId jointId, float lower, float upper);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetMaxMotorTorque", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WheelJointSetMaxMotorTorque(JointId jointId, float torque);
@@ -1003,6 +1063,9 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_EnableWarmStarting", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WorldEnableWarmStarting(WorldId worldId, byte flag);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetBodyEvents", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern BodyEvents WorldGetBodyEvents(WorldId worldId);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetContactEvents", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern ContactEvents WorldGetContactEvents(WorldId worldId);
 
@@ -1018,20 +1081,20 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_IsValid", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern byte WorldIsValid(WorldId id);
 
+        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapAABB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void WorldOverlapAABB(WorldId worldId, AABB aabb, QueryFilter filter, System.IntPtr* fcn, void* context);
+
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WorldOverlapCapsule(WorldId worldId, System.IntPtr* fcn, Capsule* capsule, Transform transform, QueryFilter filter, void* context);
+        public static extern void WorldOverlapCapsule(WorldId worldId, Capsule* capsule, Transform transform, QueryFilter filter, System.IntPtr* fcn, void* context);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WorldOverlapCircle(WorldId worldId, System.IntPtr* fcn, Circle* circle, Transform transform, QueryFilter filter, void* context);
+        public static extern void WorldOverlapCircle(WorldId worldId, Circle* circle, Transform transform, QueryFilter filter, System.IntPtr* fcn, void* context);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WorldOverlapPolygon(WorldId worldId, System.IntPtr* fcn, Polygon* polygon, Transform transform, QueryFilter filter, void* context);
+        public static extern void WorldOverlapPolygon(WorldId worldId, Polygon* polygon, Transform transform, QueryFilter filter, System.IntPtr* fcn, void* context);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_PolygonCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WorldPolygonCast(WorldId worldId, Polygon* polygon, Transform originTransform, Vec2 translation, QueryFilter filter, System.IntPtr* fcn, void* context);
-
-        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_QueryAABB", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void WorldQueryAABB(WorldId worldId, System.IntPtr* fcn, AABB aabb, QueryFilter filter, void* context);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_RayCast", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void WorldRayCast(WorldId worldId, Vec2 origin, Vec2 translation, QueryFilter filter, System.IntPtr* fcn, void* context);
@@ -1084,7 +1147,16 @@ namespace Box2D.NET.Bindings
 
             public byte fixedRotation;
 
+            public byte isBullet;
+
             public byte isEnabled;
+        }
+
+        public partial struct BodyEvents
+        {
+            public BodyMoveEvent* moveEvents;
+
+            public int moveCount;
         }
 
         public partial struct BodyId
@@ -1094,6 +1166,17 @@ namespace Box2D.NET.Bindings
             public ushort world;
 
             public ushort revision;
+        }
+
+        public partial struct BodyMoveEvent
+        {
+            public Transform transform;
+
+            public BodyId bodyId;
+
+            public void* userData;
+
+            public byte fellAsleep;
         }
 
         public partial struct Capsule

@@ -65,7 +65,7 @@ namespace Box2D.NET.Tests
 			float angle = B2.BodyGetAngle(bodyId);
 
 			// This is our little game loop.
-			for (int i = 0; i < 60; i++)
+			for (int i = 0; i < 90; i++)
 			{
 				// Instruct the world to perform a single step of simulation.
 				// It is generally best to keep the time step and iterations fixed.
