@@ -9,14 +9,12 @@ namespace Box2D.NET.Tests
         [Fact]
         public void HelloWorld()
         {
-			// Define the gravity vector.
-			B2.Vec2 gravity = new B2.Vec2 { x = 0.0f, y = -10.0f };
-
 			// Construct a world object, which will hold and simulate the rigid bodies.
 			B2.WorldDef worldDef = B2.DefaultWorldDef();
-			worldDef.gravity = gravity;
+			worldDef.gravity = new B2.Vec2 { x = 0.0f, y = -10.0f };
 
 			B2.WorldId worldId = B2.CreateWorld(&worldDef);
+			Assert.True(B2.WorldIsValid(worldId) != 0);
 
 			// Define the ground body.
 			B2.BodyDef groundBodyDef = B2.DefaultBodyDef();
@@ -25,14 +23,15 @@ namespace Box2D.NET.Tests
 			// Call the body factory which allocates memory for the ground body
 			// from a pool and creates the ground box shape (also from a pool).
 			// The body is also added to the world.
-			B2.BodyId groundBodyId = B2.CreateBody(worldId, &groundBodyDef);
+			B2.BodyId groundId = B2.CreateBody(worldId, &groundBodyDef);
+			Assert.True(B2.BodyIsValid(groundId) != 0);
 
 			// Define the ground box shape. The extents are the half-widths of the box.
 			B2.Polygon groundBox = B2.MakeBox(50.0f, 10.0f);
 
 			// Add the box shape to the ground body.
 			B2.ShapeDef groundShapeDef = B2.DefaultShapeDef();
-			B2.CreatePolygonShape(groundBodyId, &groundShapeDef, &groundBox);
+			B2.CreatePolygonShape(groundId, &groundShapeDef, &groundBox);
 
 			// Define the dynamic body. We set its position and call the body factory.
 			B2.BodyDef bodyDef = B2.DefaultBodyDef();
