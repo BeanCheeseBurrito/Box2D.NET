@@ -8,13 +8,13 @@ on:
       push-packages:
         description: 'Push nuget packages'
         required: true
-        default: 'false'
+        default: false
         type: boolean
 
       use-auto-generated-version:
         description: 'Use auto-generated version'
         required: true
-        default: 'true'
+        default: true
         type: boolean
 
       nuget-registry:
@@ -69,22 +69,22 @@ jobs:
     - name: Build Projects
       shell: bash
       run: |
-        dotnet build --property:Deterministic=true -c Debug
-        dotnet build --property:Deterministic=true -c Release
+        dotnet build -c Debug
+        dotnet build -c Release
 
     - name: Run Tests
       shell: bash
-      run: dotnet test --no-build --verbosity minimal
+      run: dotnet test
 
     - name: Pack Nuget Packages
       shell: bash
       run: |
         if [ '${{ github.event.inputs.nuget-registry }}' == 'NuGet' ]; then
-          dotnet pack --no-build --property:NugetVersionSuffix=$NugetVersionSuffix -c Debug
-          dotnet pack --no-build --property:NugetVersionSuffix=$NugetVersionSuffix -c Release
+          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix -c Debug
+          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix -c Release
         else
-          dotnet pack --no-build --property:NugetVersionSuffix=$NugetVersionSuffix --property:DebugType=embedded -c Debug
-          dotnet pack --no-build --property:NugetVersionSuffix=$NugetVersionSuffix --property:DebugType=embedded -c Release
+          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix --property:Box2DPackPdb=true -c Debug
+          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix --property:Box2DPackPdb=true -c Release
         fi
 
     - name: Upload Artifacts

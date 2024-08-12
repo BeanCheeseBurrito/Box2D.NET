@@ -37,6 +37,7 @@ namespace Box2D.NET.Tests
 			B2.BodyDef bodyDef = B2.DefaultBodyDef();
 			bodyDef.type = B2.dynamicBody;
 			bodyDef.position = new B2.Vec2 { x = 0.0f, y = 4.0f };
+
 			B2.BodyId bodyId = B2.CreateBody(worldId, &bodyDef);
 
 			// Define another box shape for our dynamic body.
@@ -61,7 +62,7 @@ namespace Box2D.NET.Tests
 			int subStepCount = 4;
 
 			B2.Vec2 position = B2.BodyGetPosition(bodyId);
-			float angle = B2.BodyGetAngle(bodyId);
+			B2.Rot rotation = B2.BodyGetRotation(bodyId);
 
 			// This is our little game loop.
 			for (int i = 0; i < 90; i++)
@@ -72,9 +73,7 @@ namespace Box2D.NET.Tests
 
 				// Now print the position and angle of the body.
 				position = B2.BodyGetPosition(bodyId);
-				angle = B2.BodyGetAngle(bodyId);
-
-				//printf("%4.2f %4.2f %4.2f\n", position.x, position.y, angle);
+				rotation = B2.BodyGetRotation(bodyId);
 			}
 
 			// When the world destructor is called, all bodies and joints are freed. This can
@@ -83,7 +82,7 @@ namespace Box2D.NET.Tests
 
 			Assert.True(Math.Abs(position.x) < 0.01f);
 			Assert.True(Math.Abs(position.y - 1.00f) < 0.01f);
-			Assert.True(Math.Abs(angle) < 0.01f);
+			Assert.True(Math.Abs(Math.Atan2(rotation.s, rotation.c)) < 0.01f);
         }
     }
 }

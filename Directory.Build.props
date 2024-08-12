@@ -1,7 +1,8 @@
 <Project>
     <PropertyGroup>
         <IsPackable>false</IsPackable>
-        <NoWarn>$(NoWarn);NETSDK1138;NETSDK1201</NoWarn>
-        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+        <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true' And '$(ContinuousIntegrationBuild)' == ''">true</ContinuousIntegrationBuild>
+        <Deterministic Condition="'$(GITHUB_ACTIONS)' == 'true' And '$(Deterministic)' == ''">true</Deterministic>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder Condition="'$(Box2DPackPdb)' == 'true'">$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
 </Project>

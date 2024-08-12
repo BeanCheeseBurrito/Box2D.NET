@@ -1,7 +1,7 @@
 ﻿using System.Runtime.CompilerServices;
 using Bindgen.NET;
 
-const string library = "box2c";
+const string library = "box2d";
 
 BindingOptions options = new()
 {
@@ -12,10 +12,11 @@ BindingOptions options = new()
     DllFilePaths =
     {
         library,
-        "runtimes/linux-x64/native/" + library,
-        "runtimes/linux-arm64/native/" + library,
-        "runtimes/osx-x64/native/" + library,
-        "runtimes/osx-arm64/native/" + library,
+        "lib" + library,
+        "runtimes/linux-x64/native/lib" + library,
+        "runtimes/linux-arm64/native/lib" + library,
+        "runtimes/osx-x64/native/lib" + library,
+        "runtimes/osx-arm64/native/lib" + library,
         "runtimes/win-x64/native/" + library,
         "runtimes/win-arm64/native/" + library
     },
@@ -70,7 +71,7 @@ string GetCurrentFilePath([CallerFilePath] string filePath = "")
 
 string GetNativeDirectory(string path)
 {
-    return GetCurrentFilePath() + "/../../native/box2c/" + path;
+    return GetCurrentFilePath() + "/../../native/box2d/" + path;
 }
 
 string GetOutputDirectory(string fileName)

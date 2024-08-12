@@ -4,6 +4,7 @@ public static unsafe class HelloWorld
 {
     public static void Main()
     {
+        Console.WriteLine(B2.Normalize(default));
         // Create a world
         B2.WorldDef worldDef = B2.DefaultWorldDef();
         worldDef.gravity = new B2.Vec2 { x = 0, y = -9.81f };
@@ -32,10 +33,10 @@ public static unsafe class HelloWorld
         {
             B2.WorldStep(worldId, timeStep, subStepCount);
             B2.Vec2 position = B2.BodyGetPosition(bodyId);
-            float angle = B2.BodyGetAngle(bodyId);
+            B2.Rot rotation = B2.BodyGetRotation(bodyId);
 
             Console.WriteLine($"Position: ({position.x}, {position.y})");
-            Console.WriteLine($"Angle: {angle}");
+            Console.WriteLine($"Angle: {MathF.Atan2(rotation.s, rotation.c)}");
             Console.WriteLine();
         }
     }

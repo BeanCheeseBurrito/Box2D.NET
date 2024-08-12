@@ -6,11 +6,12 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
+        <Deterministic>false</Deterministic>
         <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(NETCoreSdkRuntimeIdentifier)</RuntimeIdentifier>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bindgen.NET" Version="0.1.13"/>
+        <PackageReference Include="Bindgen.NET" Version="0.1.14"/>
     </ItemGroup>
 
 </Project>

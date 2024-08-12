@@ -67,9 +67,6 @@ namespace Box2D.NET.Bindings
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_EnableSleep", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodyEnableSleep(BodyId bodyId, byte enableSleep);
 
-        [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetAngle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern float BodyGetAngle(BodyId bodyId);
-
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetAngularDamping", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern float BodyGetAngularDamping(BodyId bodyId);
 
@@ -203,7 +200,7 @@ namespace Box2D.NET.Bindings
         public static extern void BodySetSleepThreshold(BodyId bodyId, float sleepVelocity);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetTransform", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern void BodySetTransform(BodyId bodyId, Vec2 position, float angle);
+        public static extern void BodySetTransform(BodyId bodyId, Vec2 position, Rot rotation);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetType", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void BodySetType(BodyId bodyId, BodyType type);
@@ -233,28 +230,28 @@ namespace Box2D.NET.Bindings
         public static extern Manifold CollideCapsuleAndCircle(Capsule* capsuleA, Transform xfA, Circle* circleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideCapsules", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollideCapsules(Capsule* capsuleA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollideCapsules(Capsule* capsuleA, Transform xfA, Capsule* capsuleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideCircles", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Manifold CollideCircles(Circle* circleA, Transform xfA, Circle* circleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollidePolygonAndCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollidePolygonAndCapsule(Polygon* polygonA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollidePolygonAndCapsule(Polygon* polygonA, Transform xfA, Capsule* capsuleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollidePolygonAndCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Manifold CollidePolygonAndCircle(Polygon* polygonA, Transform xfA, Circle* circleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollidePolygons", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollidePolygons(Polygon* polyA, Transform xfA, Polygon* polyB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollidePolygons(Polygon* polygonA, Transform xfA, Polygon* polygonB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSegmentAndCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollideSegmentAndCapsule(Segment* segmentA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollideSegmentAndCapsule(Segment* segmentA, Transform xfA, Capsule* capsuleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSegmentAndCircle", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Manifold CollideSegmentAndCircle(Segment* segmentA, Transform xfA, Circle* circleB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSegmentAndPolygon", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern Manifold CollideSegmentAndPolygon(Segment* segmentA, Transform xfA, Polygon* polygonB, Transform xfB, DistanceCache* cache);
+        public static extern Manifold CollideSegmentAndPolygon(Segment* segmentA, Transform xfA, Polygon* polygonB, Transform xfB);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndCapsule", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern Manifold CollideSmoothSegmentAndCapsule(SmoothSegment* smoothSegmentA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
@@ -1058,7 +1055,7 @@ namespace Box2D.NET.Bindings
         public static extern CastOutput ShapeCastSegment(ShapeCastInput* input, Segment* shape);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ShapeDistance", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-        public static extern DistanceOutput ShapeDistance(DistanceCache* cache, DistanceInput* input);
+        public static extern DistanceOutput ShapeDistance(DistanceCache* cache, DistanceInput* input, Simplex* simplexes, int simplexCapacity);
 
         [System.Runtime.InteropServices.DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SleepMilliseconds", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void SleepMilliseconds(int milliseconds);
@@ -1268,7 +1265,7 @@ namespace Box2D.NET.Bindings
 
             public Vec2 position;
 
-            public float angle;
+            public Rot rotation;
 
             public Vec2 linearVelocity;
 
@@ -1295,6 +1292,8 @@ namespace Box2D.NET.Bindings
             public byte isEnabled;
 
             public byte automaticMass;
+
+            public byte allowFastRotation;
 
             public int internalValue;
         }
@@ -1512,8 +1511,6 @@ namespace Box2D.NET.Bindings
 
         public partial struct DistanceCache
         {
-            public float metric;
-
             public ushort count;
 
             public fixed byte indexA[3];
@@ -1580,6 +1577,8 @@ namespace Box2D.NET.Bindings
             public float distance;
 
             public int iterations;
+
+            public int simplexCount;
         }
 
         public partial struct DistanceProxy
@@ -1739,7 +1738,7 @@ namespace Box2D.NET.Bindings
 
             public Vec2 center;
 
-            public float I;
+            public float rotationalInertia;
         }
 
         public partial struct Mat22
@@ -2124,6 +2123,8 @@ namespace Box2D.NET.Bindings
 
             public Filter filter;
 
+            public uint customColor;
+
             public byte isSensor;
 
             public byte enableSensorEvents;
@@ -2146,6 +2147,32 @@ namespace Box2D.NET.Bindings
             public ushort world0;
 
             public ushort revision;
+        }
+
+        public partial struct Simplex
+        {
+            public SimplexVertex v1;
+
+            public SimplexVertex v2;
+
+            public SimplexVertex v3;
+
+            public int count;
+        }
+
+        public partial struct SimplexVertex
+        {
+            public Vec2 wA;
+
+            public Vec2 wB;
+
+            public Vec2 w;
+
+            public float a;
+
+            public int indexA;
+
+            public int indexB;
         }
 
         public partial struct SmoothSegment
@@ -2212,7 +2239,7 @@ namespace Box2D.NET.Bindings
 
             public uint categoryBits;
 
-            public AnonymousRecord_collision_L586_C2 AnonymousRecord_collision_L586_C2_Field;
+            public AnonymousRecord_collision_L608_C2 AnonymousRecord_collision_L608_C2_Field;
 
             public int child1;
 
@@ -2226,12 +2253,12 @@ namespace Box2D.NET.Bindings
 
             public fixed byte pad[9];
 
-            public ref int parent => ref AnonymousRecord_collision_L586_C2_Field.parent;
+            public ref int parent => ref AnonymousRecord_collision_L608_C2_Field.parent;
 
-            public ref int next => ref AnonymousRecord_collision_L586_C2_Field.next;
+            public ref int next => ref AnonymousRecord_collision_L608_C2_Field.next;
 
             [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
-            public partial struct AnonymousRecord_collision_L586_C2
+            public partial struct AnonymousRecord_collision_L608_C2
             {
                 [System.Runtime.InteropServices.FieldOffset(0)]
                 public int parent;
@@ -2338,6 +2365,8 @@ namespace Box2D.NET.Bindings
             public float jointHertz;
 
             public float jointDampingRatio;
+
+            public float maximumLinearVelocity;
 
             public byte enableSleep;
 
@@ -2524,7 +2553,11 @@ namespace Box2D.NET.Bindings
             colorWhite = 16777215,
             colorWhiteSmoke = 16119285,
             colorYellow = 16776960,
-            colorYellowGreen = 10145074
+            colorYellowGreen = 10145074,
+            colorBox2DRed = 14430514,
+            colorBox2DBlue = 3190463,
+            colorBox2DGreen = 9226532,
+            colorBox2DYellow = 16772748
         }
 
         public enum JointType : uint
@@ -2873,6 +2906,14 @@ namespace Box2D.NET.Bindings
 
         public const HexColor colorYellowGreen = HexColor.colorYellowGreen;
 
+        public const HexColor colorBox2DRed = HexColor.colorBox2DRed;
+
+        public const HexColor colorBox2DBlue = HexColor.colorBox2DBlue;
+
+        public const HexColor colorBox2DGreen = HexColor.colorBox2DGreen;
+
+        public const HexColor colorBox2DYellow = HexColor.colorBox2DYellow;
+
         public const JointType distanceJoint = JointType.distanceJoint;
 
         public const JointType motorJoint = JointType.motorJoint;
@@ -2919,19 +2960,20 @@ namespace Box2D.NET.Bindings
 
         public partial class BindgenInternal
         {
-            public const string DllImportPath = "box2c";
+            public const string DllImportPath = "box2d";
 
             static BindgenInternal()
             {
                 DllFilePaths = new System.Collections.Generic.List<string>
                 {
-                    "box2c",
-                    "runtimes/linux-x64/native/box2c",
-                    "runtimes/linux-arm64/native/box2c",
-                    "runtimes/osx-x64/native/box2c",
-                    "runtimes/osx-arm64/native/box2c",
-                    "runtimes/win-x64/native/box2c",
-                    "runtimes/win-arm64/native/box2c"
+                    "box2d",
+                    "libbox2d",
+                    "runtimes/linux-x64/native/libbox2d",
+                    "runtimes/linux-arm64/native/libbox2d",
+                    "runtimes/osx-x64/native/libbox2d",
+                    "runtimes/osx-arm64/native/libbox2d",
+                    "runtimes/win-x64/native/box2d",
+                    "runtimes/win-arm64/native/box2d"
                 };
             }
         }
@@ -2983,8 +3025,8 @@ namespace Box2D.NET.Bindings
 
             public static bool TryLoad(string path, out System.IntPtr handle)
             {
-#if NET5_0_OR_GREATER
-            return System.Runtime.InteropServices.NativeLibrary.TryLoad(path, out handle);
+#if NETCOREAPP3_0_OR_GREATER
+            return System.Runtime.InteropServices.NativeLibrary.TryLoad(path, System.Reflection.Assembly.GetExecutingAssembly(), null, out handle);
 #else
                 handle = System.IntPtr.Zero;
                 if (IsLinux)
@@ -2999,7 +3041,7 @@ namespace Box2D.NET.Bindings
 
             public static System.IntPtr GetExport(string symbol)
             {
-#if NET5_0_OR_GREATER
+#if NETCOREAPP3_0_OR_GREATER
             return System.Runtime.InteropServices.NativeLibrary.GetExport(LibraryHandle, symbol);
 #else
                 if (IsLinux)
@@ -3044,6 +3086,14 @@ namespace Box2D.NET.Bindings
 
             public static void ResolveLibrary()
             {
+                System.IntPtr handle = default;
+#if NETCOREAPP3_0_OR_GREATER
+            foreach (string dllFilePath in DllFilePaths)
+            {
+                if (TryLoad(dllFilePath, out handle))
+                    goto Return;
+            }
+#else
                 string fileExtension;
                 if (IsLinux)
                     fileExtension = ".so";
@@ -3053,12 +3103,12 @@ namespace Box2D.NET.Bindings
                     fileExtension = ".dll";
                 else
                     throw new System.InvalidOperationException("Can't determine native library file extension for the current system.");
-                System.IntPtr handle = default;
                 foreach (string dllFilePath in DllFilePaths)
                 {
                     string fileName = System.IO.Path.GetFileName(dllFilePath);
                     string parentDir = $"{dllFilePath}/..";
-                    string searchDir = System.IO.Path.IsPathRooted(dllFilePath) ? System.IO.Path.GetFullPath(parentDir) + "/" : System.IO.Path.GetFullPath(System.AppDomain.CurrentDomain.BaseDirectory + parentDir) + "/";
+                    string exeDir = System.IO.Path.GetFullPath(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location)!);
+                    string searchDir = System.IO.Path.IsPathRooted(dllFilePath) ? System.IO.Path.GetFullPath(parentDir) + "/" : System.IO.Path.GetFullPath($"{exeDir}/{parentDir}") + "/";
                     if (TryLoad($"{searchDir}{fileName}", out handle))
                         goto Return;
                     if (TryLoad($"{searchDir}{fileName}{fileExtension}", out handle))
@@ -3076,6 +3126,7 @@ namespace Box2D.NET.Bindings
                         goto Return;
                 }
 
+#endif
 #if NET7_0_OR_GREATER
                 handle = System.Runtime.InteropServices.NativeLibrary.GetMainProgramHandle();
 #else
