@@ -11,7 +11,7 @@
 
 </div>
 
-**Box2D.NET** is a C# binding for [Box2C](https://github.com/erincatto/box2c). Low-level bindings to the C api are included and generated with [Bindgen.NET](https://github.com/BeanCheeseBurrito/Bindgen.NET). Native libraries are cross-compiled with [Vezel-Dev's Zig Toolsets](https://github.com/vezel-dev/zig-toolsets).
+**Box2D.NET** is a C# binding for [Box2D](https://github.com/erincatto/box2d). Low-level bindings to the C api are included and generated with [Bindgen.NET](https://github.com/BeanCheeseBurrito/Bindgen.NET). Native libraries are cross-compiled with [Vezel-Dev's Zig Toolsets](https://github.com/vezel-dev/zig-toolsets).
 
 > [!NOTE]
 > There is currently no high-level wrapper but it may come in the future! **Box2D.NET** and **Box2D.NET.Bindings** are identical packages.
