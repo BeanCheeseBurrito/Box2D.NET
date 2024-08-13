@@ -4,7 +4,6 @@ public static unsafe class HelloWorld
 {
     public static void Main()
     {
-        Console.WriteLine(B2.Normalize(default));
         // Create a world
         B2.WorldDef worldDef = B2.DefaultWorldDef();
         worldDef.gravity = new B2.Vec2 { x = 0, y = -9.81f };
