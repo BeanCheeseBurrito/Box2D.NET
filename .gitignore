@@ -484,7 +484,7 @@ $RECYCLE.BIN/
 *.swp
 
 # Zig
-zig-cache/
+.zig-cache/
 src/Box2D.NET.Native/debug
 src/Box2D.NET.Native/release
 

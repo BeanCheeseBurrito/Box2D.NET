@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <ContinuousIntegrationBuild>false</ContinuousIntegrationBuild>
@@ -11,7 +11,60 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bindgen.NET" Version="0.1.14"/>
+        <PackageReference Include="Bindgen.NET" Version="0.1.17" />
     </ItemGroup>
 
+    <!-- -->
+    <!-- The binding generator needs access to system headers. The rest of the code below grabs the headers provided by zig. -->
+    <!-- -->
+    <PropertyGroup>
+        <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
+    </PropertyGroup>
+
+    <!-- Populate "HostRuntime" with the platform that is used to select the correct local zig nuget path. -->
+    <!-- Also, populate "LibCPlatform" with the platform that is used to select the correct libc path within the zig path. -->
+    <Choose>
+        <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+            <PropertyGroup>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">win-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">win-arm64</HostRuntime>
+                <LibCPlatform>any-windows-any</LibCPlatform>
+            </PropertyGroup>
+        </When>
+        <When Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+            <PropertyGroup>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">linux-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">linux-arm64</HostRuntime>
+                <LibCPlatform>generic-glibc</LibCPlatform>
+            </PropertyGroup>
+        </When>
+        <When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+            <PropertyGroup>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">osx-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">osx-arm64</HostRuntime>
+                <LibCPlatform>any-macos-any</LibCPlatform>
+            </PropertyGroup>
+        </When>
+    </Choose>
+
+    <ItemGroup>
+        <!-- This NuGet package contains system headers that can be provided to the binding generator. -->
+        <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.14.0.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <!-- Store the location of the zig lib folder as a global variable that can be accessed in code. -->
+    <ItemGroup>
+        <Compile Include="$(IntermediateOutputPath)BuildConstants.cs"/>
+    </ItemGroup>
+
+    <Target Name="GenerateConstants" BeforeTargets="CoreCompile">
+        <WriteLinesToFile
+            File="$(IntermediateOutputPath)BuildConstants.cs"
+            Lines='public static class BuildConstants { public const string ZigLibIncludePath = @"$(ZigLibPath)/include"%3B public const string ZigCLibIncludePath = @"$(ZigLibPath)/libc/include/$(LibCPlatform)"%3B  }'
+            Overwrite="true"
+	    />
+    </Target>
 </Project>

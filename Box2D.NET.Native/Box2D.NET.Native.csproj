@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netstandard1.0</TargetFramework>
+        <TargetFramework>netstandard2.0</TargetFramework>
         <NoWarn>$(NoWarn);NU5128</NoWarn>
     </PropertyGroup>
 
@@ -34,32 +34,32 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Vezel.Zig.Toolsets.linux-x64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsLinux)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.linux-x64" Version="0.14.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsLinux)' == 'true'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.osx-x64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsOsx)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.osx-x64" Version="0.14.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsOsx)' == 'true'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.win-x64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsWindows)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.win-x64" Version="0.14.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsWindows)' == 'true'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.linux-arm64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsLinux)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.linux-arm64" Version="0.14.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsLinux)' == 'true'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.osx-arm64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsOsx)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.osx-arm64" Version="0.14.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsOsx)' == 'true'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.win-arm64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsWindows)' == 'true'">
+        <PackageReference Include="Vezel.Zig.Toolsets.win-arm64" Version="0.14.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsWindows)' == 'true'">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -67,40 +67,40 @@
 
     <ItemGroup>
         <!--X64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-x64/libbox2d.so')" Include="debug/linux-x64/libbox2d.so" PackagePath="runtimes/linux-x64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-x64/libbox2d.dylib')" Include="debug/osx-x64/libbox2d.dylib" PackagePath="runtimes/osx-x64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/box2d.dll')" Include="debug/win-x64/box2d.dll" PackagePath="runtimes/win-x64/native/box2d.dll"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/box2d.pdb')" Include="debug/win-x64/box2d.pdb" PackagePath="runtimes/win-x64/native/box2d.pdb"/>
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-x64/libbox2d.so')" Include="debug/linux-x64/libbox2d.so" PackagePath="runtimes/linux-x64/native/libbox2d.so" />
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-x64/libbox2d.dylib')" Include="debug/osx-x64/libbox2d.dylib" PackagePath="runtimes/osx-x64/native/libbox2d.dylib" />
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/box2d.dll')" Include="debug/win-x64/box2d.dll" PackagePath="runtimes/win-x64/native/box2d.dll" />
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/box2d.pdb')" Include="debug/win-x64/box2d.pdb" PackagePath="runtimes/win-x64/native/box2d.pdb" />
 
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-x64/libbox2d.so')" Include="release/linux-x64/libbox2d.so" PackagePath="runtimes/linux-x64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-x64/libbox2d.dylib')" Include="release/osx-x64/libbox2d.dylib" PackagePath="runtimes/osx-x64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-x64/box2d.dll')" Include="release/win-x64/box2d.dll" PackagePath="runtimes/win-x64/native/box2d.dll"/>
+        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-x64/libbox2d.so')" Include="release/linux-x64/libbox2d.so" PackagePath="runtimes/linux-x64/native/libbox2d.so" />
+        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-x64/libbox2d.dylib')" Include="release/osx-x64/libbox2d.dylib" PackagePath="runtimes/osx-x64/native/libbox2d.dylib" />
+        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-x64/box2d.dll')" Include="release/win-x64/box2d.dll" PackagePath="runtimes/win-x64/native/box2d.dll" />
 
         <!--Arm64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-arm64/libbox2d.so')" Include="debug/linux-arm64/libbox2d.so" PackagePath="runtimes/linux-arm64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-arm64/libbox2d.dylib')" Include="debug/osx-arm64/libbox2d.dylib" PackagePath="runtimes/osx-arm64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/box2d.dll')" Include="debug/win-arm64/box2d.dll" PackagePath="runtimes/win-arm64/native/box2d.dll"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/box2d.pdb')" Include="debug/win-arm64/box2d.pdb" PackagePath="runtimes/win-arm64/native/box2d.pdb"/>
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-arm64/libbox2d.so')" Include="debug/linux-arm64/libbox2d.so" PackagePath="runtimes/linux-arm64/native/libbox2d.so" />
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-arm64/libbox2d.dylib')" Include="debug/osx-arm64/libbox2d.dylib" PackagePath="runtimes/osx-arm64/native/libbox2d.dylib" />
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/box2d.dll')" Include="debug/win-arm64/box2d.dll" PackagePath="runtimes/win-arm64/native/box2d.dll" />
+        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/box2d.pdb')" Include="debug/win-arm64/box2d.pdb" PackagePath="runtimes/win-arm64/native/box2d.pdb" />
 
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-arm64/libbox2d.so')" Include="release/linux-arm64/libbox2d.so" PackagePath="runtimes/linux-arm64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-arm64/libbox2d.dylib')" Include="release/osx-arm64/libbox2d.dylib" PackagePath="runtimes/osx-arm64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-arm64/box2d.dll')" Include="release/win-arm64/box2d.dll" PackagePath="runtimes/win-arm64/native/box2d.dll"/>
+        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-arm64/libbox2d.so')" Include="release/linux-arm64/libbox2d.so" PackagePath="runtimes/linux-arm64/native/libbox2d.so" />
+        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-arm64/libbox2d.dylib')" Include="release/osx-arm64/libbox2d.dylib" PackagePath="runtimes/osx-arm64/native/libbox2d.dylib" />
+        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-arm64/box2d.dll')" Include="release/win-arm64/box2d.dll" PackagePath="runtimes/win-arm64/native/box2d.dll" />
     </ItemGroup>
 
     <Target Name="Compile Native Library" AfterTargets="build">
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-x64   --prefix-exe-dir linux-x64   -Dtarget=x86_64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-x64     --prefix-exe-dir win-x64     -Dtarget=x86_64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-x64     --prefix-exe-dir osx-x64     -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-arm64 --prefix-exe-dir linux-arm64 -Dtarget=aarch64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-arm64   --prefix-exe-dir win-arm64   -Dtarget=aarch64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-arm64   --prefix-exe-dir osx-arm64   -Dtarget=aarch64-macos"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-x64   --prefix-exe-dir linux-x64   -Dtarget=x86_64-linux-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-x64     --prefix-exe-dir win-x64     -Dtarget=x86_64-windows-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-x64     --prefix-exe-dir osx-x64     -Dtarget=x86_64-macos" />
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-arm64 --prefix-exe-dir linux-arm64 -Dtarget=aarch64-linux-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-arm64   --prefix-exe-dir win-arm64   -Dtarget=aarch64-windows-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-arm64   --prefix-exe-dir osx-arm64   -Dtarget=aarch64-macos" />
 
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-x64   --prefix-exe-dir linux-x64   -Dtarget=x86_64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-x64     --prefix-exe-dir win-x64     -Dtarget=x86_64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-x64     --prefix-exe-dir osx-x64     -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-arm64 --prefix-exe-dir linux-arm64 -Dtarget=aarch64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-arm64   --prefix-exe-dir win-arm64   -Dtarget=aarch64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-arm64   --prefix-exe-dir osx-arm64   -Dtarget=aarch64-macos"/>
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-x64   --prefix-exe-dir linux-x64   -Dtarget=x86_64-linux-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-x64     --prefix-exe-dir win-x64     -Dtarget=x86_64-windows-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-x64     --prefix-exe-dir osx-x64     -Dtarget=x86_64-macos" />
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-arm64 --prefix-exe-dir linux-arm64 -Dtarget=aarch64-linux-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-arm64   --prefix-exe-dir win-arm64   -Dtarget=aarch64-windows-gnu" />
+        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-arm64   --prefix-exe-dir osx-arm64   -Dtarget=aarch64-macos" />
     </Target>
 
 </Project>

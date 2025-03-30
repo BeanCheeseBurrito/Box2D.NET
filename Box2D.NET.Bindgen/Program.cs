@@ -1,5 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using Bindgen.NET;
+﻿using Bindgen.NET;
+using System.Runtime.CompilerServices;
 
 const string library = "box2d";
 
@@ -7,23 +7,9 @@ BindingOptions options = new()
 {
     Namespace = "Box2D.NET.Bindings",
     Class = "B2",
-
     DllImportPath = library,
-    DllFilePaths =
-    {
-        library,
-        "lib" + library,
-        "runtimes/linux-x64/native/lib" + library,
-        "runtimes/linux-arm64/native/lib" + library,
-        "runtimes/osx-x64/native/lib" + library,
-        "runtimes/osx-arm64/native/lib" + library,
-        "runtimes/win-x64/native/" + library,
-        "runtimes/win-arm64/native/" + library
-    },
-
-    IncludeBuiltInClangHeaders = true,
-    IncludeDirectories = { GetNativeDirectory("include") },
-
+    IncludeDirectories = [GetNativeDirectory("include")],
+    SystemIncludeDirectories = [BuildConstants.ZigLibIncludePath, BuildConstants.ZigCLibIncludePath],
     TreatInputFileAsRawSourceCode = true,
     InputFile = """
                 #include <box2d/base.h>
@@ -36,7 +22,7 @@ BindingOptions options = new()
     OutputFile = GetOutputDirectory("B2.g.cs"),
 
     RemappedPrefixes =
-    {
+    [
         ("b2AABB_", "AABB"),
         ("b2Body_", "Body"),
         ("b2Chain_", "Chain"),
@@ -55,11 +41,10 @@ BindingOptions options = new()
         ("b2World_", "World"),
         ("b2_", ""),
         ("b2", ""),
-    },
+    ],
 
-    GenerateMacros = true,
     GenerateExternVariables = true,
-    SuppressedWarnings = { "CS9084" }
+    SuppressedWarnings = ["CS9084"]
 };
 
 BindingGenerator.Generate(options);
