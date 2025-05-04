@@ -26,10 +26,9 @@ pub fn build(b: *Build) void {
     lib.addCSourceFiles(.{
         .files = &.{
             "../native/box2d/src/aabb.c",
-            "../native/box2d/src/allocate.c",
+            "../native/box2d/src/arena_allocator.c",
             "../native/box2d/src/array.c",
             "../native/box2d/src/bitset.c",
-            "../native/box2d/src/block_array.c",
             "../native/box2d/src/body.c",
             "../native/box2d/src/broad_phase.c",
             "../native/box2d/src/constraint_graph.c",
@@ -50,10 +49,10 @@ pub fn build(b: *Build) void {
             "../native/box2d/src/mouse_joint.c",
             "../native/box2d/src/prismatic_joint.c",
             "../native/box2d/src/revolute_joint.c",
+            "../native/box2d/src/sensor.c",
             "../native/box2d/src/shape.c",
             "../native/box2d/src/solver.c",
             "../native/box2d/src/solver_set.c",
-            "../native/box2d/src/stack_allocator.c",
             "../native/box2d/src/table.c",
             "../native/box2d/src/timer.c",
             "../native/box2d/src/types.c",

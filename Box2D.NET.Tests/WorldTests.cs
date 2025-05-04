@@ -50,7 +50,7 @@ namespace Box2D.NET.Tests
 			shapeDef.density = 1.0f;
 
 			// Override the default friction.
-			shapeDef.friction = 0.3f;
+			shapeDef.material.friction = 0.3f;
 
 			// Add the shape to the body.
 			B2.CreatePolygonShape(bodyId, &shapeDef, &dynamicBox);
