@@ -3,18 +3,19 @@
     <PropertyGroup>
         <TargetFrameworks>netstandard2.1;net6.0;net7.0</TargetFrameworks>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <PropertyGroup>
         <IsPackable>true</IsPackable>
         <IncludeContentInPack>true</IncludeContentInPack>
 
-        <Version>3.0.0</Version>
+        <Version>3.1.0</Version>
         <Title Condition="'$(Configuration)' == 'Debug'">Box2D.NET.Bindings.Debug</Title>
         <Title Condition="'$(Configuration)' == 'Release'">Box2D.NET.Bindings.Release</Title>
-        <Authors>BeanCheeseBurrito</Authors>
+        <Authors>BeanCheeseBurrito, Scatterlogical</Authors>
         <Copyright>BeanCheeseBurrito</Copyright>
-        <Description>Raw C# bindings for Box2D 3.0</Description>
+        <Description>Raw C# bindings for Box2D 3.1</Description>
         <PackageId>$(Title)</PackageId>
         <PackageProjectUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</PackageProjectUrl>
         <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>

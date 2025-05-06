@@ -47,6 +47,7 @@ pub fn build(b: *Build) void {
             "../native/box2d/src/math_functions.c",
             "../native/box2d/src/motor_joint.c",
             "../native/box2d/src/mouse_joint.c",
+            "../native/box2d/src/mover.c",
             "../native/box2d/src/prismatic_joint.c",
             "../native/box2d/src/revolute_joint.c",
             "../native/box2d/src/sensor.c",
