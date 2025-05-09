@@ -1,39 +1,28 @@
 ﻿using System.Runtime.CompilerServices;
 using Bindgen.NET;
 
-const string library = "box2d";
-
 BindingOptions options = new()
 {
     Namespace = "Box2D.NET.Bindings",
     Class = "B2",
 
-    DllImportPath = library,
-    DllFilePaths =
-    {
-        library,
-        "lib" + library,
-        "runtimes/linux-x64/native/lib" + library,
-        "runtimes/linux-arm64/native/lib" + library,
-        "runtimes/osx-x64/native/lib" + library,
-        "runtimes/osx-arm64/native/lib" + library,
-        "runtimes/win-x64/native/" + library,
-        "runtimes/win-arm64/native/" + library
-    },
+    DllImportPath = "box2d",
 
-    IncludeBuiltInClangHeaders = true,
-    IncludeDirectories = { GetNativeDirectory("include") },
+    SystemIncludeDirectories = { Path.Combine(BuildConstants.ZigLibPath, "include") },
+    IncludeDirectories = { GetIncludeDirectory() },
 
     TreatInputFileAsRawSourceCode = true,
+    OutputFile = GetOutputDirectory(),
     InputFile = """
-                #include <box2d/base.h>
-                #include <box2d/box2d.h>
-                #include <box2d/collision.h>
-                #include <box2d/id.h>
-                #include <box2d/math_functions.h>
-                #include <box2d/types.h>
-                """,
-    OutputFile = GetOutputDirectory("B2.g.cs"),
+        #include <box2d/base.h>
+        #include <box2d/box2d.h>
+        #include <box2d/collision.h>
+        #include <box2d/id.h>
+        #include <box2d/math_functions.h>
+        #include <box2d/types.h>
+        """,
+
+    GenerateDisableRuntimeMarshallingAttribute = true,
 
     RemappedPrefixes =
     {
@@ -55,11 +44,7 @@ BindingOptions options = new()
         ("b2World_", "World"),
         ("b2_", ""),
         ("b2", ""),
-    },
-
-    GenerateMacros = true,
-    GenerateExternVariables = true,
-    SuppressedWarnings = { "CS9084" }
+    }
 };
 
 BindingGenerator.Generate(options);
@@ -69,12 +54,12 @@ string GetCurrentFilePath([CallerFilePath] string filePath = "")
     return filePath;
 }
 
-string GetNativeDirectory(string path)
+string GetIncludeDirectory()
 {
-    return GetCurrentFilePath() + "/../../native/box2d/" + path;
+    return Path.GetFullPath(GetCurrentFilePath() + "/../../native/box2d/include");
 }
 
-string GetOutputDirectory(string fileName)
+string GetOutputDirectory()
 {
-    return GetCurrentFilePath() + "/../../Box2D.NET.Bindings/" + fileName;
+    return GetCurrentFilePath() + "/../../Box2D.NET.Bindings/B2.g.cs";
 }

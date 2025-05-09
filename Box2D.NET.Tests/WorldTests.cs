@@ -14,7 +14,7 @@ namespace Box2D.NET.Tests
 			worldDef.gravity = new B2.Vec2 { x = 0.0f, y = -10.0f };
 
 			B2.WorldId worldId = B2.CreateWorld(&worldDef);
-			Assert.True(B2.WorldIsValid(worldId) != 0);
+			Assert.True(B2.WorldIsValid(worldId));
 
 			// Define the ground body.
 			B2.BodyDef groundBodyDef = B2.DefaultBodyDef();
@@ -24,7 +24,7 @@ namespace Box2D.NET.Tests
 			// from a pool and creates the ground box shape (also from a pool).
 			// The body is also added to the world.
 			B2.BodyId groundId = B2.CreateBody(worldId, &groundBodyDef);
-			Assert.True(B2.BodyIsValid(groundId) != 0);
+			Assert.True(B2.BodyIsValid(groundId));
 
 			// Define the ground box shape. The extents are the half-widths of the box.
 			B2.Polygon groundBox = B2.MakeBox(50.0f, 10.0f);

@@ -1,0 +1,13 @@
+<Project>
+    <PropertyGroup>
+        <IsWindowsRuntime Condition="'$(RuntimeIdentifier)' != '' and $(RuntimeIdentifier.StartsWith('win-'))">true</IsWindowsRuntime>
+        <Box2DStaticPath>$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)../static/$(RuntimeIdentifier)/native/'))</Box2DStaticPath>
+        <Box2DStaticLibrary Condition="'$(IsWindowsRuntime)' == 'true'">$(Box2DStaticPath)box2d.lib</Box2DStaticLibrary>
+        <Box2DStaticLibrary Condition="'$(IsWindowsRuntime)' != 'true'">$(Box2DStaticPath)libbox2d.a</Box2DStaticLibrary>
+    </PropertyGroup>
+
+    <ItemGroup Condition="'$(PublishAot)' == 'true' And '$(Box2DStaticLink)' == 'true' And Exists('$(Box2DStaticLibrary)')">
+        <DirectPInvoke Include="box2d"/>
+        <NativeLibrary Include="$(Box2DStaticLibrary)"/>
+    </ItemGroup>
+</Project>

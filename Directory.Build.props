@@ -1,8 +1,61 @@
 <Project>
     <PropertyGroup>
-        <IsPackable>false</IsPackable>
+        <VersionPrefix>3.1.0</VersionPrefix>
+        <Authors>BeanCheeseBurrito</Authors>
+        <Copyright>BeanCheeseBurrito</Copyright>
+        <PackageProjectUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+        <RepositoryUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</RepositoryUrl>
+        <RepositoryType>Github</RepositoryType>
+
+        <DebugType>portable</DebugType>
+        <IncludeSymbols>true</IncludeSymbols>
+        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+        <PublishRepositoryUrl>true</PublishRepositoryUrl>
+        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <NoWarn>$(NoWarn);NETSDK1138</NoWarn>
         <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true' And '$(ContinuousIntegrationBuild)' == ''">true</ContinuousIntegrationBuild>
         <Deterministic Condition="'$(GITHUB_ACTIONS)' == 'true' And '$(Deterministic)' == ''">true</Deterministic>
-        <AllowedOutputExtensionsInPackageBuildOutputFolder Condition="'$(Box2DPackPdb)' == 'true'">$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+        <AllowedOutputExtensionsInPackageBuildOutputFolder Condition="'$(PackPdb)' == 'true'">$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="$(MSBuildThisFileDirectory)/README.md" Pack="true" PackagePath="README.md"/>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <ProjectName>$([System.IO.Path]::GetFileNameWithoutExtension('$(MSBuildProjectFile)'))</ProjectName>
+        <PackageId Condition="'$(Configuration)' == 'Debug'">$(ProjectName).Debug</PackageId>
+        <PackageId Condition="'$(Configuration)' == 'Release'">$(ProjectName).Release</PackageId>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <HostArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</HostArch>
+    </PropertyGroup>
+
+    <Choose>
+        <When Condition="$([MSBuild]::IsOSPlatform('Windows'))">
+            <PropertyGroup>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">win-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">win-arm64</HostRuntime>
+            </PropertyGroup>
+        </When>
+        <When Condition="$([MSBuild]::IsOSPlatform('Linux'))">
+            <PropertyGroup>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">linux-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">linux-arm64</HostRuntime>
+            </PropertyGroup>
+        </When>
+        <When Condition="$([MSBuild]::IsOSPlatform('OSX'))">
+            <PropertyGroup>
+                <HostRuntime Condition="'$(HostArch)' == 'X64'">osx-x64</HostRuntime>
+                <HostRuntime Condition="'$(HostArch)' == 'Arm64'">osx-arm64</HostRuntime>
+            </PropertyGroup>
+        </When>
+    </Choose>
 </Project>

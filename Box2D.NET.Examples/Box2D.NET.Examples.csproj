@@ -6,6 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -13,10 +14,8 @@
         <StartupObject>$(Example)</StartupObject>
     </PropertyGroup>
 
-    <Import Project="../Box2D.NET.Native/Box2D.NET.Native.targets"/>
-
     <ItemGroup>
         <ProjectReference Include="../Box2D.NET/Box2D.NET.csproj"/>
     </ItemGroup>
-    
+
 </Project>

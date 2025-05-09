@@ -1,106 +1,163 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
-        <TargetFramework>netstandard1.0</TargetFramework>
-        <NoWarn>$(NoWarn);NU5128</NoWarn>
-    </PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>netstandard2.1</TargetFramework>
 
-    <PropertyGroup>
-        <IsPackable>true</IsPackable>
-        <IncludeContentInPack>true</IncludeContentInPack>
+        <!-- This is project for holding natives only so we dont really want to generate anything else -->
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+        <IncludeSymbols>false</IncludeSymbols>
+        <IncludeBuildFiles>false</IncludeBuildFiles>
         <IncludeBuildOutput>false</IncludeBuildOutput>
-
-        <Version>3.0.0</Version>
-        <Title Condition="'$(Configuration)' == 'Debug'">Box2D.NET.Native.Debug</Title>
-        <Title Condition="'$(Configuration)' == 'Release'">Box2D.NET.Native.Release</Title>
-        <Authors>BeanCheeseBurrito</Authors>
-        <Copyright>BeanCheeseBurrito</Copyright>
-        <Description>Native libraries for Box2D 3.0</Description>
-        <PackageId>$(Title)</PackageId>
-        <PackageProjectUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</PackageProjectUrl>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <RepositoryUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</RepositoryUrl>
-        <RepositoryType>Github</RepositoryType>
+        <MSBuildEnableWorkloadResolver>false</MSBuildEnableWorkloadResolver>
+        <NoWarn>$(NoWarn);CS2008;NU5128</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
-        <NativeIsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</NativeIsLinux>
-        <NativeIsOsx Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</NativeIsOsx>
-        <NativeIsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</NativeIsWindows>
-
-        <NativeProcessorArch>$([System.Runtime.InteropServices.RuntimeInformation]::ProcessArchitecture)</NativeProcessorArch>
-        <NativeLibName>box2d</NativeLibName>
+        <Description>Native libraries for Box2D</Description>
     </PropertyGroup>
 
+    <!-- We want 2 separate natives packages for debug and release modes -->
+    <PropertyGroup>
+        <ZigConfiguration Condition="'$(Configuration)' == 'Debug'">Debug</ZigConfiguration>
+        <ZigConfiguration Condition="'$(Configuration)' == 'Release'">ReleaseFast</ZigConfiguration>
+    </PropertyGroup>
+
+    <!-- Fallback to host runtime when not specified -->
+    <PropertyGroup>
+        <RuntimeIdentifier Condition="'$(RuntimeIdentifier)' == ''">$(HostRuntime)</RuntimeIdentifier>
+    </PropertyGroup>
+
+    <!-- These files will be auto included based on platform in dependant projects -->
     <ItemGroup>
-        <PackageReference Include="Vezel.Zig.Toolsets.linux-x64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsLinux)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+        <None Pack="true" Include="buildTransitive/Box2D.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
+        <None Pack="true" Include="buildTransitive/Box2D.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
+        <None Pack="true" Include="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" PackagePath="static/"/>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.osx-x64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsOsx)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+        <Content Include="$(OutputPath)runtimes/**/**" Exclude="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" Link="%(Filename)%(Extension)">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+            <PackagePath>runtimes/</PackagePath>
+        </Content>
+    </ItemGroup>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.win-x64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'X64' And '$(NativeIsWindows)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+    <!-- Determine mapping between dotnet RID and zig targets -->
+    <Choose>
+        <When Condition="$(RuntimeIdentifier) == 'win-x64'">
+            <PropertyGroup>
+                <ZigIdentifier>x86_64-windows-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'win-x86'">
+            <PropertyGroup>
+                <ZigIdentifier>x86-windows-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'win-arm'">
+            <PropertyGroup>
+                <ZigIdentifier>arm-windows-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'win-arm64'">
+            <PropertyGroup>
+                <ZigIdentifier>aarch64-windows-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'linux-x64'">
+            <PropertyGroup>
+                <ZigIdentifier>x86_64-linux-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'linux-x86'">
+            <PropertyGroup>
+                <ZigIdentifier>x86-linux-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'linux-arm'">
+            <PropertyGroup>
+                <ZigIdentifier>arm-linux-gnueabihf</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'linux-arm64'">
+            <PropertyGroup>
+                <ZigIdentifier>aarch64-linux-gnu</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'osx-x64'">
+            <PropertyGroup>
+                <ZigIdentifier>x86_64-macos</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'osx-arm64'">
+            <PropertyGroup>
+                <ZigIdentifier>aarch64-macos</ZigIdentifier>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'iossimulator-x64'">
+            <PropertyGroup>
+                <ZigIdentifier>x86_64-ios-simulator</ZigIdentifier>
+                <ZigArgs>--sysroot $(IOS_SIMULATOR_SDK)</ZigArgs>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'iossimulator-arm64'">
+            <PropertyGroup>
+                <ZigIdentifier>aarch64-ios-simulator</ZigIdentifier>
+                <ZigArgs>--sysroot $(IOS_SIMULATOR_SDK)</ZigArgs>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'ios-arm64'">
+            <PropertyGroup>
+                <ZigIdentifier>aarch64-ios</ZigIdentifier>
+                <ZigArgs>--sysroot $(IOS_SDK)</ZigArgs>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'browser-wasm'">
+            <PropertyGroup>
+                <ZigIdentifier>wasm32-emscripten</ZigIdentifier>
+                <ZigArgs>--sysroot "$(EMSDK)/upstream/emscripten"</ZigArgs>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'android-arm64'">
+            <PropertyGroup>
+                <ZigIdentifier>aarch64-linux-android</ZigIdentifier>
+                <ZigArgs>--sysroot $(ANDROID_NDK_HOME)</ZigArgs>
+            </PropertyGroup>
+        </When>
+        <When Condition="$(RuntimeIdentifier) == 'android-x64'">
+            <PropertyGroup>
+                <ZigIdentifier>x86_64-linux-android</ZigIdentifier>
+                <ZigArgs>--sysroot $(ANDROID_NDK_HOME)</ZigArgs>
+            </PropertyGroup>
+        </When>
+        <Otherwise>
+            <PropertyGroup>
+                <ZigIdentifier>$(RuntimeIdentifier)</ZigIdentifier>
+            </PropertyGroup>
+        </Otherwise>
+    </Choose>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.linux-arm64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsLinux)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
+    <!-- Path to compiler_rt.zig -->
+    <PropertyGroup>
+        <ZigArgs>$(ZigArgs) -Dcompiler-rt-path="$(ZigLibPath)/compiler_rt.zig"</ZigArgs>
+    </PropertyGroup>
 
-        <PackageReference Include="Vezel.Zig.Toolsets.osx-arm64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsOsx)' == 'true'">
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-
-        <PackageReference Include="Vezel.Zig.Toolsets.win-arm64" Version="0.13.0.1" Condition="'$(NativeProcessorArch)' == 'Arm64' And '$(NativeIsWindows)' == 'true'">
+    <!-- Here we need host not target toolset to compile/cross-compile -->
+    <ItemGroup>
+        <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.13.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-        <!--X64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-x64/libbox2d.so')" Include="debug/linux-x64/libbox2d.so" PackagePath="runtimes/linux-x64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-x64/libbox2d.dylib')" Include="debug/osx-x64/libbox2d.dylib" PackagePath="runtimes/osx-x64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/box2d.dll')" Include="debug/win-x64/box2d.dll" PackagePath="runtimes/win-x64/native/box2d.dll"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-x64/box2d.pdb')" Include="debug/win-x64/box2d.pdb" PackagePath="runtimes/win-x64/native/box2d.pdb"/>
-
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-x64/libbox2d.so')" Include="release/linux-x64/libbox2d.so" PackagePath="runtimes/linux-x64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-x64/libbox2d.dylib')" Include="release/osx-x64/libbox2d.dylib" PackagePath="runtimes/osx-x64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-x64/box2d.dll')" Include="release/win-x64/box2d.dll" PackagePath="runtimes/win-x64/native/box2d.dll"/>
-
-        <!--Arm64-->
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/linux-arm64/libbox2d.so')" Include="debug/linux-arm64/libbox2d.so" PackagePath="runtimes/linux-arm64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/osx-arm64/libbox2d.dylib')" Include="debug/osx-arm64/libbox2d.dylib" PackagePath="runtimes/osx-arm64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/box2d.dll')" Include="debug/win-arm64/box2d.dll" PackagePath="runtimes/win-arm64/native/box2d.dll"/>
-        <Content Condition="'$(Configuration)' == 'Debug' And Exists('debug/win-arm64/box2d.pdb')" Include="debug/win-arm64/box2d.pdb" PackagePath="runtimes/win-arm64/native/box2d.pdb"/>
-
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/linux-arm64/libbox2d.so')" Include="release/linux-arm64/libbox2d.so" PackagePath="runtimes/linux-arm64/native/libbox2d.so"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/osx-arm64/libbox2d.dylib')" Include="release/osx-arm64/libbox2d.dylib" PackagePath="runtimes/osx-arm64/native/libbox2d.dylib"/>
-        <Content Condition="'$(Configuration)' == 'Release' And Exists('release/win-arm64/box2d.dll')" Include="release/win-arm64/box2d.dll" PackagePath="runtimes/win-arm64/native/box2d.dll"/>
-    </ItemGroup>
-
-    <Target Name="Compile Native Library" AfterTargets="build">
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-x64   --prefix-exe-dir linux-x64   -Dtarget=x86_64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-x64     --prefix-exe-dir win-x64     -Dtarget=x86_64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-x64     --prefix-exe-dir osx-x64     -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir linux-arm64 --prefix-exe-dir linux-arm64 -Dtarget=aarch64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir win-arm64   --prefix-exe-dir win-arm64   -Dtarget=aarch64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=Debug --prefix debug --prefix-lib-dir osx-arm64   --prefix-exe-dir osx-arm64   -Dtarget=aarch64-macos"/>
-
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-x64   --prefix-exe-dir linux-x64   -Dtarget=x86_64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-x64     --prefix-exe-dir win-x64     -Dtarget=x86_64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-x64     --prefix-exe-dir osx-x64     -Dtarget=x86_64-macos"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir linux-arm64 --prefix-exe-dir linux-arm64 -Dtarget=aarch64-linux-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir win-arm64   --prefix-exe-dir win-arm64   -Dtarget=aarch64-windows-gnu"/>
-        <Exec Command="$(ZigExePath) build -Doptimize=ReleaseFast --prefix release --prefix-lib-dir osx-arm64   --prefix-exe-dir osx-arm64   -Dtarget=aarch64-macos"/>
+    <!-- All the native code compile magic lives here -->
+    <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
+        <PropertyGroup>
+            <BuildCommand>$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) $(ZigArgs)</BuildCommand>
+        </PropertyGroup>
+        <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
+        <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>
+        <Message Importance="High" Text="Build Zig Args: $(ZigArgs)"/>
+        <Exec Command="$(BuildCommand) -Dlibrary-type=Shared" Condition="'$(RuntimeIdentifier)' != 'browser-wasm'"/>
+        <Exec Command="$(BuildCommand) -Dlibrary-type=Static"/>
     </Target>
-
 </Project>
