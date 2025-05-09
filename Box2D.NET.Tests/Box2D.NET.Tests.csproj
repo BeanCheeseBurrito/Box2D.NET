@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net6.0;net7.0;net8.0</TargetFrameworks>
-        <IsPackable>false</IsPackable>
+        <TargetFramework>net8.0</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,11 +12,9 @@
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.0"/>
         <PackageReference Include="coverlet.collector" Version="1.2.0"/>
     </ItemGroup>
-    
-    <Import Project="../Box2D.NET.Native/Box2D.NET.Native.targets"/>
 
     <ItemGroup>
-      <ProjectReference Include="..\Box2D.NET\Box2D.NET.csproj"/>
+      <ProjectReference Include="../Box2D.NET/Box2D.NET.csproj"/>
     </ItemGroup>
 
 </Project>

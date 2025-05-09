@@ -1,36 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>netstandard2.1;net6.0;net7.0</TargetFrameworks>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <PropertyGroup>
-        <IsPackable>true</IsPackable>
-        <IncludeContentInPack>true</IncludeContentInPack>
-
-        <Version>3.0.0</Version>
-        <Title Condition="'$(Configuration)' == 'Debug'">Box2D.NET.Bindings.Debug</Title>
-        <Title Condition="'$(Configuration)' == 'Release'">Box2D.NET.Bindings.Release</Title>
-        <Authors>BeanCheeseBurrito</Authors>
-        <Copyright>BeanCheeseBurrito</Copyright>
-        <Description>Raw C# bindings for Box2D 3.0</Description>
-        <PackageId>$(Title)</PackageId>
-        <PackageProjectUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</PackageProjectUrl>
-        <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <RepositoryUrl>https://github.com/BeanCheeseBurrito/Box2D.NET</RepositoryUrl>
-        <RepositoryType>Github</RepositoryType>
-
-        <DebugType>portable</DebugType>
-        <IncludeSymbols>true</IncludeSymbols>
-        <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-        <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <EmbedUntrackedSources>true</EmbedUntrackedSources>
+        <Description>Raw C# bindings for Box2D</Description>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
         <ProjectReference Include="..\Box2D.NET.Native\Box2D.NET.Native.csproj"/>
     </ItemGroup>
 

@@ -20,88 +20,158 @@ on:
       nuget-registry:
         description: 'NuGet registry'
         required: true
-        default: 'GitLab'
+        default: 'GitHub'
         type: choice
         options:
-          - GitLab
+          - GitHub
           - NuGet
 
 jobs:
   build:
-
     runs-on: ${{ matrix.os }}
 
+    permissions:
+      packages: write
+
     strategy:
-        fail-fast: false
-        matrix:
-            os: [ubuntu-latest, macos-13, windows-latest]
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-13, windows-latest]
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        submodules: 'recursive'
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'recursive'
+          fetch-depth: 0
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: |
-          3.1.x
-          5.0.x
-          6.0.x
-          7.0.x
-          8.0.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Set Version Suffix
-      shell: bash
-      run: |
-        if [ '${{ github.event.inputs.use-auto-generated-version }}' != 'false' ]; then
-          echo "NugetVersionSuffix=-dev-$(date +'%Y-%m-%d-%H-%M-%S')" >> $GITHUB_ENV
-        fi
+      - name: Set Version Suffix
+        shell: bash
+        run: |
+          if [ '${{ github.event.inputs.use-auto-generated-version }}' != 'false' ]; then
+            echo "BuildVersionSuffix=build.$(git rev-list --count HEAD)" >> $GITHUB_ENV
+          fi
 
-    - name: Restore Dependencies
-      shell: bash
-      run: dotnet restore
+      - name: Setup IOS SDK
+        if: matrix.os == 'macos-13'
+        shell: bash
+        run: |
+          IOS_SDK=$(xcrun --sdk iphoneos --show-sdk-path)
+          IOS_SIMULATOR_SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)
 
-    - name: Generate Bindings
-      shell: bash
-      run: dotnet run --project Box2D.NET.Bindgen
+          echo "IOS_SDK=$IOS_SDK" >> $GITHUB_ENV
+          echo "IOS_SIMULATOR_SDK=$IOS_SIMULATOR_SDK" >> $GITHUB_ENV
 
-    - name: Build Projects
-      shell: bash
-      run: |
-        dotnet build -c Debug
-        dotnet build -c Release
+      - name: Setup Emscripten SDK
+        if: matrix.os == 'macos-13'
+        uses: mymindstorm/setup-emsdk@v14
+        with:
+          actions-cache-folder: 'emsdk-cache'
 
-    - name: Run Tests
-      shell: bash
-      run: dotnet test
+      - name: Setup Android NDK
+        if: matrix.os == 'macos-13'
+        uses: nttld/setup-ndk@v1
+        with:
+          ndk-version: r25c
+          link-to-sdk: true
 
-    - name: Pack Nuget Packages
-      shell: bash
-      run: |
-        if [ '${{ github.event.inputs.nuget-registry }}' == 'NuGet' ]; then
-          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix -c Debug
-          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix -c Release
-        else
-          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix --property:Box2DPackPdb=true -c Debug
-          dotnet pack --property:NugetVersionSuffix=$NugetVersionSuffix --property:Box2DPackPdb=true -c Release
-        fi
+      - name: Set Android NDK variables
+        if: matrix.os == 'macos-13'
+        shell: bash
+        run: |
+          echo "ANDROID_NDK_HOME=$ANDROID_NDK_HOME" >> $GITHUB_ENV
 
-    - name: Upload Artifacts
-      if: matrix.os == 'ubuntu-latest'
-      uses: actions/upload-artifact@v3
-      with:
-        name: Nuget Packages
-        path: |
-          **/Box2D.NET.*.nupkg
-          **/Box2D.NET.*.snupkg
+      - name: Restore Dependencies
+        shell: bash
+        run: dotnet restore
 
-    - name: Push NuGet Packages
-      if: matrix.os == 'ubuntu-latest' && github.event_name == 'workflow_dispatch' && github.event.inputs.push-packages == 'true'
-      shell: bash
-      run: |
-        if [ '${{ github.event.inputs.nuget-registry }}' == 'GitLab' ]; then
-          dotnet nuget push **/Box2D.NET.*.nupkg --api-key '${{ secrets.GITLAB_ACCESS_TOKEN }}' --source 'https://gitlab.com/api/v4/projects/53993416/packages/nuget/index.json'
-        elif [ '${{ github.event.inputs.nuget-registry }}' == 'NuGet' ]; then
-          dotnet nuget push **/Box2D.NET.*.nupkg --api-key '${{ secrets.NUGET_ACCESS_TOKEN }}' --source 'https://api.nuget.org/v3/index.json'
-        fi
+      - name: Generate Bindings
+        shell: bash
+        run: dotnet run --project Box2D.NET.Bindgen
+
+      - name: Build Projects
+        shell: bash
+        run: |
+          dotnet build -c Debug
+          dotnet build -c Release
+
+      - name: Build Natives
+        shell: bash
+        if: matrix.os == 'macos-13'
+        working-directory: Box2D.NET.Native
+        run: |
+          dotnet build -c Debug -r linux-x64
+          dotnet build -c Debug -r linux-arm64
+          dotnet build -c Debug -r osx-x64
+          dotnet build -c Debug -r osx-arm64
+          dotnet build -c Debug -r win-x64
+          dotnet build -c Debug -r win-arm64
+          dotnet build -c Debug -r browser-wasm
+          dotnet build -c Debug -r iossimulator-x64
+          dotnet build -c Debug -r iossimulator-arm64
+          dotnet build -c Debug -r ios-arm64
+          dotnet build -c Debug -r android-arm64
+          dotnet build -c Debug -r android-x64
+
+          dotnet build -c Release -r linux-x64
+          dotnet build -c Release -r linux-arm64
+          dotnet build -c Release -r osx-x64
+          dotnet build -c Release -r osx-arm64
+          dotnet build -c Release -r win-x64
+          dotnet build -c Release -r win-arm64
+          dotnet build -c Release -r browser-wasm
+          dotnet build -c Release -r iossimulator-x64
+          dotnet build -c Release -r iossimulator-arm64
+          dotnet build -c Release -r ios-arm64
+          dotnet build -c Release -r android-arm64
+          dotnet build -c Release -r android-x64
+
+      - name: Run Tests
+        shell: bash
+        run: dotnet test -p:SkipNatives=true
+
+      - name: Pack Nuget Packages
+        shell: bash
+        run: |
+          dotnet pack --property:VersionSuffix=$BuildVersionSuffix -p:SkipNatives=true -p:BuildSelectorPackage=true
+          
+          if [ '${{ github.event.inputs.nuget-registry }}' == 'NuGet' ]; then
+            dotnet pack --property:VersionSuffix=$BuildVersionSuffix -p:SkipNatives=true -c Debug
+            dotnet pack --property:VersionSuffix=$BuildVersionSuffix -p:SkipNatives=true -c Release
+          else
+            dotnet pack --property:VersionSuffix=$BuildVersionSuffix --property:PackPdb=true -p:SkipNatives=true -c Debug
+            dotnet pack --property:VersionSuffix=$BuildVersionSuffix --property:PackPdb=true -p:SkipNatives=true -c Release
+          fi
+
+      - name: Upload Artifacts
+        if: matrix.os == 'macos-13'
+        uses: actions/upload-artifact@v4
+        with:
+          name: Nuget Packages
+          path: |
+            **/Box2D.NET.*.nupkg
+            **/Box2D.NET.*.snupkg
+
+      - name: Push NuGet Packages
+        if: >
+          matrix.os == 'macos-13' &&
+          github.repository_owner == 'BeanCheeseBurrito' &&
+          (
+            (github.event_name == 'workflow_dispatch' && github.event.inputs.push-packages == 'true') ||
+            (github.event_name == 'push' && github.ref == 'refs/heads/main')
+          )
+        shell: bash
+        run: |
+          if [ '${{ github.event_name }}' == 'workflow_dispatch' ]; then
+            if [ '${{ github.event.inputs.nuget-registry }}' == 'NuGet' ]; then
+              dotnet nuget push **/Box2D.NET.*.nupkg --skip-duplicate --api-key '${{ secrets.NUGET_ACCESS_TOKEN }}' --source 'https://api.nuget.org/v3/index.json'
+            elif [ '${{ github.event.inputs.nuget-registry }}' == 'GitHub' ]; then
+              dotnet nuget push **/Box2D.NET.*.nupkg --skip-duplicate --api-key '${{ secrets.GITHUB_TOKEN }}' --source 'https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json'
+            fi
+          elif [ '${{ github.ref }}' == 'refs/heads/main' ]; then
+            dotnet nuget push **/Box2D.NET.*.nupkg --skip-duplicate --api-key '${{ secrets.GITHUB_TOKEN }}' --source 'https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json'
+          fi
