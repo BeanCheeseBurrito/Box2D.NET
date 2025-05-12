@@ -11,16 +11,9 @@ BindingOptions options = new()
     SystemIncludeDirectories = { Path.Combine(BuildConstants.ZigLibPath, "include") },
     IncludeDirectories = { GetIncludeDirectory() },
 
-    TreatInputFileAsRawSourceCode = true,
     OutputFile = GetOutputDirectory(),
-    InputFile = """
-        #include <box2d/base.h>
-        #include <box2d/box2d.h>
-        #include <box2d/collision.h>
-        #include <box2d/id.h>
-        #include <box2d/math_functions.h>
-        #include <box2d/types.h>
-        """,
+    InputFile = GetInputFile(),
+    TreatInputFileAsRawSourceCode = true,
 
     GenerateDisableRuntimeMarshallingAttribute = true,
 
@@ -62,4 +55,14 @@ string GetIncludeDirectory()
 string GetOutputDirectory()
 {
     return GetCurrentFilePath() + "/../../Box2D.NET.Bindings/B2.g.cs";
+}
+
+// Generates an input file that includes all Box2D headers.
+string GetInputFile()
+{
+    IEnumerable<string> headerFiles = Directory
+        .EnumerateFiles(GetIncludeDirectory(), "*.h", SearchOption.AllDirectories)
+        .Select((string filePath) => $"#include <{Path.GetRelativePath(GetIncludeDirectory(), filePath)}>");
+
+    return string.Join('\n', headerFiles);
 }

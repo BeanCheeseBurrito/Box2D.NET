@@ -143,7 +143,7 @@
 
     <!-- Here we need host not target toolset to compile/cross-compile -->
     <ItemGroup>
-        <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.13.0.1">
+        <PackageReference Include="Vezel.Zig.Toolsets.$(HostRuntime)" Version="0.14.0.1">
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>

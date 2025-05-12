@@ -18,48 +18,28 @@ const src_flags = [_][]const u8{
 const include_paths = [_][]const u8{
     "../native/box2d/src",
     "../native/box2d/include",
-    "../native/box2d/extern/simde",
 };
 
-const src_files = [_][]const u8{
-    "../native/box2d/src/aabb.c",
-    "../native/box2d/src/allocate.c",
-    "../native/box2d/src/array.c",
-    "../native/box2d/src/bitset.c",
-    "../native/box2d/src/block_array.c",
-    "../native/box2d/src/body.c",
-    "../native/box2d/src/broad_phase.c",
-    "../native/box2d/src/constraint_graph.c",
-    "../native/box2d/src/contact.c",
-    "../native/box2d/src/contact_solver.c",
-    "../native/box2d/src/core.c",
-    "../native/box2d/src/distance.c",
-    "../native/box2d/src/distance_joint.c",
-    "../native/box2d/src/dynamic_tree.c",
-    "../native/box2d/src/geometry.c",
-    "../native/box2d/src/hull.c",
-    "../native/box2d/src/id_pool.c",
-    "../native/box2d/src/island.c",
-    "../native/box2d/src/joint.c",
-    "../native/box2d/src/manifold.c",
-    "../native/box2d/src/math_functions.c",
-    "../native/box2d/src/motor_joint.c",
-    "../native/box2d/src/mouse_joint.c",
-    "../native/box2d/src/prismatic_joint.c",
-    "../native/box2d/src/revolute_joint.c",
-    "../native/box2d/src/shape.c",
-    "../native/box2d/src/solver.c",
-    "../native/box2d/src/solver_set.c",
-    "../native/box2d/src/stack_allocator.c",
-    "../native/box2d/src/table.c",
-    "../native/box2d/src/timer.c",
-    "../native/box2d/src/types.c",
-    "../native/box2d/src/weld_joint.c",
-    "../native/box2d/src/wheel_joint.c",
-    "../native/box2d/src/world.c",
-};
+// Collect all C source files in the given directory and its subdirectories.
+fn getSourceFiles(b: *std.Build, dir_path: []const u8) !std.ArrayList([]const u8) {
+    var list = std.ArrayList([]const u8).init(b.allocator);
 
-pub fn compile(b: *Build, options: BuildOptions) void {
+    var dir = try std.fs.cwd().openDir(dir_path, .{ .iterate = true });
+    defer dir.close();
+
+    var walker = try dir.walk(b.allocator);
+    defer walker.deinit();
+
+    while (try walker.next()) |entry| {
+        if (entry.kind == .file and std.mem.endsWith(u8, entry.path, ".c")) {
+            try list.append(b.pathJoin(&.{ dir_path, entry.path }));
+        }
+    }
+
+    return list;
+}
+
+pub fn compile(b: *Build, options: BuildOptions) !void {
     const lib = switch (options.library_type) {
         .Shared => b.addSharedLibrary(.{
             .name = "box2d",
@@ -79,22 +59,25 @@ pub fn compile(b: *Build, options: BuildOptions) void {
     };
 
     if (options.optimize != .Debug) {
-        lib.defineCMacro("NDEBUG", null);
+        lib.root_module.addCMacro("NDEBUG", "");
+    }
+
+    const source_files = try getSourceFiles(b, "../native/box2d/src");
+    defer source_files.deinit();
+
+    for (source_files.items) |file| {
+        lib.addCSourceFile(.{ .file = b.path(file), .flags = &src_flags });
     }
 
     for (include_paths) |path| {
         lib.addIncludePath(b.path(path));
     }
 
-    for (src_files) |file| {
-        lib.addCSourceFile(.{ .file = b.path(file), .flags = &src_flags });
-    }
-
     switch (options.target.result.os.tag) {
         .windows => {
             // Temporary fix to get rid of undefined symbol errors when statically linking in Native AOT.
             if (options.library_type == LibraryType.Static) {
-                // lib.addCSourceFile(.{ .file = b.path("../native/windows.c"), .flags = &src_flags });
+                lib.addCSourceFile(.{ .file = b.path("../native/windows.c"), .flags = &src_flags });
             }
         },
         .ios => {
@@ -166,8 +149,8 @@ pub fn compile(b: *Build, options: BuildOptions) void {
     b.installArtifact(lib);
 }
 
-pub fn build(b: *Build) void {
-    compile(b, .{
+pub fn build(b: *Build) !void {
+    try compile(b, .{
         .optimize = b.standardOptimizeOption(.{}),
         .target = b.standardTargetOptions(.{}),
         .library_type = b.option(LibraryType, "library-type", "Compile as a static or shared library.") orelse LibraryType.Shared,
