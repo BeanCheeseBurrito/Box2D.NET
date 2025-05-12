@@ -19,7 +19,7 @@ public static unsafe class HelloWorld
         // Create a shape
         B2.Polygon box = B2.MakeBox(1, 1);
         B2.ShapeDef shapeDef = B2.DefaultShapeDef();
-        shapeDef.friction = 0.6f;
+        shapeDef.material.friction = 0.6f;
         shapeDef.density = 1.0f;
 
         B2.ShapeId shapeId = B2.CreatePolygonShape(bodyId, &shapeDef, &box);

@@ -21,9 +21,6 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_Extents")]
     public static extern Vec2 AABBExtents(AABB a);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_IsValid")]
-    public static extern bool AABBIsValid(AABB aabb);
-
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2AABB_Union")]
     public static extern AABB AABBUnion(AABB a, AABB b);
 
@@ -38,6 +35,9 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Add")]
     public static extern Vec2 Add(Vec2 a, Vec2 b);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Atan2")]
+    public static extern float Atan2(float y, float x);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_ApplyAngularImpulse")]
     public static extern void BodyApplyAngularImpulse(BodyId bodyId, float impulse, bool wake);
@@ -69,8 +69,11 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_Enable")]
     public static extern void BodyEnable(BodyId bodyId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_EnableContactEvents")]
+    public static extern void BodyEnableContactEvents(BodyId bodyId, bool flag);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_EnableHitEvents")]
-    public static extern void BodyEnableHitEvents(BodyId bodyId, bool enableHitEvents);
+    public static extern void BodyEnableHitEvents(BodyId bodyId, bool flag);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_EnableSleep")]
     public static extern void BodyEnableSleep(BodyId bodyId, bool enableSleep);
@@ -81,9 +84,6 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetAngularVelocity")]
     public static extern float BodyGetAngularVelocity(BodyId bodyId);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetAutomaticMass")]
-    public static extern bool BodyGetAutomaticMass(BodyId bodyId);
-
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetContactCapacity")]
     public static extern int BodyGetContactCapacity(BodyId bodyId);
 
@@ -92,9 +92,6 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetGravityScale")]
     public static extern float BodyGetGravityScale(BodyId bodyId);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetInertiaTensor")]
-    public static extern float BodyGetInertiaTensor(BodyId bodyId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetJointCount")]
     public static extern int BodyGetJointCount(BodyId bodyId);
@@ -114,6 +111,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetLocalPoint")]
     public static extern Vec2 BodyGetLocalPoint(BodyId bodyId, Vec2 worldPoint);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetLocalPointVelocity")]
+    public static extern Vec2 BodyGetLocalPointVelocity(BodyId bodyId, Vec2 localPoint);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetLocalVector")]
     public static extern Vec2 BodyGetLocalVector(BodyId bodyId, Vec2 worldVector);
 
@@ -123,11 +123,17 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetMassData")]
     public static extern MassData BodyGetMassData(BodyId bodyId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetName")]
+    public static extern byte* BodyGetName(BodyId bodyId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetPosition")]
     public static extern Vec2 BodyGetPosition(BodyId bodyId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetRotation")]
     public static extern Rot BodyGetRotation(BodyId bodyId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetRotationalInertia")]
+    public static extern float BodyGetRotationalInertia(BodyId bodyId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetShapeCount")]
     public static extern int BodyGetShapeCount(BodyId bodyId);
@@ -147,11 +153,17 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetUserData")]
     public static extern void* BodyGetUserData(BodyId bodyId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetWorld")]
+    public static extern WorldId BodyGetWorld(BodyId bodyId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetWorldCenterOfMass")]
     public static extern Vec2 BodyGetWorldCenterOfMass(BodyId bodyId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetWorldPoint")]
     public static extern Vec2 BodyGetWorldPoint(BodyId bodyId, Vec2 localPoint);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetWorldPointVelocity")]
+    public static extern Vec2 BodyGetWorldPointVelocity(BodyId bodyId, Vec2 worldPoint);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_GetWorldVector")]
     public static extern Vec2 BodyGetWorldVector(BodyId bodyId, Vec2 localVector);
@@ -180,9 +192,6 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetAngularVelocity")]
     public static extern void BodySetAngularVelocity(BodyId bodyId, float angularVelocity);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetAutomaticMass")]
-    public static extern void BodySetAutomaticMass(BodyId bodyId, bool automaticMass);
-
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetAwake")]
     public static extern void BodySetAwake(BodyId bodyId, bool awake);
 
@@ -204,8 +213,14 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetMassData")]
     public static extern void BodySetMassData(BodyId bodyId, MassData massData);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetName")]
+    public static extern void BodySetName(BodyId bodyId, byte* name);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetSleepThreshold")]
-    public static extern void BodySetSleepThreshold(BodyId bodyId, float sleepVelocity);
+    public static extern void BodySetSleepThreshold(BodyId bodyId, float sleepThreshold);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetTargetTransform")]
+    public static extern void BodySetTargetTransform(BodyId bodyId, Transform target, float timeStep);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetTransform")]
     public static extern void BodySetTransform(BodyId bodyId, Vec2 position, Rot rotation);
@@ -216,11 +231,32 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Body_SetUserData")]
     public static extern void BodySetUserData(BodyId bodyId, void* userData);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_GetFriction")]
+    public static extern float ChainGetFriction(ChainId chainId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_GetMaterial")]
+    public static extern int ChainGetMaterial(ChainId chainId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_GetRestitution")]
+    public static extern float ChainGetRestitution(ChainId chainId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_GetSegmentCount")]
+    public static extern int ChainGetSegmentCount(ChainId chainId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_GetSegments")]
+    public static extern int ChainGetSegments(ChainId chainId, ShapeId* segmentArray, int capacity);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_GetWorld")]
+    public static extern WorldId ChainGetWorld(ChainId chainId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_IsValid")]
     public static extern bool ChainIsValid(ChainId id);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_SetFriction")]
     public static extern void ChainSetFriction(ChainId chainId, float friction);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_SetMaterial")]
+    public static extern void ChainSetMaterial(ChainId chainId, int material);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Chain_SetRestitution")]
     public static extern void ChainSetRestitution(ChainId chainId, float restitution);
@@ -234,11 +270,23 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ClampInt")]
     public static extern int ClampInt(int a, int lower, int upper);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ClipVector")]
+    public static extern Vec2 ClipVector(Vec2 vector, CollisionPlane* planes, int count);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideCapsuleAndCircle")]
     public static extern Manifold CollideCapsuleAndCircle(Capsule* capsuleA, Transform xfA, Circle* circleB, Transform xfB);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideCapsules")]
     public static extern Manifold CollideCapsules(Capsule* capsuleA, Transform xfA, Capsule* capsuleB, Transform xfB);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideChainSegmentAndCapsule")]
+    public static extern Manifold CollideChainSegmentAndCapsule(ChainSegment* segmentA, Transform xfA, Capsule* capsuleB, Transform xfB, SimplexCache* cache);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideChainSegmentAndCircle")]
+    public static extern Manifold CollideChainSegmentAndCircle(ChainSegment* segmentA, Transform xfA, Circle* circleB, Transform xfB);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideChainSegmentAndPolygon")]
+    public static extern Manifold CollideChainSegmentAndPolygon(ChainSegment* segmentA, Transform xfA, Polygon* polygonB, Transform xfB, SimplexCache* cache);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideCircles")]
     public static extern Manifold CollideCircles(Circle* circleA, Transform xfA, Circle* circleB, Transform xfB);
@@ -261,15 +309,6 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSegmentAndPolygon")]
     public static extern Manifold CollideSegmentAndPolygon(Segment* segmentA, Transform xfA, Polygon* polygonB, Transform xfB);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndCapsule")]
-    public static extern Manifold CollideSmoothSegmentAndCapsule(SmoothSegment* smoothSegmentA, Transform xfA, Capsule* capsuleB, Transform xfB, DistanceCache* cache);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndCircle")]
-    public static extern Manifold CollideSmoothSegmentAndCircle(SmoothSegment* smoothSegmentA, Transform xfA, Circle* circleB, Transform xfB);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CollideSmoothSegmentAndPolygon")]
-    public static extern Manifold CollideSmoothSegmentAndPolygon(SmoothSegment* smoothSegmentA, Transform xfA, Polygon* polygonB, Transform xfB, DistanceCache* cache);
-
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeAngularVelocity")]
     public static extern float ComputeAngularVelocity(Rot q1, Rot q2, float inv_h);
 
@@ -285,6 +324,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeCircleMass")]
     public static extern MassData ComputeCircleMass(Circle* shape, float density);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeCosSin")]
+    public static extern CosSin ComputeCosSin(float radians);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeHull")]
     public static extern Hull ComputeHull(Vec2* points, int count);
 
@@ -293,6 +335,9 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputePolygonMass")]
     public static extern MassData ComputePolygonMass(Polygon* shape, float density);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeRotationBetweenUnitVectors")]
+    public static extern Rot ComputeRotationBetweenUnitVectors(Vec2 v1, Vec2 v2);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ComputeSegmentAABB")]
     public static extern AABB ComputeSegmentAABB(Segment* shape, Transform transform);
@@ -312,6 +357,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateDistanceJoint")]
     public static extern JointId CreateDistanceJoint(WorldId worldId, DistanceJointDef* def);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateFilterJoint")]
+    public static extern JointId CreateFilterJoint(WorldId worldId, FilterJointDef* def);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateMotorJoint")]
     public static extern JointId CreateMotorJoint(WorldId worldId, MotorJointDef* def);
 
@@ -329,9 +377,6 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateSegmentShape")]
     public static extern ShapeId CreateSegmentShape(BodyId bodyId, ShapeDef* def, Segment* segment);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateTimer")]
-    public static extern Timer CreateTimer();
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2CreateWeldJoint")]
     public static extern JointId CreateWeldJoint(WorldId worldId, WeldJointDef* def);
@@ -357,11 +402,20 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultChainDef")]
     public static extern ChainDef DefaultChainDef();
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultDebugDraw")]
+    public static extern DebugDraw DefaultDebugDraw();
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultDistanceJointDef")]
     public static extern DistanceJointDef DefaultDistanceJointDef();
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultExplosionDef")]
+    public static extern ExplosionDef DefaultExplosionDef();
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultFilter")]
     public static extern Filter DefaultFilter();
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultFilterJointDef")]
+    public static extern FilterJointDef DefaultFilterJointDef();
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultMotorJointDef")]
     public static extern MotorJointDef DefaultMotorJointDef();
@@ -380,6 +434,9 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultShapeDef")]
     public static extern ShapeDef DefaultShapeDef();
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultSurfaceMaterial")]
+    public static extern SurfaceMaterial DefaultSurfaceMaterial();
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DefaultWeldJointDef")]
     public static extern WeldJointDef DefaultWeldJointDef();
@@ -400,7 +457,7 @@ public static unsafe partial class B2
     public static extern void DestroyJoint(JointId jointId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DestroyShape")]
-    public static extern void DestroyShape(ShapeId shapeId);
+    public static extern void DestroyShape(ShapeId shapeId, bool updateBodyMass);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DestroyWorld")]
     public static extern void DestroyWorld(WorldId worldId);
@@ -420,12 +477,6 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetCurrentLength")]
     public static extern float DistanceJointGetCurrentLength(JointId jointId);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetDampingRatio")]
-    public static extern float DistanceJointGetDampingRatio(JointId jointId);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetHertz")]
-    public static extern float DistanceJointGetHertz(JointId jointId);
-
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetLength")]
     public static extern float DistanceJointGetLength(JointId jointId);
 
@@ -443,6 +494,12 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetMotorSpeed")]
     public static extern float DistanceJointGetMotorSpeed(JointId jointId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetSpringDampingRatio")]
+    public static extern float DistanceJointGetSpringDampingRatio(JointId jointId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_GetSpringHertz")]
+    public static extern float DistanceJointGetSpringHertz(JointId jointId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DistanceJoint_IsLimitEnabled")]
     public static extern bool DistanceJointIsLimitEnabled(JointId jointId);
@@ -481,7 +538,7 @@ public static unsafe partial class B2
     public static extern DynamicTree DynamicTreeCreate();
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_CreateProxy")]
-    public static extern int DynamicTreeCreateProxy(DynamicTree* tree, AABB aabb, uint categoryBits, int userData);
+    public static extern int DynamicTreeCreateProxy(DynamicTree* tree, AABB aabb, ulong categoryBits, ulong userData);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Destroy")]
     public static extern void DynamicTreeDestroy(DynamicTree* tree);
@@ -501,41 +558,44 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetByteCount")]
     public static extern int DynamicTreeGetByteCount(DynamicTree* tree);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetCategoryBits")]
+    public static extern ulong DynamicTreeGetCategoryBits(DynamicTree* tree, int proxyId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetHeight")]
     public static extern int DynamicTreeGetHeight(DynamicTree* tree);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetMaxBalance")]
-    public static extern int DynamicTreeGetMaxBalance(DynamicTree* tree);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetProxyCount")]
     public static extern int DynamicTreeGetProxyCount(DynamicTree* tree);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetRootBounds")]
+    public static extern AABB DynamicTreeGetRootBounds(DynamicTree* tree);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_GetUserData")]
-    public static extern int DynamicTreeGetUserData(DynamicTree* tree, int proxyId);
+    public static extern ulong DynamicTreeGetUserData(DynamicTree* tree, int proxyId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_MoveProxy")]
     public static extern void DynamicTreeMoveProxy(DynamicTree* tree, int proxyId, AABB aabb);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Query")]
-    public static extern void DynamicTreeQuery(DynamicTree* tree, AABB aabb, uint maskBits, delegate* unmanaged<int, int, void*, bool> callback, void* context);
+    public static extern TreeStats DynamicTreeQuery(DynamicTree* tree, AABB aabb, ulong maskBits, delegate* unmanaged<int, ulong, void*, bool> callback, void* context);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_RayCast")]
-    public static extern void DynamicTreeRayCast(DynamicTree* tree, RayCastInput* input, uint maskBits, delegate* unmanaged<RayCastInput*, int, int, void*, float> callback, void* context);
+    public static extern TreeStats DynamicTreeRayCast(DynamicTree* tree, RayCastInput* input, ulong maskBits, delegate* unmanaged<RayCastInput*, int, ulong, void*, float> callback, void* context);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Rebuild")]
     public static extern int DynamicTreeRebuild(DynamicTree* tree, bool fullBuild);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_RebuildBottomUp")]
-    public static extern void DynamicTreeRebuildBottomUp(DynamicTree* tree);
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_SetCategoryBits")]
+    public static extern void DynamicTreeSetCategoryBits(DynamicTree* tree, int proxyId, ulong categoryBits);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_ShapeCast")]
-    public static extern void DynamicTreeShapeCast(DynamicTree* tree, ShapeCastInput* input, uint maskBits, delegate* unmanaged<ShapeCastInput*, int, int, void*, float> callback, void* context);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_ShiftOrigin")]
-    public static extern void DynamicTreeShiftOrigin(DynamicTree* tree, Vec2 newOrigin);
+    public static extern TreeStats DynamicTreeShapeCast(DynamicTree* tree, ShapeCastInput* input, ulong maskBits, delegate* unmanaged<ShapeCastInput*, int, ulong, void*, float> callback, void* context);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_Validate")]
     public static extern void DynamicTreeValidate(DynamicTree* tree);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2DynamicTree_ValidateNoEnlarged")]
+    public static extern void DynamicTreeValidateNoEnlarged(DynamicTree* tree);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetByteCount")]
     public static extern int GetByteCount();
@@ -550,22 +610,28 @@ public static unsafe partial class B2
     public static extern float GetLengthUnitsPerMeter();
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetMilliseconds")]
-    public static extern float GetMilliseconds(Timer* timer);
+    public static extern float GetMilliseconds(ulong ticks);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetMillisecondsAndReset")]
-    public static extern float GetMillisecondsAndReset(Timer* timer);
+    public static extern float GetMillisecondsAndReset(ulong* ticks);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetSweepTransform")]
     public static extern Transform GetSweepTransform(Sweep* sweep, float time);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetTicks")]
-    public static extern long GetTicks(Timer* timer);
+    public static extern ulong GetTicks();
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2GetVersion")]
     public static extern Version GetVersion();
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Hash")]
+    public static extern uint Hash(uint hash, byte* data, int count);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IntegrateRotation")]
     public static extern Rot IntegrateRotation(Rot q1, float deltaAngle);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2InternalAssertFcn")]
+    public static extern int InternalAssertFcn(byte* condition, byte* fileName, int lineNumber);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2InvMulRot")]
     public static extern Rot InvMulRot(Rot q, Rot r);
@@ -580,13 +646,28 @@ public static unsafe partial class B2
     public static extern Vec2 InvTransformPoint(Transform t, Vec2 p);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsNormalized")]
-    public static extern bool IsNormalized(Rot q);
+    public static extern bool IsNormalized(Vec2 a);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValid")]
-    public static extern bool IsValid(float a);
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsNormalizedRot")]
+    public static extern bool IsNormalizedRot(Rot q);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidAABB")]
+    public static extern bool IsValidAABB(AABB aabb);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidFloat")]
+    public static extern bool IsValidFloat(float a);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidPlane")]
+    public static extern bool IsValidPlane(Plane a);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidRay")]
     public static extern bool IsValidRay(RayCastInput* input);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidRotation")]
+    public static extern bool IsValidRotation(Rot q);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2IsValidVec2")]
+    public static extern bool IsValidVec2(Vec2 v);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetBodyA")]
     public static extern BodyId JointGetBodyA(JointId jointId);
@@ -615,6 +696,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetUserData")]
     public static extern void* JointGetUserData(JointId jointId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_GetWorld")]
+    public static extern WorldId JointGetWorld(JointId jointId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Joint_IsValid")]
     public static extern bool JointIsValid(JointId id);
 
@@ -639,29 +723,53 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Lerp")]
     public static extern Vec2 Lerp(Vec2 a, Vec2 b, float t);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LoadBodyId")]
+    public static extern BodyId LoadBodyId(ulong x);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LoadChainId")]
+    public static extern ChainId LoadChainId(ulong x);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LoadJointId")]
+    public static extern JointId LoadJointId(ulong x);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2LoadShapeId")]
+    public static extern ShapeId LoadShapeId(ulong x);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeAABB")]
+    public static extern AABB MakeAABB(Vec2* points, int count, float radius);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeBox")]
-    public static extern Polygon MakeBox(float hx, float hy);
+    public static extern Polygon MakeBox(float halfWidth, float halfHeight);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeOffsetBox")]
-    public static extern Polygon MakeOffsetBox(float hx, float hy, Vec2 center, float angle);
+    public static extern Polygon MakeOffsetBox(float halfWidth, float halfHeight, Vec2 center, Rot rotation);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeOffsetPolygon")]
-    public static extern Polygon MakeOffsetPolygon(Hull* hull, float radius, Transform transform);
+    public static extern Polygon MakeOffsetPolygon(Hull* hull, Vec2 position, Rot rotation);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeOffsetProxy")]
+    public static extern ShapeProxy MakeOffsetProxy(Vec2* points, int count, float radius, Vec2 position, Rot rotation);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeOffsetRoundedBox")]
+    public static extern Polygon MakeOffsetRoundedBox(float halfWidth, float halfHeight, Vec2 center, Rot rotation, float radius);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeOffsetRoundedPolygon")]
+    public static extern Polygon MakeOffsetRoundedPolygon(Hull* hull, Vec2 position, Rot rotation, float radius);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakePolygon")]
     public static extern Polygon MakePolygon(Hull* hull, float radius);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeProxy")]
-    public static extern DistanceProxy MakeProxy(Vec2* vertices, int count, float radius);
+    public static extern ShapeProxy MakeProxy(Vec2* points, int count, float radius);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeRot")]
-    public static extern Rot MakeRot(float angle);
+    public static extern Rot MakeRot(float radians);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeRoundedBox")]
-    public static extern Polygon MakeRoundedBox(float hx, float hy, float radius);
+    public static extern Polygon MakeRoundedBox(float halfWidth, float halfHeight, float radius);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2MakeSquare")]
-    public static extern Polygon MakeSquare(float h);
+    public static extern Polygon MakeSquare(float halfWidth);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Max")]
     public static extern Vec2 Max(Vec2 a, Vec2 b);
@@ -765,11 +873,11 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Normalize")]
     public static extern Vec2 Normalize(Vec2 v);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2NormalizeChecked")]
-    public static extern Vec2 NormalizeChecked(Vec2 v);
-
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2NormalizeRot")]
     public static extern Rot NormalizeRot(Rot q);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PlaneSeparation")]
+    public static extern float PlaneSeparation(Plane plane, Vec2 point);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PointInCapsule")]
     public static extern bool PointInCapsule(Vec2 point, Capsule* shape);
@@ -801,11 +909,17 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetMotorSpeed")]
     public static extern float PrismaticJointGetMotorSpeed(JointId jointId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetSpeed")]
+    public static extern float PrismaticJointGetSpeed(JointId jointId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetSpringDampingRatio")]
     public static extern float PrismaticJointGetSpringDampingRatio(JointId jointId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetSpringHertz")]
     public static extern float PrismaticJointGetSpringHertz(JointId jointId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetTranslation")]
+    public static extern float PrismaticJointGetTranslation(JointId jointId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2PrismaticJoint_GetUpperLimit")]
     public static extern float PrismaticJointGetUpperLimit(JointId jointId);
@@ -888,6 +1002,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_IsMotorEnabled")]
     public static extern bool RevoluteJointIsMotorEnabled(JointId jointId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_IsSpringEnabled")]
+    public static extern bool RevoluteJointIsSpringEnabled(JointId jointId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RevoluteJoint_SetLimits")]
     public static extern void RevoluteJointSetLimits(JointId jointId, float lower, float upper);
 
@@ -914,9 +1031,6 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Rot_GetYAxis")]
     public static extern Vec2 RotGetYAxis(Rot q);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Rot_IsValid")]
-    public static extern bool RotIsValid(Rot q);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2RotateVector")]
     public static extern Vec2 RotateVector(Rot q, Vec2 v);
@@ -966,6 +1080,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetCapsule")]
     public static extern Capsule ShapeGetCapsule(ShapeId shapeId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetChainSegment")]
+    public static extern ChainSegment ShapeGetChainSegment(ShapeId shapeId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetCircle")]
     public static extern Circle ShapeGetCircle(ShapeId shapeId);
 
@@ -987,6 +1104,12 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetFriction")]
     public static extern float ShapeGetFriction(ShapeId shapeId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetMassData")]
+    public static extern MassData ShapeGetMassData(ShapeId shapeId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetMaterial")]
+    public static extern int ShapeGetMaterial(ShapeId shapeId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetParentChain")]
     public static extern ChainId ShapeGetParentChain(ShapeId shapeId);
 
@@ -999,14 +1122,20 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetSegment")]
     public static extern Segment ShapeGetSegment(ShapeId shapeId);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetSmoothSegment")]
-    public static extern SmoothSegment ShapeGetSmoothSegment(ShapeId shapeId);
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetSensorCapacity")]
+    public static extern int ShapeGetSensorCapacity(ShapeId shapeId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetSensorOverlaps")]
+    public static extern int ShapeGetSensorOverlaps(ShapeId shapeId, ShapeId* overlaps, int capacity);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetType")]
     public static extern ShapeType ShapeGetType(ShapeId shapeId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetUserData")]
     public static extern void* ShapeGetUserData(ShapeId shapeId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_GetWorld")]
+    public static extern WorldId ShapeGetWorld(ShapeId shapeId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_IsSensor")]
     public static extern bool ShapeIsSensor(ShapeId shapeId);
@@ -1015,7 +1144,7 @@ public static unsafe partial class B2
     public static extern bool ShapeIsValid(ShapeId id);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_RayCast")]
-    public static extern CastOutput ShapeRayCast(ShapeId shapeId, Vec2 origin, Vec2 translation);
+    public static extern CastOutput ShapeRayCast(ShapeId shapeId, RayCastInput* input);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetCapsule")]
     public static extern void ShapeSetCapsule(ShapeId shapeId, Capsule* capsule);
@@ -1024,13 +1153,16 @@ public static unsafe partial class B2
     public static extern void ShapeSetCircle(ShapeId shapeId, Circle* circle);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetDensity")]
-    public static extern void ShapeSetDensity(ShapeId shapeId, float density);
+    public static extern void ShapeSetDensity(ShapeId shapeId, float density, bool updateBodyMass);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetFilter")]
     public static extern void ShapeSetFilter(ShapeId shapeId, Filter filter);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetFriction")]
     public static extern void ShapeSetFriction(ShapeId shapeId, float friction);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetMaterial")]
+    public static extern void ShapeSetMaterial(ShapeId shapeId, int material);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Shape_SetPolygon")]
     public static extern void ShapeSetPolygon(ShapeId shapeId, Polygon* polygon);
@@ -1063,13 +1195,25 @@ public static unsafe partial class B2
     public static extern CastOutput ShapeCastSegment(ShapeCastInput* input, Segment* shape);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ShapeDistance")]
-    public static extern DistanceOutput ShapeDistance(DistanceCache* cache, DistanceInput* input, Simplex* simplexes, int simplexCapacity);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SleepMilliseconds")]
-    public static extern void SleepMilliseconds(int milliseconds);
+    public static extern DistanceOutput ShapeDistance(DistanceInput* input, SimplexCache* cache, Simplex* simplexes, int simplexCapacity);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Solve22")]
     public static extern Vec2 Solve22(Mat22 A, Vec2 b);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2SolvePlanes")]
+    public static extern PlaneSolverResult SolvePlanes(Vec2 position, CollisionPlane* planes, int count);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2StoreBodyId")]
+    public static extern ulong StoreBodyId(BodyId id);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2StoreChainId")]
+    public static extern ulong StoreChainId(ChainId id);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2StoreJointId")]
+    public static extern ulong StoreJointId(JointId id);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2StoreShapeId")]
+    public static extern ulong StoreShapeId(ShapeId id);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Sub")]
     public static extern Vec2 Sub(Vec2 a, Vec2 b);
@@ -1084,13 +1228,13 @@ public static unsafe partial class B2
     public static extern Polygon TransformPolygon(Transform transform, Polygon* polygon);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2UnwindAngle")]
-    public static extern float UnwindAngle(float angle);
+    public static extern float UnwindAngle(float radians);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2UnwindLargeAngle")]
+    public static extern float UnwindLargeAngle(float radians);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2ValidateHull")]
     public static extern bool ValidateHull(Hull* hull);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2Vec2_IsValid")]
-    public static extern bool Vec2IsValid(Vec2 v);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetAngularDampingRatio")]
     public static extern float WeldJointGetAngularDampingRatio(JointId jointId);
@@ -1104,6 +1248,9 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetLinearHertz")]
     public static extern float WeldJointGetLinearHertz(JointId jointId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_GetReferenceAngle")]
+    public static extern float WeldJointGetReferenceAngle(JointId jointId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetAngularDampingRatio")]
     public static extern void WeldJointSetAngularDampingRatio(JointId jointId, float dampingRatio);
 
@@ -1115,6 +1262,9 @@ public static unsafe partial class B2
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetLinearHertz")]
     public static extern void WeldJointSetLinearHertz(JointId jointId, float hertz);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WeldJoint_SetReferenceAngle")]
+    public static extern void WeldJointSetReferenceAngle(JointId jointId, float angleInRadians);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_EnableLimit")]
     public static extern void WheelJointEnableLimit(JointId jointId, bool enableLimit);
@@ -1170,20 +1320,20 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2WheelJoint_SetSpringHertz")]
     public static extern void WheelJointSetSpringHertz(JointId jointId, float hertz);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastCapsule")]
-    public static extern void WorldCastCapsule(WorldId worldId, Capsule* capsule, Transform originTransform, Vec2 translation, QueryFilter filter, delegate* unmanaged<ShapeId, Vec2, Vec2, float, void*, float> fcn, void* context);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastCircle")]
-    public static extern void WorldCastCircle(WorldId worldId, Circle* circle, Transform originTransform, Vec2 translation, QueryFilter filter, delegate* unmanaged<ShapeId, Vec2, Vec2, float, void*, float> fcn, void* context);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastPolygon")]
-    public static extern void WorldCastPolygon(WorldId worldId, Polygon* polygon, Transform originTransform, Vec2 translation, QueryFilter filter, delegate* unmanaged<ShapeId, Vec2, Vec2, float, void*, float> fcn, void* context);
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastMover")]
+    public static extern float WorldCastMover(WorldId worldId, Capsule* mover, Vec2 translation, QueryFilter filter);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastRay")]
-    public static extern void WorldCastRay(WorldId worldId, Vec2 origin, Vec2 translation, QueryFilter filter, delegate* unmanaged<ShapeId, Vec2, Vec2, float, void*, float> fcn, void* context);
+    public static extern TreeStats WorldCastRay(WorldId worldId, Vec2 origin, Vec2 translation, QueryFilter filter, delegate* unmanaged<ShapeId, Vec2, Vec2, float, void*, float> fcn, void* context);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastRayClosest")]
     public static extern RayResult WorldCastRayClosest(WorldId worldId, Vec2 origin, Vec2 translation, QueryFilter filter);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CastShape")]
+    public static extern TreeStats WorldCastShape(WorldId worldId, ShapeProxy* proxy, Vec2 translation, QueryFilter filter, delegate* unmanaged<ShapeId, Vec2, Vec2, float, void*, float> fcn, void* context);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_CollideMover")]
+    public static extern void WorldCollideMover(WorldId worldId, Capsule* mover, QueryFilter filter, delegate* unmanaged<ShapeId, PlaneResult*, void*, bool> fcn, void* context);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_Draw")]
     public static extern void WorldDraw(WorldId worldId, DebugDraw* draw);
@@ -1197,11 +1347,17 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_EnableSleeping")]
     public static extern void WorldEnableSleeping(WorldId worldId, bool flag);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_EnableSpeculative")]
+    public static extern void WorldEnableSpeculative(WorldId worldId, bool flag);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_EnableWarmStarting")]
     public static extern void WorldEnableWarmStarting(WorldId worldId, bool flag);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_Explode")]
-    public static extern void WorldExplode(WorldId worldId, Vec2 position, float radius, float impulse);
+    public static extern void WorldExplode(WorldId worldId, ExplosionDef* explosionDef);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetAwakeBodyCount")]
+    public static extern int WorldGetAwakeBodyCount(WorldId worldId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetBodyEvents")]
     public static extern BodyEvents WorldGetBodyEvents(WorldId worldId);
@@ -1215,32 +1371,53 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetGravity")]
     public static extern Vec2 WorldGetGravity(WorldId worldId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetHitEventThreshold")]
+    public static extern float WorldGetHitEventThreshold(WorldId worldId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetMaximumLinearSpeed")]
+    public static extern float WorldGetMaximumLinearSpeed(WorldId worldId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetProfile")]
     public static extern Profile WorldGetProfile(WorldId worldId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetRestitutionThreshold")]
+    public static extern float WorldGetRestitutionThreshold(WorldId worldId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetSensorEvents")]
     public static extern SensorEvents WorldGetSensorEvents(WorldId worldId);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_GetUserData")]
+    public static extern void* WorldGetUserData(WorldId worldId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_IsContinuousEnabled")]
+    public static extern bool WorldIsContinuousEnabled(WorldId worldId);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_IsSleepingEnabled")]
+    public static extern bool WorldIsSleepingEnabled(WorldId worldId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_IsValid")]
     public static extern bool WorldIsValid(WorldId id);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_IsWarmStartingEnabled")]
+    public static extern bool WorldIsWarmStartingEnabled(WorldId worldId);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapAABB")]
-    public static extern void WorldOverlapAABB(WorldId worldId, AABB aabb, QueryFilter filter, delegate* unmanaged<ShapeId, void*, bool> fcn, void* context);
+    public static extern TreeStats WorldOverlapAABB(WorldId worldId, AABB aabb, QueryFilter filter, delegate* unmanaged<ShapeId, void*, bool> fcn, void* context);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapCapsule")]
-    public static extern void WorldOverlapCapsule(WorldId worldId, Capsule* capsule, Transform transform, QueryFilter filter, delegate* unmanaged<ShapeId, void*, bool> fcn, void* context);
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapShape")]
+    public static extern TreeStats WorldOverlapShape(WorldId worldId, ShapeProxy* proxy, QueryFilter filter, delegate* unmanaged<ShapeId, void*, bool> fcn, void* context);
 
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapCircle")]
-    public static extern void WorldOverlapCircle(WorldId worldId, Circle* circle, Transform transform, QueryFilter filter, delegate* unmanaged<ShapeId, void*, bool> fcn, void* context);
-
-    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_OverlapPolygon")]
-    public static extern void WorldOverlapPolygon(WorldId worldId, Polygon* polygon, Transform transform, QueryFilter filter, delegate* unmanaged<ShapeId, void*, bool> fcn, void* context);
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_RebuildStaticTree")]
+    public static extern void WorldRebuildStaticTree(WorldId worldId);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetContactTuning")]
-    public static extern void WorldSetContactTuning(WorldId worldId, float hertz, float dampingRatio, float pushVelocity);
+    public static extern void WorldSetContactTuning(WorldId worldId, float hertz, float dampingRatio, float pushSpeed);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetCustomFilterCallback")]
     public static extern void WorldSetCustomFilterCallback(WorldId worldId, delegate* unmanaged<ShapeId, ShapeId, void*, bool> fcn, void* context);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetFrictionCallback")]
+    public static extern void WorldSetFrictionCallback(WorldId worldId, delegate* unmanaged<float, int, float, int, float> callback);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetGravity")]
     public static extern void WorldSetGravity(WorldId worldId, Vec2 gravity);
@@ -1248,11 +1425,23 @@ public static unsafe partial class B2
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetHitEventThreshold")]
     public static extern void WorldSetHitEventThreshold(WorldId worldId, float value);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetJointTuning")]
+    public static extern void WorldSetJointTuning(WorldId worldId, float hertz, float dampingRatio);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetMaximumLinearSpeed")]
+    public static extern void WorldSetMaximumLinearSpeed(WorldId worldId, float maximumLinearSpeed);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetPreSolveCallback")]
     public static extern void WorldSetPreSolveCallback(WorldId worldId, delegate* unmanaged<ShapeId, ShapeId, Manifold*, void*, bool> fcn, void* context);
 
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetRestitutionCallback")]
+    public static extern void WorldSetRestitutionCallback(WorldId worldId, delegate* unmanaged<float, int, float, int, float> callback);
+
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetRestitutionThreshold")]
     public static extern void WorldSetRestitutionThreshold(WorldId worldId, float value);
+
+    [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_SetUserData")]
+    public static extern void WorldSetUserData(WorldId worldId, void* userData);
 
     [DllImport(BindgenInternal.DllImportPath, EntryPoint = "b2World_Step")]
     public static extern void WorldStep(WorldId worldId, float timeStep, int subStepCount);
@@ -1293,7 +1482,7 @@ public static unsafe partial class B2
         colorCyan = 65535,
         colorDarkBlue = 139,
         colorDarkCyan = 35723,
-        colorDarkGoldenrod = 12092939,
+        colorDarkGoldenRod = 12092939,
         colorDarkGray = 11119017,
         colorDarkGreen = 25600,
         colorDarkKhaki = 12433259,
@@ -1312,27 +1501,18 @@ public static unsafe partial class B2
         colorDeepSkyBlue = 49151,
         colorDimGray = 6908265,
         colorDodgerBlue = 2003199,
-        colorFirebrick = 11674146,
+        colorFireBrick = 11674146,
         colorFloralWhite = 16775920,
         colorForestGreen = 2263842,
         colorFuchsia = 16711935,
         colorGainsboro = 14474460,
         colorGhostWhite = 16316671,
         colorGold = 16766720,
-        colorGoldenrod = 14329120,
-        colorGray = 12500670,
-        colorGray1 = 1710618,
-        colorGray2 = 3355443,
-        colorGray3 = 5066061,
-        colorGray4 = 6710886,
-        colorGray5 = 8355711,
-        colorGray6 = 10066329,
-        colorGray7 = 11776947,
-        colorGray8 = 13421772,
-        colorGray9 = 15066597,
-        colorGreen = 65280,
+        colorGoldenRod = 14329120,
+        colorGray = 8421504,
+        colorGreen = 32768,
         colorGreenYellow = 11403055,
-        colorHoneydew = 15794160,
+        colorHoneyDew = 15794160,
         colorHotPink = 16738740,
         colorIndianRed = 13458524,
         colorIndigo = 4915330,
@@ -1345,15 +1525,13 @@ public static unsafe partial class B2
         colorLightBlue = 11393254,
         colorLightCoral = 15761536,
         colorLightCyan = 14745599,
-        colorLightGoldenrod = 15654274,
-        colorLightGoldenrodYellow = 16448210,
+        colorLightGoldenRodYellow = 16448210,
         colorLightGray = 13882323,
         colorLightGreen = 9498256,
         colorLightPink = 16758465,
         colorLightSalmon = 16752762,
         colorLightSeaGreen = 2142890,
         colorLightSkyBlue = 8900346,
-        colorLightSlateBlue = 8679679,
         colorLightSlateGray = 7833753,
         colorLightSteelBlue = 11584734,
         colorLightYellow = 16777184,
@@ -1361,8 +1539,8 @@ public static unsafe partial class B2
         colorLimeGreen = 3329330,
         colorLinen = 16445670,
         colorMagenta = 16711935,
-        colorMaroon = 11546720,
-        colorMediumAquamarine = 6737322,
+        colorMaroon = 8388608,
+        colorMediumAquaMarine = 6737322,
         colorMediumBlue = 205,
         colorMediumOrchid = 12211667,
         colorMediumPurple = 9662683,
@@ -1377,14 +1555,13 @@ public static unsafe partial class B2
         colorMoccasin = 16770229,
         colorNavajoWhite = 16768685,
         colorNavy = 128,
-        colorNavyBlue = 128,
         colorOldLace = 16643558,
         colorOlive = 8421376,
         colorOliveDrab = 7048739,
         colorOrange = 16753920,
         colorOrangeRed = 16729344,
         colorOrchid = 14315734,
-        colorPaleGoldenrod = 15657130,
+        colorPaleGoldenRod = 15657130,
         colorPaleGreen = 10025880,
         colorPaleTurquoise = 11529966,
         colorPaleVioletRed = 14381203,
@@ -1394,7 +1571,7 @@ public static unsafe partial class B2
         colorPink = 16761035,
         colorPlum = 14524637,
         colorPowderBlue = 11591910,
-        colorPurple = 10494192,
+        colorPurple = 8388736,
         colorRebeccaPurple = 6697881,
         colorRed = 16711680,
         colorRosyBrown = 12357519,
@@ -1403,7 +1580,7 @@ public static unsafe partial class B2
         colorSalmon = 16416882,
         colorSandyBrown = 16032864,
         colorSeaGreen = 3050327,
-        colorSeashell = 16774638,
+        colorSeaShell = 16774638,
         colorSienna = 10506797,
         colorSilver = 12632256,
         colorSkyBlue = 8900331,
@@ -1418,7 +1595,6 @@ public static unsafe partial class B2
         colorTomato = 16737095,
         colorTurquoise = 4251856,
         colorViolet = 15631086,
-        colorVioletRed = 13639824,
         colorWheat = 16113331,
         colorWhite = 16777215,
         colorWhiteSmoke = 16119285,
@@ -1433,12 +1609,13 @@ public static unsafe partial class B2
     public enum JointType : uint
     {
         distanceJoint = 0,
-        motorJoint = 1,
-        mouseJoint = 2,
-        prismaticJoint = 3,
-        revoluteJoint = 4,
-        weldJoint = 5,
-        wheelJoint = 6
+        filterJoint = 1,
+        motorJoint = 2,
+        mouseJoint = 3,
+        prismaticJoint = 4,
+        revoluteJoint = 5,
+        weldJoint = 6,
+        wheelJoint = 7
     }
 
     public enum ShapeType : uint
@@ -1447,7 +1624,7 @@ public static unsafe partial class B2
         capsuleShape = 1,
         segmentShape = 2,
         polygonShape = 3,
-        smoothSegmentShape = 4,
+        chainSegmentShape = 4,
         shapeTypeCount = 5
     }
 
@@ -1514,7 +1691,7 @@ public static unsafe partial class B2
 
     public const HexColor colorDarkCyan = HexColor.colorDarkCyan;
 
-    public const HexColor colorDarkGoldenrod = HexColor.colorDarkGoldenrod;
+    public const HexColor colorDarkGoldenRod = HexColor.colorDarkGoldenRod;
 
     public const HexColor colorDarkGray = HexColor.colorDarkGray;
 
@@ -1552,7 +1729,7 @@ public static unsafe partial class B2
 
     public const HexColor colorDodgerBlue = HexColor.colorDodgerBlue;
 
-    public const HexColor colorFirebrick = HexColor.colorFirebrick;
+    public const HexColor colorFireBrick = HexColor.colorFireBrick;
 
     public const HexColor colorFloralWhite = HexColor.colorFloralWhite;
 
@@ -1566,33 +1743,15 @@ public static unsafe partial class B2
 
     public const HexColor colorGold = HexColor.colorGold;
 
-    public const HexColor colorGoldenrod = HexColor.colorGoldenrod;
+    public const HexColor colorGoldenRod = HexColor.colorGoldenRod;
 
     public const HexColor colorGray = HexColor.colorGray;
-
-    public const HexColor colorGray1 = HexColor.colorGray1;
-
-    public const HexColor colorGray2 = HexColor.colorGray2;
-
-    public const HexColor colorGray3 = HexColor.colorGray3;
-
-    public const HexColor colorGray4 = HexColor.colorGray4;
-
-    public const HexColor colorGray5 = HexColor.colorGray5;
-
-    public const HexColor colorGray6 = HexColor.colorGray6;
-
-    public const HexColor colorGray7 = HexColor.colorGray7;
-
-    public const HexColor colorGray8 = HexColor.colorGray8;
-
-    public const HexColor colorGray9 = HexColor.colorGray9;
 
     public const HexColor colorGreen = HexColor.colorGreen;
 
     public const HexColor colorGreenYellow = HexColor.colorGreenYellow;
 
-    public const HexColor colorHoneydew = HexColor.colorHoneydew;
+    public const HexColor colorHoneyDew = HexColor.colorHoneyDew;
 
     public const HexColor colorHotPink = HexColor.colorHotPink;
 
@@ -1618,9 +1777,7 @@ public static unsafe partial class B2
 
     public const HexColor colorLightCyan = HexColor.colorLightCyan;
 
-    public const HexColor colorLightGoldenrod = HexColor.colorLightGoldenrod;
-
-    public const HexColor colorLightGoldenrodYellow = HexColor.colorLightGoldenrodYellow;
+    public const HexColor colorLightGoldenRodYellow = HexColor.colorLightGoldenRodYellow;
 
     public const HexColor colorLightGray = HexColor.colorLightGray;
 
@@ -1633,8 +1790,6 @@ public static unsafe partial class B2
     public const HexColor colorLightSeaGreen = HexColor.colorLightSeaGreen;
 
     public const HexColor colorLightSkyBlue = HexColor.colorLightSkyBlue;
-
-    public const HexColor colorLightSlateBlue = HexColor.colorLightSlateBlue;
 
     public const HexColor colorLightSlateGray = HexColor.colorLightSlateGray;
 
@@ -1652,7 +1807,7 @@ public static unsafe partial class B2
 
     public const HexColor colorMaroon = HexColor.colorMaroon;
 
-    public const HexColor colorMediumAquamarine = HexColor.colorMediumAquamarine;
+    public const HexColor colorMediumAquaMarine = HexColor.colorMediumAquaMarine;
 
     public const HexColor colorMediumBlue = HexColor.colorMediumBlue;
 
@@ -1682,8 +1837,6 @@ public static unsafe partial class B2
 
     public const HexColor colorNavy = HexColor.colorNavy;
 
-    public const HexColor colorNavyBlue = HexColor.colorNavyBlue;
-
     public const HexColor colorOldLace = HexColor.colorOldLace;
 
     public const HexColor colorOlive = HexColor.colorOlive;
@@ -1696,7 +1849,7 @@ public static unsafe partial class B2
 
     public const HexColor colorOrchid = HexColor.colorOrchid;
 
-    public const HexColor colorPaleGoldenrod = HexColor.colorPaleGoldenrod;
+    public const HexColor colorPaleGoldenRod = HexColor.colorPaleGoldenRod;
 
     public const HexColor colorPaleGreen = HexColor.colorPaleGreen;
 
@@ -1734,7 +1887,7 @@ public static unsafe partial class B2
 
     public const HexColor colorSeaGreen = HexColor.colorSeaGreen;
 
-    public const HexColor colorSeashell = HexColor.colorSeashell;
+    public const HexColor colorSeaShell = HexColor.colorSeaShell;
 
     public const HexColor colorSienna = HexColor.colorSienna;
 
@@ -1764,8 +1917,6 @@ public static unsafe partial class B2
 
     public const HexColor colorViolet = HexColor.colorViolet;
 
-    public const HexColor colorVioletRed = HexColor.colorVioletRed;
-
     public const HexColor colorWheat = HexColor.colorWheat;
 
     public const HexColor colorWhite = HexColor.colorWhite;
@@ -1785,6 +1936,8 @@ public static unsafe partial class B2
     public const HexColor colorBox2DYellow = HexColor.colorBox2DYellow;
 
     public const JointType distanceJoint = JointType.distanceJoint;
+
+    public const JointType filterJoint = JointType.filterJoint;
 
     public const JointType motorJoint = JointType.motorJoint;
 
@@ -1806,7 +1959,7 @@ public static unsafe partial class B2
 
     public const ShapeType polygonShape = ShapeType.polygonShape;
 
-    public const ShapeType smoothSegmentShape = ShapeType.smoothSegmentShape;
+    public const ShapeType chainSegmentShape = ShapeType.chainSegmentShape;
 
     public const ShapeType shapeTypeCount = ShapeType.shapeTypeCount;
 
@@ -1829,18 +1982,18 @@ public static unsafe partial class B2
         public int revision;
     }
 
-    public partial struct Timer
-    {
-        public ulong start_sec;
-
-        public ulong start_usec;
-    }
-
     public partial struct Vec2
     {
         public float x;
 
         public float y;
+    }
+
+    public partial struct CosSin
+    {
+        public float cosine;
+
+        public float sine;
     }
 
     public partial struct Rot
@@ -1871,60 +2024,20 @@ public static unsafe partial class B2
         public Vec2 upperBound;
     }
 
-    public partial struct Circle
+    public partial struct Plane
     {
-        public Vec2 center;
+        public Vec2 normal;
 
-        public float radius;
+        public float offset;
     }
 
-    public partial struct Capsule
-    {
-        public Vec2 center1;
-
-        public Vec2 center2;
-
-        public float radius;
-    }
-
-    public partial struct DistanceCache
+    public partial struct SimplexCache
     {
         public ushort count;
 
         public InlineArrays.byte_3 indexA;
 
         public InlineArrays.byte_3 indexB;
-    }
-
-    public partial struct Polygon
-    {
-        public InlineArrays.Vec2_8 vertices;
-
-        public InlineArrays.Vec2_8 normals;
-
-        public Vec2 centroid;
-
-        public float radius;
-
-        public int count;
-    }
-
-    public partial struct Segment
-    {
-        public Vec2 point1;
-
-        public Vec2 point2;
-    }
-
-    public partial struct SmoothSegment
-    {
-        public Vec2 ghost1;
-
-        public Segment segment;
-
-        public Vec2 ghost2;
-
-        public int chainId;
     }
 
     public partial struct Hull
@@ -1943,17 +2056,24 @@ public static unsafe partial class B2
         public float maxFraction;
     }
 
-    public partial struct ShapeCastInput
+    public partial struct ShapeProxy
     {
         public InlineArrays.Vec2_8 points;
 
         public int count;
 
         public float radius;
+    }
+
+    public partial struct ShapeCastInput
+    {
+        public ShapeProxy proxy;
 
         public Vec2 translation;
 
         public float maxFraction;
+
+        public bool canEncroach;
     }
 
     public partial struct CastOutput
@@ -1978,6 +2098,53 @@ public static unsafe partial class B2
         public float rotationalInertia;
     }
 
+    public partial struct Circle
+    {
+        public Vec2 center;
+
+        public float radius;
+    }
+
+    public partial struct Capsule
+    {
+        public Vec2 center1;
+
+        public Vec2 center2;
+
+        public float radius;
+    }
+
+    public partial struct Polygon
+    {
+        public InlineArrays.Vec2_8 vertices;
+
+        public InlineArrays.Vec2_8 normals;
+
+        public Vec2 centroid;
+
+        public float radius;
+
+        public int count;
+    }
+
+    public partial struct Segment
+    {
+        public Vec2 point1;
+
+        public Vec2 point2;
+    }
+
+    public partial struct ChainSegment
+    {
+        public Vec2 ghost1;
+
+        public Segment segment;
+
+        public Vec2 ghost2;
+
+        public int chainId;
+    }
+
     public partial struct SegmentDistanceResult
     {
         public Vec2 closest1;
@@ -1991,20 +2158,11 @@ public static unsafe partial class B2
         public float distanceSquared;
     }
 
-    public partial struct DistanceProxy
-    {
-        public InlineArrays.Vec2_8 points;
-
-        public int count;
-
-        public float radius;
-    }
-
     public partial struct DistanceInput
     {
-        public DistanceProxy proxyA;
+        public ShapeProxy proxyA;
 
-        public DistanceProxy proxyB;
+        public ShapeProxy proxyB;
 
         public Transform transformA;
 
@@ -2018,6 +2176,8 @@ public static unsafe partial class B2
         public Vec2 pointA;
 
         public Vec2 pointB;
+
+        public Vec2 normal;
 
         public float distance;
 
@@ -2054,9 +2214,9 @@ public static unsafe partial class B2
 
     public partial struct ShapeCastPairInput
     {
-        public DistanceProxy proxyA;
+        public ShapeProxy proxyA;
 
-        public DistanceProxy proxyB;
+        public ShapeProxy proxyB;
 
         public Transform transformA;
 
@@ -2065,6 +2225,8 @@ public static unsafe partial class B2
         public Vec2 translationB;
 
         public float maxFraction;
+
+        public bool canEncroach;
     }
 
     public partial struct Sweep
@@ -2082,22 +2244,22 @@ public static unsafe partial class B2
 
     public partial struct TOIInput
     {
-        public DistanceProxy proxyA;
+        public ShapeProxy proxyA;
 
-        public DistanceProxy proxyB;
+        public ShapeProxy proxyB;
 
         public Sweep sweepA;
 
         public Sweep sweepB;
 
-        public float tMax;
+        public float maxFraction;
     }
 
     public partial struct TOIOutput
     {
         public TOIState state;
 
-        public float t;
+        public float fraction;
     }
 
     public partial struct ManifoldPoint
@@ -2114,7 +2276,7 @@ public static unsafe partial class B2
 
         public float tangentImpulse;
 
-        public float maxNormalImpulse;
+        public float totalNormalImpulse;
 
         public float normalVelocity;
 
@@ -2125,49 +2287,13 @@ public static unsafe partial class B2
 
     public partial struct Manifold
     {
-        public InlineArrays.ManifoldPoint_2 points;
-
         public Vec2 normal;
 
+        public float rollingImpulse;
+
+        public InlineArrays.ManifoldPoint_2 points;
+
         public int pointCount;
-    }
-
-    public partial struct TreeNode
-    {
-        public AABB aabb;
-
-        public uint categoryBits;
-
-        public TreeNode.AnonymousRecord_collision_L608_C2 TreeNode_AnonymousRecord_collision_L608_C2_Field;
-
-        public int child1;
-
-        public int child2;
-
-        public int userData;
-
-        public short height;
-
-        public bool enlarged;
-
-        public InlineArrays.byte_9 pad;
-
-        public ref int parent => ref TreeNode_AnonymousRecord_collision_L608_C2_Field.parent;
-
-        public ref int next => ref TreeNode_AnonymousRecord_collision_L608_C2_Field.next;
-    }
-
-    public partial struct TreeNode
-    {
-        [StructLayout(System.Runtime.InteropServices.LayoutKind.Explicit)]
-        public partial struct AnonymousRecord_collision_L608_C2
-        {
-            [System.Runtime.InteropServices.FieldOffset(0)]
-            public int parent;
-
-            [System.Runtime.InteropServices.FieldOffset(0)]
-            public int next;
-        }
     }
 
     public partial struct DynamicTree
@@ -2195,11 +2321,47 @@ public static unsafe partial class B2
         public int rebuildCapacity;
     }
 
+    public partial struct TreeNode
+    {
+    }
+
+    public partial struct TreeStats
+    {
+        public int nodeVisits;
+
+        public int leafVisits;
+    }
+
+    public partial struct PlaneResult
+    {
+        public Plane plane;
+
+        public bool hit;
+    }
+
+    public partial struct CollisionPlane
+    {
+        public Plane plane;
+
+        public float pushLimit;
+
+        public float push;
+
+        public bool clipVelocity;
+    }
+
+    public partial struct PlaneSolverResult
+    {
+        public Vec2 position;
+
+        public int iterationCount;
+    }
+
     public partial struct WorldId
     {
         public ushort index1;
 
-        public ushort revision;
+        public ushort generation;
     }
 
     public partial struct BodyId
@@ -2208,7 +2370,7 @@ public static unsafe partial class B2
 
         public ushort world0;
 
-        public ushort revision;
+        public ushort generation;
     }
 
     public partial struct ShapeId
@@ -2217,16 +2379,7 @@ public static unsafe partial class B2
 
         public ushort world0;
 
-        public ushort revision;
-    }
-
-    public partial struct JointId
-    {
-        public int index1;
-
-        public ushort world0;
-
-        public ushort revision;
+        public ushort generation;
     }
 
     public partial struct ChainId
@@ -2235,7 +2388,16 @@ public static unsafe partial class B2
 
         public ushort world0;
 
-        public ushort revision;
+        public ushort generation;
+    }
+
+    public partial struct JointId
+    {
+        public int index1;
+
+        public ushort world0;
+
+        public ushort generation;
     }
 
     public partial struct RayResult
@@ -2248,6 +2410,10 @@ public static unsafe partial class B2
 
         public float fraction;
 
+        public int nodeVisits;
+
+        public int leafVisits;
+
         public bool hit;
     }
 
@@ -2257,23 +2423,27 @@ public static unsafe partial class B2
 
         public float restitutionThreshold;
 
-        public float contactPushoutVelocity;
-
         public float hitEventThreshold;
 
         public float contactHertz;
 
         public float contactDampingRatio;
 
+        public float maxContactPushSpeed;
+
         public float jointHertz;
 
         public float jointDampingRatio;
 
-        public float maximumLinearVelocity;
+        public float maximumLinearSpeed;
+
+        public delegate* unmanaged<float, int, float, int, float> frictionCallback;
+
+        public delegate* unmanaged<float, int, float, int, float> restitutionCallback;
 
         public bool enableSleep;
 
-        public bool enableContinous;
+        public bool enableContinuous;
 
         public int workerCount;
 
@@ -2282,6 +2452,8 @@ public static unsafe partial class B2
         public delegate* unmanaged<void*, void*, void> finishTask;
 
         public void* userTaskContext;
+
+        public void* userData;
 
         public int internalValue;
     }
@@ -2306,6 +2478,8 @@ public static unsafe partial class B2
 
         public float sleepThreshold;
 
+        public byte* name;
+
         public void* userData;
 
         public bool enableSleep;
@@ -2318,8 +2492,6 @@ public static unsafe partial class B2
 
         public bool isEnabled;
 
-        public bool automaticMass;
-
         public bool allowFastRotation;
 
         public int internalValue;
@@ -2327,33 +2499,44 @@ public static unsafe partial class B2
 
     public partial struct Filter
     {
-        public uint categoryBits;
+        public ulong categoryBits;
 
-        public uint maskBits;
+        public ulong maskBits;
 
         public int groupIndex;
     }
 
     public partial struct QueryFilter
     {
-        public uint categoryBits;
+        public ulong categoryBits;
 
-        public uint maskBits;
+        public ulong maskBits;
+    }
+
+    public partial struct SurfaceMaterial
+    {
+        public float friction;
+
+        public float restitution;
+
+        public float rollingResistance;
+
+        public float tangentSpeed;
+
+        public int userMaterialId;
+
+        public uint customColor;
     }
 
     public partial struct ShapeDef
     {
         public void* userData;
 
-        public float friction;
-
-        public float restitution;
+        public SurfaceMaterial material;
 
         public float density;
 
         public Filter filter;
-
-        public uint customColor;
 
         public bool isSensor;
 
@@ -2365,7 +2548,9 @@ public static unsafe partial class B2
 
         public bool enablePreSolveEvents;
 
-        public bool forceContactCreation;
+        public bool invokeContactCreation;
+
+        public bool updateBodyMass;
 
         public int internalValue;
     }
@@ -2378,13 +2563,15 @@ public static unsafe partial class B2
 
         public int count;
 
-        public float friction;
+        public SurfaceMaterial* materials;
 
-        public float restitution;
+        public int materialCount;
 
         public Filter filter;
 
         public bool isLoop;
+
+        public bool enableSensorEvents;
 
         public int internalValue;
     }
@@ -2399,13 +2586,11 @@ public static unsafe partial class B2
 
         public float solve;
 
-        public float buildIslands;
+        public float mergeIslands;
+
+        public float prepareStages;
 
         public float solveConstraints;
-
-        public float prepareTasks;
-
-        public float solverTasks;
 
         public float prepareConstraints;
 
@@ -2413,33 +2598,33 @@ public static unsafe partial class B2
 
         public float warmStart;
 
-        public float solveVelocities;
+        public float solveImpulses;
 
         public float integratePositions;
 
-        public float relaxVelocities;
+        public float relaxImpulses;
 
         public float applyRestitution;
 
         public float storeImpulses;
 
-        public float finalizeBodies;
-
         public float splitIslands;
 
-        public float sleepIslands;
+        public float transforms;
 
         public float hitEvents;
 
-        public float broadphase;
+        public float refit;
 
-        public float continuous;
+        public float bullets;
+
+        public float sleepIslands;
+
+        public float sensors;
     }
 
     public partial struct Counters
     {
-        public int staticBodyCount;
-
         public int bodyCount;
 
         public int shapeCount;
@@ -2538,6 +2723,17 @@ public static unsafe partial class B2
         public float maxForce;
 
         public bool collideConnected;
+
+        public void* userData;
+
+        public int internalValue;
+    }
+
+    public partial struct FilterJointDef
+    {
+        public BodyId bodyIdA;
+
+        public BodyId bodyIdB;
 
         public void* userData;
 
@@ -2686,6 +2882,19 @@ public static unsafe partial class B2
         public int internalValue;
     }
 
+    public partial struct ExplosionDef
+    {
+        public ulong maskBits;
+
+        public Vec2 position;
+
+        public float radius;
+
+        public float falloff;
+
+        public float impulsePerLength;
+    }
+
     public partial struct SensorBeginTouchEvent
     {
         public ShapeId sensorShapeId;
@@ -2716,6 +2925,8 @@ public static unsafe partial class B2
         public ShapeId shapeIdA;
 
         public ShapeId shapeIdB;
+
+        public Manifold manifold;
     }
 
     public partial struct ContactEndTouchEvent
@@ -2782,25 +2993,23 @@ public static unsafe partial class B2
 
     public partial struct DebugDraw
     {
-        public delegate* unmanaged<Vec2*, int, HexColor, void*, void> DrawPolygon;
+        public delegate* unmanaged<Vec2*, int, HexColor, void*, void> DrawPolygonFcn;
 
-        public delegate* unmanaged<Transform, Vec2*, int, float, HexColor, void*, void> DrawSolidPolygon;
+        public delegate* unmanaged<Transform, Vec2*, int, float, HexColor, void*, void> DrawSolidPolygonFcn;
 
-        public delegate* unmanaged<Vec2, float, HexColor, void*, void> DrawCircle;
+        public delegate* unmanaged<Vec2, float, HexColor, void*, void> DrawCircleFcn;
 
-        public delegate* unmanaged<Transform, float, HexColor, void*, void> DrawSolidCircle;
+        public delegate* unmanaged<Transform, float, HexColor, void*, void> DrawSolidCircleFcn;
 
-        public delegate* unmanaged<Vec2, Vec2, float, HexColor, void*, void> DrawCapsule;
+        public delegate* unmanaged<Vec2, Vec2, float, HexColor, void*, void> DrawSolidCapsuleFcn;
 
-        public delegate* unmanaged<Vec2, Vec2, float, HexColor, void*, void> DrawSolidCapsule;
+        public delegate* unmanaged<Vec2, Vec2, HexColor, void*, void> DrawSegmentFcn;
 
-        public delegate* unmanaged<Vec2, Vec2, HexColor, void*, void> DrawSegment;
+        public delegate* unmanaged<Transform, void*, void> DrawTransformFcn;
 
-        public delegate* unmanaged<Transform, void*, void> DrawTransform;
+        public delegate* unmanaged<Vec2, float, HexColor, void*, void> DrawPointFcn;
 
-        public delegate* unmanaged<Vec2, float, HexColor, void*, void> DrawPoint;
-
-        public delegate* unmanaged<Vec2, byte*, void*, void> DrawString;
+        public delegate* unmanaged<Vec2, byte*, HexColor, void*, void> DrawStringFcn;
 
         public AABB drawingBounds;
 
@@ -2812,9 +3021,11 @@ public static unsafe partial class B2
 
         public bool drawJointExtras;
 
-        public bool drawAABBs;
+        public bool drawBounds;
 
         public bool drawMass;
+
+        public bool drawBodyNames;
 
         public bool drawContacts;
 
@@ -2824,7 +3035,11 @@ public static unsafe partial class B2
 
         public bool drawContactImpulses;
 
+        public bool drawContactFeatures;
+
         public bool drawFrictionImpulses;
+
+        public bool drawIslands;
 
         public void* context;
     }
@@ -2858,15 +3073,6 @@ public static unsafe partial class B2
 
     public partial struct InlineArrays
     {
-        [InlineArray(9)]
-        public partial struct byte_9
-        {
-            public byte Item0;
-        }
-    }
-
-    public partial struct InlineArrays
-    {
         [InlineArray(12)]
         public partial struct int_12
         {
@@ -2874,13 +3080,15 @@ public static unsafe partial class B2
         }
     }
 
-    public const int defaultCategoryBits = 1;
+    public const int B2_DEFAULT_CATEGORY_BITS = 1;
 
-    public const uint defaultMaskBits = 4294967295;
+    public const ulong B2_DEFAULT_MASK_BITS = 18446744073709551615;
 
-    public const int maxPolygonVertices = 8;
+    public const int B2_HASH_INIT = 5381;
 
-    public const float pi = 3.1415927f;
+    public const int B2_MAX_POLYGON_VERTICES = 8;
+
+    public const float B2_PI = 3.1415927f;
 
     public partial struct Version : IEquatable<Version>
     {
@@ -2918,42 +3126,6 @@ public static unsafe partial class B2
         }
     }
 
-    public partial struct Timer : IEquatable<Timer>
-    {
-        public bool Equals(Timer other)
-        {
-            fixed (Timer* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(Timer)).SequenceEqual(new Span<byte>(&other, sizeof(Timer)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Timer other && Equals(other);
-        }
-
-        public static bool operator ==(Timer left, Timer right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(Timer left, Timer right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (Timer* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(Timer)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
     public partial struct Vec2 : IEquatable<Vec2>
     {
         public bool Equals(Vec2 other)
@@ -2985,6 +3157,42 @@ public static unsafe partial class B2
             {
                 HashCode hash = new();
                 hash.AddBytes(new Span<byte>(__self, sizeof(Vec2)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct CosSin : IEquatable<CosSin>
+    {
+        public bool Equals(CosSin other)
+        {
+            fixed (CosSin* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(CosSin)).SequenceEqual(new Span<byte>(&other, sizeof(CosSin)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is CosSin other && Equals(other);
+        }
+
+        public static bool operator ==(CosSin left, CosSin right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(CosSin left, CosSin right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (CosSin* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(CosSin)));
                 return hash.ToHashCode();
             }
         }
@@ -3134,217 +3342,73 @@ public static unsafe partial class B2
         }
     }
 
-    public partial struct Circle : IEquatable<Circle>
+    public partial struct Plane : IEquatable<Plane>
     {
-        public bool Equals(Circle other)
+        public bool Equals(Plane other)
         {
-            fixed (Circle* __self = &this)
+            fixed (Plane* __self = &this)
             {
-                return new Span<byte>(__self, sizeof(Circle)).SequenceEqual(new Span<byte>(&other, sizeof(Circle)));
+                return new Span<byte>(__self, sizeof(Plane)).SequenceEqual(new Span<byte>(&other, sizeof(Plane)));
             }
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Circle other && Equals(other);
+            return obj is Plane other && Equals(other);
         }
 
-        public static bool operator ==(Circle left, Circle right)
+        public static bool operator ==(Plane left, Plane right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Circle left, Circle right)
+        public static bool operator !=(Plane left, Plane right)
         {
             return !(left == right);
         }
 
         public override int GetHashCode()
         {
-            fixed (Circle* __self = &this)
+            fixed (Plane* __self = &this)
             {
                 HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(Circle)));
+                hash.AddBytes(new Span<byte>(__self, sizeof(Plane)));
                 return hash.ToHashCode();
             }
         }
     }
 
-    public partial struct Capsule : IEquatable<Capsule>
+    public partial struct SimplexCache : IEquatable<SimplexCache>
     {
-        public bool Equals(Capsule other)
+        public bool Equals(SimplexCache other)
         {
-            fixed (Capsule* __self = &this)
+            fixed (SimplexCache* __self = &this)
             {
-                return new Span<byte>(__self, sizeof(Capsule)).SequenceEqual(new Span<byte>(&other, sizeof(Capsule)));
+                return new Span<byte>(__self, sizeof(SimplexCache)).SequenceEqual(new Span<byte>(&other, sizeof(SimplexCache)));
             }
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is Capsule other && Equals(other);
+            return obj is SimplexCache other && Equals(other);
         }
 
-        public static bool operator ==(Capsule left, Capsule right)
+        public static bool operator ==(SimplexCache left, SimplexCache right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(Capsule left, Capsule right)
+        public static bool operator !=(SimplexCache left, SimplexCache right)
         {
             return !(left == right);
         }
 
         public override int GetHashCode()
         {
-            fixed (Capsule* __self = &this)
+            fixed (SimplexCache* __self = &this)
             {
                 HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(Capsule)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
-    public partial struct DistanceCache : IEquatable<DistanceCache>
-    {
-        public bool Equals(DistanceCache other)
-        {
-            fixed (DistanceCache* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(DistanceCache)).SequenceEqual(new Span<byte>(&other, sizeof(DistanceCache)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is DistanceCache other && Equals(other);
-        }
-
-        public static bool operator ==(DistanceCache left, DistanceCache right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(DistanceCache left, DistanceCache right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (DistanceCache* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(DistanceCache)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
-    public partial struct Polygon : IEquatable<Polygon>
-    {
-        public bool Equals(Polygon other)
-        {
-            fixed (Polygon* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(Polygon)).SequenceEqual(new Span<byte>(&other, sizeof(Polygon)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Polygon other && Equals(other);
-        }
-
-        public static bool operator ==(Polygon left, Polygon right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(Polygon left, Polygon right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (Polygon* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(Polygon)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
-    public partial struct Segment : IEquatable<Segment>
-    {
-        public bool Equals(Segment other)
-        {
-            fixed (Segment* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(Segment)).SequenceEqual(new Span<byte>(&other, sizeof(Segment)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is Segment other && Equals(other);
-        }
-
-        public static bool operator ==(Segment left, Segment right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(Segment left, Segment right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (Segment* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(Segment)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
-    public partial struct SmoothSegment : IEquatable<SmoothSegment>
-    {
-        public bool Equals(SmoothSegment other)
-        {
-            fixed (SmoothSegment* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(SmoothSegment)).SequenceEqual(new Span<byte>(&other, sizeof(SmoothSegment)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is SmoothSegment other && Equals(other);
-        }
-
-        public static bool operator ==(SmoothSegment left, SmoothSegment right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(SmoothSegment left, SmoothSegment right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (SmoothSegment* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(SmoothSegment)));
+                hash.AddBytes(new Span<byte>(__self, sizeof(SimplexCache)));
                 return hash.ToHashCode();
             }
         }
@@ -3417,6 +3481,42 @@ public static unsafe partial class B2
             {
                 HashCode hash = new();
                 hash.AddBytes(new Span<byte>(__self, sizeof(RayCastInput)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct ShapeProxy : IEquatable<ShapeProxy>
+    {
+        public bool Equals(ShapeProxy other)
+        {
+            fixed (ShapeProxy* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(ShapeProxy)).SequenceEqual(new Span<byte>(&other, sizeof(ShapeProxy)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ShapeProxy other && Equals(other);
+        }
+
+        public static bool operator ==(ShapeProxy left, ShapeProxy right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ShapeProxy left, ShapeProxy right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (ShapeProxy* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(ShapeProxy)));
                 return hash.ToHashCode();
             }
         }
@@ -3530,6 +3630,186 @@ public static unsafe partial class B2
         }
     }
 
+    public partial struct Circle : IEquatable<Circle>
+    {
+        public bool Equals(Circle other)
+        {
+            fixed (Circle* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(Circle)).SequenceEqual(new Span<byte>(&other, sizeof(Circle)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Circle other && Equals(other);
+        }
+
+        public static bool operator ==(Circle left, Circle right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Circle left, Circle right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (Circle* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(Circle)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct Capsule : IEquatable<Capsule>
+    {
+        public bool Equals(Capsule other)
+        {
+            fixed (Capsule* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(Capsule)).SequenceEqual(new Span<byte>(&other, sizeof(Capsule)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Capsule other && Equals(other);
+        }
+
+        public static bool operator ==(Capsule left, Capsule right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Capsule left, Capsule right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (Capsule* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(Capsule)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct Polygon : IEquatable<Polygon>
+    {
+        public bool Equals(Polygon other)
+        {
+            fixed (Polygon* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(Polygon)).SequenceEqual(new Span<byte>(&other, sizeof(Polygon)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Polygon other && Equals(other);
+        }
+
+        public static bool operator ==(Polygon left, Polygon right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Polygon left, Polygon right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (Polygon* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(Polygon)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct Segment : IEquatable<Segment>
+    {
+        public bool Equals(Segment other)
+        {
+            fixed (Segment* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(Segment)).SequenceEqual(new Span<byte>(&other, sizeof(Segment)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Segment other && Equals(other);
+        }
+
+        public static bool operator ==(Segment left, Segment right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Segment left, Segment right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (Segment* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(Segment)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct ChainSegment : IEquatable<ChainSegment>
+    {
+        public bool Equals(ChainSegment other)
+        {
+            fixed (ChainSegment* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(ChainSegment)).SequenceEqual(new Span<byte>(&other, sizeof(ChainSegment)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ChainSegment other && Equals(other);
+        }
+
+        public static bool operator ==(ChainSegment left, ChainSegment right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ChainSegment left, ChainSegment right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (ChainSegment* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(ChainSegment)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
     public partial struct SegmentDistanceResult : IEquatable<SegmentDistanceResult>
     {
         public bool Equals(SegmentDistanceResult other)
@@ -3561,42 +3841,6 @@ public static unsafe partial class B2
             {
                 HashCode hash = new();
                 hash.AddBytes(new Span<byte>(__self, sizeof(SegmentDistanceResult)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
-    public partial struct DistanceProxy : IEquatable<DistanceProxy>
-    {
-        public bool Equals(DistanceProxy other)
-        {
-            fixed (DistanceProxy* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(DistanceProxy)).SequenceEqual(new Span<byte>(&other, sizeof(DistanceProxy)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is DistanceProxy other && Equals(other);
-        }
-
-        public static bool operator ==(DistanceProxy left, DistanceProxy right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(DistanceProxy left, DistanceProxy right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (DistanceProxy* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(DistanceProxy)));
                 return hash.ToHashCode();
             }
         }
@@ -3962,6 +4206,42 @@ public static unsafe partial class B2
         }
     }
 
+    public partial struct DynamicTree : IEquatable<DynamicTree>
+    {
+        public bool Equals(DynamicTree other)
+        {
+            fixed (DynamicTree* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(DynamicTree)).SequenceEqual(new Span<byte>(&other, sizeof(DynamicTree)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is DynamicTree other && Equals(other);
+        }
+
+        public static bool operator ==(DynamicTree left, DynamicTree right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(DynamicTree left, DynamicTree right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (DynamicTree* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(DynamicTree)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
     public partial struct TreeNode : IEquatable<TreeNode>
     {
         public bool Equals(TreeNode other)
@@ -3998,76 +4278,145 @@ public static unsafe partial class B2
         }
     }
 
-    public partial struct TreeNode
+    public partial struct TreeStats : IEquatable<TreeStats>
     {
-        public partial struct AnonymousRecord_collision_L608_C2 : IEquatable<AnonymousRecord_collision_L608_C2>
+        public bool Equals(TreeStats other)
         {
-            public bool Equals(AnonymousRecord_collision_L608_C2 other)
+            fixed (TreeStats* __self = &this)
             {
-                fixed (AnonymousRecord_collision_L608_C2* __self = &this)
-                {
-                    return new Span<byte>(__self, sizeof(AnonymousRecord_collision_L608_C2)).SequenceEqual(new Span<byte>(&other, sizeof(AnonymousRecord_collision_L608_C2)));
-                }
-            }
-
-            public override bool Equals(object? obj)
-            {
-                return obj is AnonymousRecord_collision_L608_C2 other && Equals(other);
-            }
-
-            public static bool operator ==(AnonymousRecord_collision_L608_C2 left, AnonymousRecord_collision_L608_C2 right)
-            {
-                return left.Equals(right);
-            }
-
-            public static bool operator !=(AnonymousRecord_collision_L608_C2 left, AnonymousRecord_collision_L608_C2 right)
-            {
-                return !(left == right);
-            }
-
-            public override int GetHashCode()
-            {
-                fixed (AnonymousRecord_collision_L608_C2* __self = &this)
-                {
-                    HashCode hash = new();
-                    hash.AddBytes(new Span<byte>(__self, sizeof(AnonymousRecord_collision_L608_C2)));
-                    return hash.ToHashCode();
-                }
-            }
-        }
-    }
-
-    public partial struct DynamicTree : IEquatable<DynamicTree>
-    {
-        public bool Equals(DynamicTree other)
-        {
-            fixed (DynamicTree* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(DynamicTree)).SequenceEqual(new Span<byte>(&other, sizeof(DynamicTree)));
+                return new Span<byte>(__self, sizeof(TreeStats)).SequenceEqual(new Span<byte>(&other, sizeof(TreeStats)));
             }
         }
 
         public override bool Equals(object? obj)
         {
-            return obj is DynamicTree other && Equals(other);
+            return obj is TreeStats other && Equals(other);
         }
 
-        public static bool operator ==(DynamicTree left, DynamicTree right)
+        public static bool operator ==(TreeStats left, TreeStats right)
         {
             return left.Equals(right);
         }
 
-        public static bool operator !=(DynamicTree left, DynamicTree right)
+        public static bool operator !=(TreeStats left, TreeStats right)
         {
             return !(left == right);
         }
 
         public override int GetHashCode()
         {
-            fixed (DynamicTree* __self = &this)
+            fixed (TreeStats* __self = &this)
             {
                 HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(DynamicTree)));
+                hash.AddBytes(new Span<byte>(__self, sizeof(TreeStats)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct PlaneResult : IEquatable<PlaneResult>
+    {
+        public bool Equals(PlaneResult other)
+        {
+            fixed (PlaneResult* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(PlaneResult)).SequenceEqual(new Span<byte>(&other, sizeof(PlaneResult)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PlaneResult other && Equals(other);
+        }
+
+        public static bool operator ==(PlaneResult left, PlaneResult right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(PlaneResult left, PlaneResult right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (PlaneResult* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(PlaneResult)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct CollisionPlane : IEquatable<CollisionPlane>
+    {
+        public bool Equals(CollisionPlane other)
+        {
+            fixed (CollisionPlane* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(CollisionPlane)).SequenceEqual(new Span<byte>(&other, sizeof(CollisionPlane)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is CollisionPlane other && Equals(other);
+        }
+
+        public static bool operator ==(CollisionPlane left, CollisionPlane right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(CollisionPlane left, CollisionPlane right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (CollisionPlane* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(CollisionPlane)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct PlaneSolverResult : IEquatable<PlaneSolverResult>
+    {
+        public bool Equals(PlaneSolverResult other)
+        {
+            fixed (PlaneSolverResult* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(PlaneSolverResult)).SequenceEqual(new Span<byte>(&other, sizeof(PlaneSolverResult)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is PlaneSolverResult other && Equals(other);
+        }
+
+        public static bool operator ==(PlaneSolverResult left, PlaneSolverResult right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(PlaneSolverResult left, PlaneSolverResult right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (PlaneSolverResult* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(PlaneSolverResult)));
                 return hash.ToHashCode();
             }
         }
@@ -4181,42 +4530,6 @@ public static unsafe partial class B2
         }
     }
 
-    public partial struct JointId : IEquatable<JointId>
-    {
-        public bool Equals(JointId other)
-        {
-            fixed (JointId* __self = &this)
-            {
-                return new Span<byte>(__self, sizeof(JointId)).SequenceEqual(new Span<byte>(&other, sizeof(JointId)));
-            }
-        }
-
-        public override bool Equals(object? obj)
-        {
-            return obj is JointId other && Equals(other);
-        }
-
-        public static bool operator ==(JointId left, JointId right)
-        {
-            return left.Equals(right);
-        }
-
-        public static bool operator !=(JointId left, JointId right)
-        {
-            return !(left == right);
-        }
-
-        public override int GetHashCode()
-        {
-            fixed (JointId* __self = &this)
-            {
-                HashCode hash = new();
-                hash.AddBytes(new Span<byte>(__self, sizeof(JointId)));
-                return hash.ToHashCode();
-            }
-        }
-    }
-
     public partial struct ChainId : IEquatable<ChainId>
     {
         public bool Equals(ChainId other)
@@ -4248,6 +4561,42 @@ public static unsafe partial class B2
             {
                 HashCode hash = new();
                 hash.AddBytes(new Span<byte>(__self, sizeof(ChainId)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct JointId : IEquatable<JointId>
+    {
+        public bool Equals(JointId other)
+        {
+            fixed (JointId* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(JointId)).SequenceEqual(new Span<byte>(&other, sizeof(JointId)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is JointId other && Equals(other);
+        }
+
+        public static bool operator ==(JointId left, JointId right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(JointId left, JointId right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (JointId* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(JointId)));
                 return hash.ToHashCode();
             }
         }
@@ -4428,6 +4777,42 @@ public static unsafe partial class B2
             {
                 HashCode hash = new();
                 hash.AddBytes(new Span<byte>(__self, sizeof(QueryFilter)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct SurfaceMaterial : IEquatable<SurfaceMaterial>
+    {
+        public bool Equals(SurfaceMaterial other)
+        {
+            fixed (SurfaceMaterial* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(SurfaceMaterial)).SequenceEqual(new Span<byte>(&other, sizeof(SurfaceMaterial)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is SurfaceMaterial other && Equals(other);
+        }
+
+        public static bool operator ==(SurfaceMaterial left, SurfaceMaterial right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(SurfaceMaterial left, SurfaceMaterial right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (SurfaceMaterial* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(SurfaceMaterial)));
                 return hash.ToHashCode();
             }
         }
@@ -4685,6 +5070,42 @@ public static unsafe partial class B2
         }
     }
 
+    public partial struct FilterJointDef : IEquatable<FilterJointDef>
+    {
+        public bool Equals(FilterJointDef other)
+        {
+            fixed (FilterJointDef* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(FilterJointDef)).SequenceEqual(new Span<byte>(&other, sizeof(FilterJointDef)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is FilterJointDef other && Equals(other);
+        }
+
+        public static bool operator ==(FilterJointDef left, FilterJointDef right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(FilterJointDef left, FilterJointDef right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (FilterJointDef* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(FilterJointDef)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
     public partial struct PrismaticJointDef : IEquatable<PrismaticJointDef>
     {
         public bool Equals(PrismaticJointDef other)
@@ -4824,6 +5245,42 @@ public static unsafe partial class B2
             {
                 HashCode hash = new();
                 hash.AddBytes(new Span<byte>(__self, sizeof(WheelJointDef)));
+                return hash.ToHashCode();
+            }
+        }
+    }
+
+    public partial struct ExplosionDef : IEquatable<ExplosionDef>
+    {
+        public bool Equals(ExplosionDef other)
+        {
+            fixed (ExplosionDef* __self = &this)
+            {
+                return new Span<byte>(__self, sizeof(ExplosionDef)).SequenceEqual(new Span<byte>(&other, sizeof(ExplosionDef)));
+            }
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ExplosionDef other && Equals(other);
+        }
+
+        public static bool operator ==(ExplosionDef left, ExplosionDef right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(ExplosionDef left, ExplosionDef right)
+        {
+            return !(left == right);
+        }
+
+        public override int GetHashCode()
+        {
+            fixed (ExplosionDef* __self = &this)
+            {
+                HashCode hash = new();
+                hash.AddBytes(new Span<byte>(__self, sizeof(ExplosionDef)));
                 return hash.ToHashCode();
             }
         }
@@ -5336,45 +5793,6 @@ public static unsafe partial class B2
                 {
                     HashCode hash = new();
                     hash.AddBytes(new Span<byte>(__self, sizeof(ManifoldPoint_2)));
-                    return hash.ToHashCode();
-                }
-            }
-        }
-    }
-
-    public partial struct InlineArrays
-    {
-        public partial struct byte_9 : IEquatable<byte_9>
-        {
-            public bool Equals(byte_9 other)
-            {
-                fixed (byte_9* __self = &this)
-                {
-                    return new Span<byte>(__self, sizeof(byte_9)).SequenceEqual(new Span<byte>(&other, sizeof(byte_9)));
-                }
-            }
-
-            public override bool Equals(object? obj)
-            {
-                return obj is byte_9 other && Equals(other);
-            }
-
-            public static bool operator ==(byte_9 left, byte_9 right)
-            {
-                return left.Equals(right);
-            }
-
-            public static bool operator !=(byte_9 left, byte_9 right)
-            {
-                return !(left == right);
-            }
-
-            public override int GetHashCode()
-            {
-                fixed (byte_9* __self = &this)
-                {
-                    HashCode hash = new();
-                    hash.AddBytes(new Span<byte>(__self, sizeof(byte_9)));
                     return hash.ToHashCode();
                 }
             }
