@@ -15,11 +15,6 @@ const src_flags = [_][]const u8{
     "-fno-sanitize=undefined",
 };
 
-const include_paths = [_][]const u8{
-    "../native/box2d/src",
-    "../native/box2d/include",
-};
-
 // Collect all C source files in the given directory and its subdirectories.
 fn getSourceFiles(b: *std.Build, dir_path: []const u8) !std.ArrayList([]const u8) {
     var list = std.ArrayList([]const u8).init(b.allocator);
@@ -62,15 +57,13 @@ pub fn compile(b: *Build, options: BuildOptions) !void {
         lib.root_module.addCMacro("NDEBUG", "");
     }
 
+    lib.addIncludePath(b.path("../native/box2d/include"));
+    lib.addIncludePath(b.path("../native/box2d/src"));
+
     const source_files = try getSourceFiles(b, "../native/box2d/src");
     defer source_files.deinit();
-
     for (source_files.items) |file| {
         lib.addCSourceFile(.{ .file = b.path(file), .flags = &src_flags });
-    }
-
-    for (include_paths) |path| {
-        lib.addIncludePath(b.path(path));
     }
 
     switch (options.target.result.os.tag) {
@@ -81,27 +74,24 @@ pub fn compile(b: *Build, options: BuildOptions) !void {
             }
         },
         .ios => {
-            if (b.sysroot == null) {
+            if (b.sysroot == null or b.sysroot.?.len == 0) {
                 @panic("A --sysroot path to an IOS SDK needs to be provided when compiling for IOS.");
             }
 
             lib.addSystemFrameworkPath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/System/Library/Frameworks" }) });
             lib.addSystemIncludePath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/usr/include" }) });
-            lib.addLibraryPath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/usr/lib" }) });
+            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
         },
         .emscripten => {
-            if (b.sysroot == null) {
-                @panic("Pass '--sysroot \"$EMSDK/upstream/emscripten\"'");
+            if (b.sysroot == null or b.sysroot.?.len == 0) {
+                @panic("A --sysroot path to an emscripten cache needs to be provided when compiling for wasm.");
             }
 
-            const cache_include = b.pathJoin(&.{ b.sysroot.?, "cache", "sysroot", "include" });
-            var dir = std.fs.openDirAbsolute(cache_include, std.fs.Dir.OpenDirOptions{ .access_sub_paths = true, .no_follow = true }) catch @panic("No emscripten cache. Generate it!");
-            dir.close();
-            lib.addIncludePath(.{ .cwd_relative = cache_include });
+            lib.addSystemIncludePath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/sysroot/include" }) });
         },
         .linux => {
             if (options.target.result.abi == .android) {
-                if (b.sysroot == null) {
+                if (b.sysroot == null or b.sysroot.?.len == 0) {
                     @panic("A --sysroot path to an Android NDK needs to be provided when compiling for Android.");
                 }
 
@@ -120,7 +110,7 @@ pub fn compile(b: *Build, options: BuildOptions) !void {
                 const android_api_level: []const u8 = "21";
 
                 const android_sysroot = b.pathJoin(&.{ b.sysroot.?, "/toolchains/llvm/prebuilt/", host_tuple, "/sysroot" });
-                const android_lib_path = b.pathJoin(&.{ android_sysroot, "/usr/lib/", triple, android_api_level });
+                const android_lib_path = b.pathJoin(&.{ "/usr/lib/", triple, android_api_level });
                 const android_include_path = b.pathJoin(&.{ android_sysroot, "/usr/include" });
                 const android_system_include_path = b.pathJoin(&.{ android_sysroot, "/usr/include/", triple });
 
