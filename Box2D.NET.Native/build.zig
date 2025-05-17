@@ -59,6 +59,7 @@ pub fn compile(b: *Build, options: BuildOptions) !void {
 
     lib.addIncludePath(b.path("../native/box2d/include"));
     lib.addIncludePath(b.path("../native/box2d/src"));
+    lib.addCSourceFile(.{ .file = b.path("../native/inline.c"), .flags = &src_flags });
 
     const source_files = try getSourceFiles(b, "../native/box2d/src");
     defer source_files.deinit();
