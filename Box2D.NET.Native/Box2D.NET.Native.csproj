@@ -34,11 +34,8 @@
         <None Pack="true" Include="buildTransitive/Box2D.NET.Native.props" PackagePath="buildTransitive/$(PackageId).props"/>
         <None Pack="true" Include="buildTransitive/Box2D.NET.Native.targets" PackagePath="buildTransitive/$(PackageId).targets"/>
         <None Pack="true" Include="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" PackagePath="static/"/>
-
-        <Content Include="$(OutputPath)runtimes/**/**" Exclude="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" Link="%(Filename)%(Extension)">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            <PackagePath>runtimes/</PackagePath>
-        </Content>
+        <None Pack="true" Include="$(OutputPath)runtimes/**/**" Exclude="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" PackagePath="runtimes/"/>
+        <None Include="$(OutputPath)runtimes/$(HostRuntime)/**" Exclude="$(OutputPath)runtimes/**/*.a;$(OutputPath)runtimes/**/*.lib" Link="%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest"/>
     </ItemGroup>
 
     <!-- Here we need host not target toolset to compile/cross-compile -->
@@ -51,7 +48,7 @@
     <Import Project="$(NuGetPackageRoot)/microsoft.net.runtime.emscripten.3.1.56.cache.$(HostRuntime)/9.0.5/Sdk/Sdk.props"/>
 
     <PropertyGroup>
-        <EMSCRIPTEN_CACHE Condition="$(EMSCRIPTEN_CACHE) == ''" >$(WasmCachePath)</EMSCRIPTEN_CACHE>
+        <EMSCRIPTEN_CACHE_SYSROOT Condition="$(EMSCRIPTEN_CACHE_SYSROOT) == ''" >$(WasmCachePath)sysroot</EMSCRIPTEN_CACHE_SYSROOT>
     </PropertyGroup>
 
     <!-- Determine mapping between dotnet RID and zig targets -->
@@ -109,37 +106,37 @@
         <When Condition="$(RuntimeIdentifier) == 'iossimulator-x64'">
             <PropertyGroup>
                 <ZigIdentifier>x86_64-ios-simulator</ZigIdentifier>
-                <ZigArgs>--sysroot "$(IOS_SIMULATOR_SDK)"</ZigArgs>
+                <ZigArgs>-Dsysroot="$(IOS_SIMULATOR_SDK_SYSROOT)"</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'iossimulator-arm64'">
             <PropertyGroup>
                 <ZigIdentifier>aarch64-ios-simulator</ZigIdentifier>
-                <ZigArgs>--sysroot "$(IOS_SIMULATOR_SDK)"</ZigArgs>
+                <ZigArgs>-Dsysroot="$(IOS_SIMULATOR_SDK_SYSROOT)" -Dcpu=apple_m1</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'ios-arm64'">
             <PropertyGroup>
                 <ZigIdentifier>aarch64-ios</ZigIdentifier>
-                <ZigArgs>--sysroot "$(IOS_SDK)"</ZigArgs>
+                <ZigArgs>-Dsysroot="$(IOS_SDK_SYSROOT)"</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'browser-wasm'">
             <PropertyGroup>
                 <ZigIdentifier>wasm32-emscripten</ZigIdentifier>
-                <ZigArgs>--sysroot "$(EMSCRIPTEN_CACHE)"</ZigArgs>
+                <ZigArgs>-Dsysroot="$(EMSCRIPTEN_CACHE_SYSROOT)"</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'android-arm64'">
             <PropertyGroup>
-                <ZigIdentifier>aarch64-linux-android</ZigIdentifier>
-                <ZigArgs>--sysroot "$(ANDROID_NDK_HOME)"</ZigArgs>
+                <ZigIdentifier>aarch64-linux-android.21</ZigIdentifier>
+                <ZigArgs>-Dsysroot="$(ANDROID_NDK_SYSROOT)"</ZigArgs>
             </PropertyGroup>
         </When>
         <When Condition="$(RuntimeIdentifier) == 'android-x64'">
             <PropertyGroup>
-                <ZigIdentifier>x86_64-linux-android</ZigIdentifier>
-                <ZigArgs>--sysroot "$(ANDROID_NDK_HOME)"</ZigArgs>
+                <ZigIdentifier>x86_64-linux-android.21</ZigIdentifier>
+                <ZigArgs>-Dsysroot="$(ANDROID_NDK_SYSROOT)"</ZigArgs>
             </PropertyGroup>
         </When>
         <Otherwise>
@@ -152,7 +149,7 @@
     <!-- All the native code compile magic lives here -->
     <Target Name="CompileNatives" AfterTargets="Build" Condition="'$(SkipNatives)' != 'true'">
         <PropertyGroup>
-            <BuildCommand>$(ZigExePath) build -Dcompiler-rt-path="$(ZigLibPath)compiler_rt.zig" -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) $(ZigArgs)</BuildCommand>
+            <BuildCommand>$(ZigExePath) build -Doptimize=$(ZigConfiguration) --prefix $(OutputPath)runtimes --prefix-lib-dir $(RuntimeIdentifier)/native --prefix-exe-dir $(RuntimeIdentifier)/native -Dtarget=$(ZigIdentifier) -Dcompiler-rt-path="$(ZigLibPath)compiler_rt.zig" $(ZigArgs)</BuildCommand>
         </PropertyGroup>
         <Message Importance="High" Text="Build Target: $(RuntimeIdentifier) $(Configuration)"/>
         <Message Importance="High" Text="Build Zig Target: $(ZigIdentifier) $(ZigConfiguration)"/>

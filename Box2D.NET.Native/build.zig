@@ -8,6 +8,11 @@ const BuildOptions = struct {
     optimize: std.builtin.OptimizeMode,
     target: Build.ResolvedTarget,
     library_type: LibraryType,
+    // There are some issues with path lookups when using --sysroot. Pass as a build option instead.
+    sysroot: ?[]const u8,
+    // When building static libraries for Windows, zig's compiler-rt needs to be bundled.
+    // For some reason, setting "bundle_compiler_rt" to true doesn't produce a static library that works with NativeAOT.
+    // As a work-around, we manually build the compiler_rt.zig file.
     compiler_rt_path: ?[]const u8,
 };
 
@@ -75,45 +80,38 @@ pub fn compile(b: *Build, options: BuildOptions) !void {
             }
         },
         .ios => {
-            if (b.sysroot == null or b.sysroot.?.len == 0) {
+            if (options.sysroot == null or options.sysroot.?.len == 0) {
                 @panic("A --sysroot path to an IOS SDK needs to be provided when compiling for IOS.");
             }
 
-            lib.addSystemFrameworkPath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/System/Library/Frameworks" }) });
-            lib.addSystemIncludePath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/usr/include" }) });
-            lib.addLibraryPath(.{ .cwd_relative = "/usr/lib" });
+            lib.addSystemFrameworkPath(.{ .cwd_relative = b.pathJoin(&.{ options.sysroot.?, "/System/Library/Frameworks" }) });
+            lib.addSystemIncludePath(.{ .cwd_relative = b.pathJoin(&.{ options.sysroot.?, "/usr/include" }) });
+            lib.addLibraryPath(.{ .cwd_relative = b.pathJoin(&.{ options.sysroot.?, "/usr/lib" }) });
         },
         .emscripten => {
-            if (b.sysroot == null or b.sysroot.?.len == 0) {
+            if (options.sysroot == null or options.sysroot.?.len == 0) {
                 @panic("A --sysroot path to an emscripten cache needs to be provided when compiling for wasm.");
             }
 
-            lib.addSystemIncludePath(.{ .cwd_relative = b.pathJoin(&.{ b.sysroot.?, "/sysroot/include" }) });
+            lib.addSystemIncludePath(.{ .cwd_relative = b.pathJoin(&.{ options.sysroot.?, "/include" }) });
         },
         .linux => {
             if (options.target.result.abi == .android) {
-                if (b.sysroot == null or b.sysroot.?.len == 0) {
+                if (options.sysroot == null or options.sysroot.?.len == 0) {
                     @panic("A --sysroot path to an Android NDK needs to be provided when compiling for Android.");
                 }
-
-                const host_tuple = switch (builtin.target.os.tag) {
-                    .linux => "linux-x86_64",
-                    .windows => "windows-x86_64",
-                    .macos => "darwin-x86_64",
-                    else => @panic("unsupported host OS"),
-                };
 
                 const triple = switch (options.target.result.cpu.arch) {
                     .aarch64 => "aarch64-linux-android",
                     .x86_64 => "x86_64-linux-android",
                     else => @panic("Unsupported Android architecture"),
                 };
+
                 const android_api_level: []const u8 = "21";
 
-                const android_sysroot = b.pathJoin(&.{ b.sysroot.?, "/toolchains/llvm/prebuilt/", host_tuple, "/sysroot" });
-                const android_lib_path = b.pathJoin(&.{ "/usr/lib/", triple, android_api_level });
-                const android_include_path = b.pathJoin(&.{ android_sysroot, "/usr/include" });
-                const android_system_include_path = b.pathJoin(&.{ android_sysroot, "/usr/include/", triple });
+                const android_lib_path = b.pathJoin(&.{ options.sysroot.?, "/usr/lib/", triple, android_api_level });
+                const android_include_path = b.pathJoin(&.{ options.sysroot.?, "/usr/include" });
+                const android_system_include_path = b.pathJoin(&.{ options.sysroot.?, "/usr/include/", triple });
 
                 lib.addLibraryPath(.{ .cwd_relative = android_lib_path });
 
@@ -145,9 +143,7 @@ pub fn build(b: *Build) !void {
         .optimize = b.standardOptimizeOption(.{}),
         .target = b.standardTargetOptions(.{}),
         .library_type = b.option(LibraryType, "library-type", "Compile as a static or shared library.") orelse LibraryType.Shared,
-        // When building static libraries for Windows, zig's compiler-rt needs to be bundled.
-        // For some reason, setting "bundle_compiler_rt" to true doesn't produce a static library that works with NativeAOT.
-        // As a work-around, we manually build the compiler_rt.zig file.
+        .sysroot = b.option([]const u8, "sysroot", "Path to sysroot.") orelse null,
         .compiler_rt_path = b.option([]const u8, "compiler-rt-path", "Path to the compiler_rt file.") orelse null,
     });
 }
