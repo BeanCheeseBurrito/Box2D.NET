@@ -49,6 +49,9 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
       - name: Set Version Suffix
         shell: bash
         run: |
@@ -56,25 +59,19 @@ jobs:
             echo "BuildVersionSuffix=build.$(git rev-list --count HEAD)" >> $GITHUB_ENV
           fi
 
-      - name: Setup IOS SDK
+      - name: Set IOS SDK Variables
         if: matrix.os == 'macos-latest'
         shell: bash
         run: |
-          echo "IOS_SDK=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
-          echo "IOS_SIMULATOR_SDK=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
+          echo "IOS_SDK_SYSROOT=$(xcrun --sdk iphoneos --show-sdk-path)" >> $GITHUB_ENV
+          echo "IOS_SIMULATOR_SDK_SYSROOT=$(xcrun --sdk iphonesimulator --show-sdk-path)" >> $GITHUB_ENV
 
-      - name: Setup Android NDK
-        if: matrix.os == 'macos-latest'
-        uses: nttld/setup-ndk@v1
-        with:
-          ndk-version: r25c
-          link-to-sdk: true
-
-      - name: Set Android NDK variables
+      - name: Set Android NDK Variables
         if: matrix.os == 'macos-latest'
         shell: bash
         run: |
-          echo "ANDROID_NDK_HOME=$ANDROID_NDK_HOME" >> $GITHUB_ENV
+          echo "ANDROID_NDK=$(find "$ANDROID_SDK_ROOT/ndk/" -mindepth 1 -maxdepth 1 -type d | sort | head -n 1)" >> $GITHUB_ENV
+          echo "ANDROID_NDK_SYSROOT=$ANDROID_NDK/toolchains/llvm/prebuilt/darwin-x86_64/sysroot" >> $GITHUB_ENV
 
       - name: Restore Dependencies
         shell: bash
@@ -104,9 +101,9 @@ jobs:
           dotnet build -c Debug -r win-x86
           dotnet build -c Debug -r win-arm64
           # dotnet build -c Debug -r browser-wasm
-          # dotnet build -c Debug -r iossimulator-x64
-          # dotnet build -c Debug -r iossimulator-arm64
-          # dotnet build -c Debug -r ios-arm64
+          dotnet build -c Debug -r iossimulator-x64
+          dotnet build -c Debug -r iossimulator-arm64
+          dotnet build -c Debug -r ios-arm64
           dotnet build -c Debug -r android-arm64
           dotnet build -c Debug -r android-x64
 
@@ -119,9 +116,9 @@ jobs:
           dotnet build -c Release -r win-x86
           dotnet build -c Release -r win-arm64
           # dotnet build -c Release -r browser-wasm
-          # dotnet build -c Release -r iossimulator-x64
-          # dotnet build -c Release -r iossimulator-arm64
-          # dotnet build -c Release -r ios-arm64
+          dotnet build -c Release -r iossimulator-x64
+          dotnet build -c Release -r iossimulator-arm64
+          dotnet build -c Release -r ios-arm64
           dotnet build -c Release -r android-arm64
           dotnet build -c Release -r android-x64
 
