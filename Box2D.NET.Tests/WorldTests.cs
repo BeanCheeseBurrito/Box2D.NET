@@ -80,9 +80,9 @@ namespace Box2D.NET.Tests
 			// create orphaned ids, so be careful about your world management.
 			B2.DestroyWorld(worldId);
 
-			Assert.True(Math.Abs(position.x) < 0.01f);
-			Assert.True(Math.Abs(position.y - 1.00f) < 0.01f);
-			Assert.True(Math.Abs(Math.Atan2(rotation.s, rotation.c)) < 0.01f);
+			Assert.True(B2.AbsFloat(position.x) < 0.01f);
+			Assert.True(B2.AbsFloat(position.y - 1.00f) < 0.01f);
+			Assert.True(B2.AbsFloat(B2.RotGetAngle(rotation)) < 0.01f);
         }
     }
 }
