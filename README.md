@@ -41,7 +41,7 @@ To include both of them in your project based on your build configuration, use t
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
@@ -52,24 +52,49 @@ To include both of them in your project based on your build configuration, use t
 </Project>
 ```
 
-## GitLab Package Registry
-For more up-to-date packages, development builds are available on the [GitLab package registry](https://gitlab.com/BeanCheeseBurrito/Box2D.NET/-/packages). To add the development feed to your project, add the GitLab link below  as a restore source. You can now reference any package version listed [here](https://gitlab.com/BeanCheeseBurrito/Box2D.NET/-/packages)!
+## GitHub Package Registry
+For more up-to-date packages, development builds are available on the [GitHub package registry](https://github.com/BeanCheeseBurrito?tab=packages&repo_name=Box2D.NET). Packages are automatically uploaded on every commit to the main branch.
+
+To access development builds from your project, you first need to create a GitHub personal access token with the ``read:packages`` permission. (See [Creating a personal access token (classic)](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-personal-access-token-classic))
+
+Once you have created a personal access token, run the following command to add the GitHub feed as a new package source. Replace ``YOUR_GITHUB_USERNAME`` with your GitHub username and ``YOUR_GITHUB_TOKEN`` with your personal access token.
+```bash
+dotnet nuget add source --name "box2d.net" --username "YOUR_GITHUB_USERNAME" --password "YOUR_GITHUB_TOKEN" --store-password-in-clear-text "https://nuget.pkg.github.com/BeanCheeseBurrito/index.json"
+```
+
+You can now reference any package from the [GitHub feed](https://github.com/BeanCheeseBurrito?tab=packages&repo_name=Box2D.NET)!
+
+```console
+dotnet add PROJECT package Box2D.NET.Release --version *-build.*
+```
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
-        <RestoreAdditionalProjectSources>https://gitlab.com/api/v4/projects/53993416/packages/nuget/index.json</RestoreAdditionalProjectSources>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Box2D.NET.Debug" Version="0.0.4"/>
+        <PackageReference Include="Box2D.NET.Debug" Version="*-build.*"/>
     </ItemGroup>
-
 </Project>
 ```
-> [!WARNING] 
+___
+By default, the GitHub feed will be added to your global ``nuget.config`` file and can be referenced by any project on your machine. If wish to add the feed to a single project/solution, create a ``nuget.config`` file at the root of your project/solution directory and run the following command with the ``--configfile`` option.
+```bash
+dotnet nuget add source --configfile "./nuget.config" --name "box2d.net" --username "YOUR_GITHUB_USERNAME" --password "YOUR_GITHUB_TOKEN" --store-password-in-clear-text "https://nuget.pkg.github.com/BeanCheeseBurrito/index.json"
+```
+To remove the GitHub feed from your NuGet package sources, run the following command.
+```bash
+dotnet nuget remove source "box2d.net"
+```
+GitHub Actions workflows can be authenticated using the ``GITHUB_TOKEN`` secret.
+```yaml
+- name: Add GitHub source
+  run: dotnet nuget add source --name "box2d.net" --username "USERNAME" --password "${{ secrets.GITHUB_TOKEN }}" --store-password-in-clear-text "https://nuget.pkg.github.com/BeanCheeseBurrito/index.json"
+```
+> [!WARNING]
 > Development feed packages may be deleted without warning to free up space.
 
 ## Running examples
@@ -110,13 +135,11 @@ Reference the project and import the native libraries.
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
-    <Import Project="PATH/Box2D.NET/Box2D.NET.Native/Box2D.NET.Native.targets" />
-
     <ItemGroup>
-        <ProjectReference Include="PATH/Box2D.NET/Box2D.NET/Box2D.NET.csproj" />
+        <ProjectReference Include="PATH/Box2D.NET/Box2D.NET/Box2D.NET.csproj"/>
     </ItemGroup>
 
 </Project>
